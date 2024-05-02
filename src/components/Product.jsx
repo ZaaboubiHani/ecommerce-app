@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom/dist';
-import { BsPlus, BsEyeFill } from 'react-icons/bs';
-import { CartContext } from '../contexts/CartContext';
+import { BsEyeFill } from 'react-icons/bs';
 import { LanguageContext } from '../contexts/LanguageContext';
 const Product = ({ product }) => {
-  const { addToCart } = useContext(CartContext);
   const { language } = useContext(LanguageContext);
-  const { _id, category, arName, frName, engName, price,colors } = product;
+  const { _id, category, arName, frName, engName, price, colors } = product;
   return <div>
     <div className='border border-[#e4e4e4] h-[300px] mb-4 relative overflow-hidden group transition'>
       <div className='w-full h-full flex justify-center items-center'>
@@ -17,25 +15,33 @@ const Product = ({ product }) => {
       </div>
       {/* Buttons */}
       <div className='absolute top-6 -right-11 group-hover:right-5 p-2 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300'>
-        <button>
-          <div onClick={() => addToCart(product, _id)}
-          className='flex justify-center items-center text-white w-12 h-12 bg-red-500'>
-            <BsPlus className='text-3xl' />
-          </div>
-        </button>
-        <Link to={`/product/${_id}`} className='w-12 h-12 bg-white flex justify-center items-center text-primary drop-shadow-xl'>
+        <Link to={`/product/${_id}`} className='w-12 h-12 bg-red-500 flex justify-center items-center text-primary drop-shadow-xl'>
           <BsEyeFill />
         </Link>
       </div>
     </div>
     {/* catergory title and price */}
     <div>
-      <div className='text-sm capitalize text-gray-500'>
-      {language === 'ar' ? category.arName : language === 'fr' ? category.frName : category.engName}
+      <div className='flex'>
+        {
+          colors.map(col => {
+            return <div key={col._id}
+              style={{
+                height: '20px',
+                width: '20px',
+                backgroundColor: col.hex,
+                marginLeft: '8px',
+                border:'1px solid black'
+              }} />
+          })
+        }
       </div>
-      <Link to={`/product/${_id}`} >
+      <div className='text-sm capitalize text-gray-500'>
+        {language === 'ar' ? category.arName : language === 'fr' ? category?.frName : category.engName}
+      </div>
+      <Link to={`/product/${_id}`} >F
         <h2 className='font-semibold mb-1'>
-        {language === 'ar' ? arName : language === 'fr' ? frName : engName}
+          {language === 'ar' ? arName : language === 'fr' ? frName : engName}
         </h2>
       </Link>
       <div className='font-semibold'>
