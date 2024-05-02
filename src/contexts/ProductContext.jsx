@@ -3,43 +3,67 @@ export const ProductContext = createContext();
 import Api from '../api/api.source';
 const apiInstance = Api.instance;
 import { CategoryContext } from './CategoryContext';
-import { PaginationContext } from './PaginationContext';
 
 const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
-  const { assignLimit, page } = useContext(PaginationContext);
+  const [limitReached, setLimitReached] = useState(false);
+
+  let [page, setPage] = useState(1);
+  let [pageLimit, setPageLimit] = useState(1);
   const { category } = useContext(CategoryContext);
+
   const fetchProducts = async () => {
-    setLoadingProducts(true);
-    apiInstance.getAxios().get(`/products`,
-      {
+    const response = await apiInstance.getAxios().get(`/products`, {
+      params: {
+        page: page,
+        limit: 10,
+        category: category?._id,
+      }
+    });
+
+    if (response.status === 200) {
+      const totalPages = response.data.totalPages;
+      setPageLimit(prev => (totalPages));
+      setProducts(response.data.docs);
+      setLoadingProducts(false);
+    }
+  };
+
+
+  const fetchMoreProducts = async () => {
+    if (page <= pageLimit) {
+      setPage(prev => (prev + 1));
+      page = page + 1;
+      const response = await apiInstance.getAxios().get(`/products`, {
         params: {
           page: page,
-          limit: 1,
-        }
-      }
-    )
-      .then(response => {
-        console.log('response: ', response.data);
-        assignLimit(response.data.totalPages)
-        setProducts(response.data.docs);
-        setLoadingProducts(false);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        setLoadingProducts(false);
+          limit: 10,
+          category: category?._id,
+        },
       });
+      if (response.status === 200) {
+        setPageLimit(response.data.totalPages);
+        pageLimit = response.data.totalPages;
+        setProducts(prev=>([...prev,...response.data.docs]));
+      }
 
+    }
+    if(pageLimit < page){
+      setLimitReached(true);
+    }
   };
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    fetchProducts();
-  }, [page]);
-  return <ProductContext.Provider value={{ products, loadingProducts }}>
+  return <ProductContext.Provider value={{
+    products,
+    loadingProducts,
+    limitReached,
+    fetchMoreProducts,
+  }}>
     {children}
   </ProductContext.Provider>;
 };
