@@ -39,7 +39,7 @@ const Product = ({ product }) => {
       <div className='text-sm capitalize text-gray-500'>
         {language === 'ar' ? category.arName : language === 'fr' ? category?.frName : category.engName}
       </div>
-      <Link to={`/product/${_id}`} >F
+      <Link to={`/product/${_id}`} >
         <h2 className='font-semibold mb-1'>
           {language === 'ar' ? arName : language === 'fr' ? frName : engName}
         </h2>

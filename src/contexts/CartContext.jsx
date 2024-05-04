@@ -29,14 +29,15 @@ const CartProvider = ({ children }) => {
     }
   }, [cart]);
 
-  const addToCart = (product, id) => {
+  const addToCart = (product) => {
+    const { id, ...other } = product;
     const newItem = { ...product, amount: 1 };
     const cartItem = cart.find(item => {
-      return item.id === id;
+      return item.id === id && item.color === other.color && item.size === other.size;
     });
     if (cartItem) {
       const newCart = [...cart].map(item => {
-        if (item.id === id) {
+        if (item.id === id && item.color === other.color && item.size === other.size) {
           return { ...item, amount: cartItem.amount + 1 };
         }
         else {
@@ -52,29 +53,29 @@ const CartProvider = ({ children }) => {
     }
   };
 
-  const removeFromCart = (id) => {
+  const removeFromCart = (id,color,size) => {
     const newCart = cart.filter(item => {
-      return item.id !== id;
+      return item.id !== id || item.color !== color || item.size !== size;
     });
     localStorage.setItem('cart', JSON.stringify(newCart));
     setCart(newCart);
   };
 
-  const clearCart = (id) => {
+  const clearCart = () => {
     setCart([]);
     localStorage.setItem('cart', JSON.stringify([]));
   };
 
-  const increaseAmount = (id) => {
-    const item = cart.find((item) => item.id === id);
-    addToCart(item, id);
+  const increaseAmount = (id,color,size) => {
+    const item = cart.find((item) => item.id === id && item.color === color && item.size === size);
+    addToCart(item);
   };
 
-  const decreaseAmount = (id) => {
-    const cartItem = cart.find((item) => item.id === id);
+  const decreaseAmount = (id,color,size) => {
+    const cartItem = cart.find((item) => item.id === id && item.color === color && item.size === size);
     if (cartItem) {
       const newCart = cart.map((item) => {
-        if (item.id === id) {
+        if (item.id === id && item.color === color && item.size === size) {
           return { ...item, amount: cartItem.amount - 1 };
         } else {
           return item;
@@ -82,11 +83,6 @@ const CartProvider = ({ children }) => {
       });
       setCart(newCart);
     }
-
-    if (cartItem.amount < 2) {
-      removeFromCart(id);
-    }
-
   };
 
   return <CartContext.Provider value={{
