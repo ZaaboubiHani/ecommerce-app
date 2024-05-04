@@ -66,7 +66,7 @@ const Home = () => {
                 <div ref={loadingRef} className="text-center mt-4">
                   {language === 'ar' ? '...تحميل' : language === 'fr' ? 'Chargement...' : 'Loading...'}
                 </div>
-                : <div className="text-center mt-4">end</div>
+                : <div className="text-center mt-4"></div>
               }
             </div>
         }
