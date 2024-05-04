@@ -58,8 +58,8 @@ const CartItem = ({ item }) => {
           <div
             style={{
               cursor: 'pointer',
-              height: '30px',
-              width: '30px',
+              height: '25px',
+              width: '25px',
               marginRight: '16px',
               display: 'flex',
               justifyContent: 'center',
@@ -71,8 +71,8 @@ const CartItem = ({ item }) => {
           <div
             style={{
               cursor: 'pointer',
-              height: '30px',
-              width: '30px',
+              height: '25px',
+              width: '25px',
               marginRight: '16px',
               display: 'flex',
               justifyContent: 'center',
