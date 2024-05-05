@@ -60,10 +60,11 @@ const CartItem = ({ item }) => {
               cursor: 'pointer',
               height: '25px',
               width: '25px',
-              marginRight: '16px',
+              marginRight: '8px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              borderRadius:'4px',
               border: '1px solid black'
             }} >
             {item.size}
@@ -73,10 +74,10 @@ const CartItem = ({ item }) => {
               cursor: 'pointer',
               height: '25px',
               width: '25px',
-              marginRight: '16px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              borderRadius:'20px',
               border: '1px solid black',
               backgroundColor: item.color,
             }} />
