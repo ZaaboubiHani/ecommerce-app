@@ -21,7 +21,7 @@ const ProductDetails = () => {
       {language === 'ar' ? '...تحميل' : language === 'fr' ? 'Chargement...' : 'Loading...'}
     </section>
   }
-  return <section className='pt-32 pb-12 lg:py-32 flex items-center'>
+  return <section className='pt-32 pb-12 lg:py-32 flex items-center mb-8'>
     <div className="container mx-auto">
       {/*image & text wrapper*/}
       <div className='flex flex-col lg:flex-row items-start'>
@@ -62,8 +62,9 @@ const ProductDetails = () => {
                   key={col._id}
                   style={{
                     cursor: 'pointer',
-                    height: '20px',
-                    width: '20px',
+                    height: '30px',
+                    width: '30px',
+                    borderRadius:'20px',
                     backgroundColor: col.hex,
                     marginRight: '16px',
                     border: colorIndex === i ? '3px solid black' : '1px solid black'
@@ -81,6 +82,7 @@ const ProductDetails = () => {
                     cursor: 'pointer',
                     height: '30px',
                     width: '30px',
+                    borderRadius:'4px',
                     marginRight: '16px',
                     display: 'flex',
                     justifyContent: 'center',

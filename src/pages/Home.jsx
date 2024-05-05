@@ -44,7 +44,7 @@ const Home = () => {
   };
 
 
-  return <div>
+  return <div className='mb-8'>
     <Hero />
     <section className='py-16'>
       <div className="container mx-auto">
