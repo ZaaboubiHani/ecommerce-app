@@ -3,11 +3,13 @@ import { useParams } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';
 import { ProductContext } from '../contexts/ProductContext';
 import { LanguageContext } from '../contexts/LanguageContext';
+import { SidebarContext } from '../contexts/SidebarContext';
 const ProductDetails = () => {
   const { id } = useParams();
   const { products } = useContext(ProductContext);
   const { addToCart } = useContext(CartContext);
   const { language } = useContext(LanguageContext);
+  const { setIsOpen, handleClose } = useContext(SidebarContext);
   const [colorIndex, setColorIndex] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
   const [sizeIndex, setSizeIndex] = useState(0);
@@ -101,19 +103,25 @@ const ProductDetails = () => {
             {language === 'ar' ? product.arDescription : language === 'fr' ? product.frDescription : product.engDescription}
           </p>
 
-          <button onClick={() => addToCart({
-            id: product._id,
-            price:product.price,
-            arDescription:product.arDescription,
-            frDescription:product.frDescription,
-            engDescription:product.engDescription,
-            arName:product.arName,
-            frName:product.frName,
-            engName:product.engName,
-            img:product.colors[colorIndex].images?.urls[imageIndex],
-            size:product.colors[colorIndex].sizes[sizeIndex].size,
-            color:product.colors[colorIndex].hex,
-          })}
+          <button onClick={() => {
+            addToCart({
+              id: product._id,
+              price: product.price,
+              arDescription: product.arDescription,
+              frDescription: product.frDescription,
+              engDescription: product.engDescription,
+              arName: product.arName,
+              frName: product.frName,
+              engName: product.engName,
+              img: product.colors[colorIndex].images?.urls[imageIndex],
+              size: product.colors[colorIndex].sizes[sizeIndex].size,
+              color: product.colors[colorIndex].hex,
+            });
+            setIsOpen(true);
+            setTimeout(() => {
+              handleClose();
+            }, 3000);
+          }}
             className='bg-primary py-4 px-8 text-white'>
             {language === 'ar' ? 'أضف إلى السلة' : language === 'fr' ? 'Ajouter au panier' : 'Add to cart'}
           </button>
