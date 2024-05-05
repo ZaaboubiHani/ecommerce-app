@@ -40,7 +40,7 @@ const Sidebar = () => {
         </div>
       </div>
       
-      <Link to='/checkout' className='bg-primary flex p-4 justify-center items-center text-white w-full font-medium '>
+      <Link to='/checkout' onClick={()=>handleClose()}className='bg-primary flex p-4 justify-center items-center text-white w-full font-medium '>
       {language === 'ar' ? 'طلب' : language === 'fr' ? 'Commande' : 'Order'}
       </Link>
     </div>

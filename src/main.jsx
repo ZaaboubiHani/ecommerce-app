@@ -8,6 +8,7 @@ import CartProvider from './contexts/CartContext';
 import LanguageProvider from './contexts/LanguageContext';
 import CategoryProvider from './contexts/CategoryContext';
 import SearchProvider from './contexts/SearchContext';
+import SnackbarProvider from './contexts/SnackbarContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <LanguageProvider>
@@ -15,11 +16,13 @@ root.render(
       <SearchProvider>
         <SidebarProvider>
           <CartProvider>
-            <ProductProvider>
-              <React.StrictMode>
-                <App />
-              </React.StrictMode>
-            </ProductProvider>
+            <SnackbarProvider>
+              <ProductProvider>
+                <React.StrictMode>
+                  <App />
+                </React.StrictMode>
+              </ProductProvider>
+            </SnackbarProvider>
           </CartProvider>
         </SidebarProvider>
       </SearchProvider>

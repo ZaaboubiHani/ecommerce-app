@@ -29,6 +29,7 @@ const Product = ({ product }) => {
               style={{
                 height: '20px',
                 width: '20px',
+                borderRadius:'20px',
                 backgroundColor: col.hex,
                 marginLeft: '8px',
                 border:'1px solid black'
