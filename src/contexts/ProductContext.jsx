@@ -29,6 +29,7 @@ const ProductProvider = ({ children }) => {
     });
 
     if (response.status === 200) {
+      console.log(response.data);
       const totalPages = response.data.totalPages;
       pageLimit.current = totalPages;
       setProducts(response.data.docs);
@@ -48,7 +49,6 @@ const ProductProvider = ({ children }) => {
       localLoadingProducts.current = true;
       page.current = 1;
       setLimitReached(false);
-      // Cancel previous request
       if (source.current) {
         source.current.cancel('Operation canceled due to new request.');
       }
