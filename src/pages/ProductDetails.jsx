@@ -12,7 +12,9 @@ const ProductDetails = () => {
   const { setIsOpen, handleClose } = useContext(SidebarContext);
   const [colorIndex, setColorIndex] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
-  const [sizeIndex, setSizeIndex] = useState(0);
+  const [sizeIndex, setSizeIndex] = useState();
+  const [validateAttempt, setValidateAttempt] = useState(false);
+
   const product = products.find(item => {
     return item._id === id;
   });
@@ -45,12 +47,10 @@ const ProductDetails = () => {
         {/*image */}
         <div className='flex flex-1 justify-center items-center mb-8 lg:mb-0'>
           <img className='max-w-[200px] lg:max-w-sm'
-            src={product.colors[colorIndex].images?.urls[imageIndex]} alt="" />
+            src={product?.colors[colorIndex].images?.urls[imageIndex]} alt="" />
         </div>
         {/* config panel */}
         <div className='flex-1 text-center lg:text-left'>
-
-
           <div className='flex mb-6'>
             {
               product.colors.map((col, i) => {
@@ -64,7 +64,7 @@ const ProductDetails = () => {
                     cursor: 'pointer',
                     height: '30px',
                     width: '30px',
-                    borderRadius:'20px',
+                    borderRadius: '20px',
                     backgroundColor: col.hex,
                     marginRight: '16px',
                     border: colorIndex === i ? '3px solid black' : '1px solid black'
@@ -75,14 +75,16 @@ const ProductDetails = () => {
           <div className='flex mb-6'>
             {
               product.colors[colorIndex].sizes.map((size, i) => {
-                return <div
+                return <button
                   onClick={() => setSizeIndex(i)}
                   key={size._id}
+                  disabled={!size.inStock}
                   style={{
-                    cursor: 'pointer',
+                    opacity: size.inStock ? '1' : '0.5',
+                    cursor: size.inStock ? 'pointer' : 'not-allowed',
                     height: '30px',
                     width: '30px',
-                    borderRadius:'4px',
+                    borderRadius: '4px',
                     marginRight: '16px',
                     display: 'flex',
                     justifyContent: 'center',
@@ -90,10 +92,15 @@ const ProductDetails = () => {
                     border: sizeIndex === i ? '3px solid black' : '1px solid black'
                   }} >
                   {size.size}
-                </div>
+                </button>
               })
             }
           </div>
+          {validateAttempt && (sizeIndex === undefined) && (
+            <div className="text-red-500 text-sm">
+              {language === 'ar' ? 'الرجاء تحديد حجم' : language === 'fr' ? 'Veuillez choisir une taille' : 'Please select a size'}
+            </div>
+          )}
           {/*text */}
           <h1 className='text-[26px] font-medium mb-2 max-w-[450px] mx-auto lg:mx-0'>
             {language === 'ar' ? product.arName : language === 'fr' ? product.frName : product.engName}
@@ -106,23 +113,29 @@ const ProductDetails = () => {
           </p>
 
           <button onClick={() => {
-            addToCart({
-              id: product._id,
-              price: product.price,
-              arDescription: product.arDescription,
-              frDescription: product.frDescription,
-              engDescription: product.engDescription,
-              arName: product.arName,
-              frName: product.frName,
-              engName: product.engName,
-              img: product.colors[colorIndex].images?.urls[imageIndex],
-              size: product.colors[colorIndex].sizes[sizeIndex].size,
-              color: product.colors[colorIndex].hex,
-            });
-            setIsOpen(true);
-            setTimeout(() => {
-              handleClose();
-            }, 3000);
+            if (sizeIndex) {
+              setValidateAttempt(false);
+              addToCart({
+                id: product._id,
+                price: product.price,
+                arDescription: product.arDescription,
+                frDescription: product.frDescription,
+                engDescription: product.engDescription,
+                arName: product.arName,
+                frName: product.frName,
+                engName: product.engName,
+                img: product.colors[colorIndex].images?.urls[imageIndex],
+                size: product.colors[colorIndex].sizes[sizeIndex].size,
+                color: product.colors[colorIndex].hex,
+              });
+              setIsOpen(true);
+              setTimeout(() => {
+                handleClose();
+              }, 3000);
+            }
+            else {
+              setValidateAttempt(true);
+            }
           }}
             className='bg-primary py-4 px-8 text-white'>
             {language === 'ar' ? 'أضف إلى السلة' : language === 'fr' ? 'Ajouter au panier' : 'Add to cart'}
