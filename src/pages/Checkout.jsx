@@ -43,7 +43,7 @@ const Checkout = () => {
     const loadData = async () => {
 
         const response = await apiInstance.getAxios().get(`/wilayas`);
-        if(response.status === 200){
+        if (response.status === 200) {
             const combinedData = uniqueWilayaNamesArray.map(wilaya => {
                 const priceData = response.data.find(price => price.name === wilaya.wilaya_name_ascii);
                 return {
@@ -104,7 +104,7 @@ const Checkout = () => {
                 isValidating ? <div className='h-[100vh] w-full flex justify-center items-center'>
                     {language === 'ar' ? '...جاري الارسال' : language === 'fr' ? 'Envoi...' : 'Sending...'}
                 </div> :
-                    <div className='flex lg:px-24'>
+                    <div className='flex flex-col lg:px-24 md:flex-row'>
                         <div className='w-full mr-4 '>
                             <section className='grid grid-cols-1 mt-4 md:grid-cols-1  gap-[30px] w-full max-auto md:max-w-none md:mx-0 lg:w-2/3 xl:w-1/2 '>
                                 <div key={'fullName'}>
@@ -193,8 +193,8 @@ const Checkout = () => {
                                                                 arWilaya: wilaya.wilaya_name,
                                                                 frWilaya: wilaya.wilaya_name_ascii,
                                                                 enWilaya: wilaya.wilaya_name_ascii,
-                                                                homePrice:wilaya.homePrice,
-                                                                deskPrice:wilaya.deskPrice,
+                                                                homePrice: wilaya.homePrice,
+                                                                deskPrice: wilaya.deskPrice,
                                                             });
                                                             setIsWilayasOpen(false);
                                                             setSelectedCommune(undefined);
@@ -331,7 +331,7 @@ const Checkout = () => {
                             </section>
 
                             <div className='flex w-full flex-col lg:flex-row items-center justify-stretch mt-4'>
-                                <Link to='/' className='bg-primary w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium mr-2'>
+                                <Link to='/' className='bg-primary w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium mx-2 text-nowrap'>
                                     {language === 'ar' ? 'اشتري اكثر' : language === 'fr' ? 'Acheter plus' : 'Buy more'}
                                 </Link>
                                 <button
@@ -343,70 +343,74 @@ const Checkout = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className='hidden md:flex flex-col border-l pl-8 ml-4 w-[230px]'>
-                            {language === 'ar' ? 'المشتريات' : language === 'fr' ? 'Achats' : 'Purchases'}
-                            <div className='flex overflow-y-scroll overflow-x-hidden border border-gray-400 my-2 max-h-[1000px] lg:max-h-[700px] w-[230px]'>
-                                <div className='flex flex-col'>
-                                    {
-                                        cart.map((item, i) =>
-                                            <div key={i} className='w-[230px] m-4'>
-                                                <img className='h-[230px] object-fit' src={item.img} alt="" />
-                                                <div className='flex mt-2'>
-                                                    <div
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                            height: '25px',
-                                                            width: '25px',
-                                                            borderRadius: '4px',
-                                                            marginRight: '4px',
-                                                            display: 'flex',
-                                                            justifyContent: 'center',
-                                                            alignItems: 'center',
-                                                            border: '1px solid black',
-                                                            fontSize: '14px',
-                                                        }} >
-                                                        {item.size}
+                        <div className='w-full flex items-center justify-center '>
+
+
+                            <div className='flex flex-col  md:border-l items-center md:pl-8 md:ml-4 w-[230px] md:items-start'>
+                                {language === 'ar' ? 'المشتريات' : language === 'fr' ? 'Achats' : 'Purchases'}
+                                <div className='flex overflow-y-scroll overflow-x-hidden border border-gray-400 my-2 max-h-[1000px] lg:max-h-[700px] w-[230px]'>
+                                    <div className='flex flex-col'>
+                                        {
+                                            cart.map((item, i) =>
+                                                <div key={i} className='w-[230px] m-4'>
+                                                    <img className='h-[230px] object-fit' src={item.img} alt="" />
+                                                    <div className='flex mt-2'>
+                                                        <div
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                                height: '25px',
+                                                                width: '25px',
+                                                                borderRadius: '4px',
+                                                                marginRight: '4px',
+                                                                display: 'flex',
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                border: '1px solid black',
+                                                                fontSize: '14px',
+                                                            }} >
+                                                            {item.size}
+                                                        </div>
+                                                        <div
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                                height: '25px',
+                                                                width: '25px',
+                                                                borderRadius: '20px',
+                                                                marginRight: '8px',
+                                                                display: 'flex',
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                border: '1px solid black',
+                                                                backgroundColor: item.color,
+                                                            }} />
+                                                        <div className='flex items-center text-center text-sm text-gray-400'>
+                                                            {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
+                                                            {item.price} X {item.amount}
+                                                        </div>
                                                     </div>
-                                                    <div
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                            height: '25px',
-                                                            width: '25px',
-                                                            borderRadius: '20px',
-                                                            marginRight: '8px',
-                                                            display: 'flex',
-                                                            justifyContent: 'center',
-                                                            alignItems: 'center',
-                                                            border: '1px solid black',
-                                                            backgroundColor: item.color,
-                                                        }} />
-                                                    <div className='flex items-center text-center text-sm text-gray-400'>
+                                                    <div>
                                                         {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                                                        {item.price} X {item.amount}
+                                                        {item.price * item.amount}
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                                                    {item.price * item.amount}
-                                                </div>
-                                            </div>
-                                        )
-                                    }
+                                            )
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='my-2 font-bold'>
-                                {language === 'ar' ? 'عدد المشتريات: ' : language === 'fr' ? 'Nombre d\'achats: ' : 'Number of purchases: '}
-                                {itemAmount}
-                            </div>
-                            <div className='my-2 font-bold'>
-                                {language === 'ar' ? 'سعر الشحن : ' : language === 'fr' ? 'Prix de livraison: ' : 'Shipping price: '}
-                                {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                                {selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0}
-                            </div>
-                            <div className='my-2 font-bold'>
-                                {language === 'ar' ? 'السعر الإجمالي: ' : language === 'fr' ? 'Prix total: ' : 'Total price: '}
-                                {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                                {total}
+                                <div className='my-2 font-bold'>
+                                    {language === 'ar' ? 'عدد المشتريات: ' : language === 'fr' ? 'Nombre d\'achats: ' : 'Number of purchases: '}
+                                    {itemAmount}
+                                </div>
+                                <div className='my-2 font-bold'>
+                                    {language === 'ar' ? 'سعر الشحن : ' : language === 'fr' ? 'Prix de livraison: ' : 'Shipping price: '}
+                                    {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
+                                    {selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0}
+                                </div>
+                                <div className='my-2 font-bold'>
+                                    {language === 'ar' ? 'السعر الإجمالي: ' : language === 'fr' ? 'Prix total: ' : 'Total price: '}
+                                    {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
+                                    {total}
+                                </div>
                             </div>
                         </div>
                     </div>
