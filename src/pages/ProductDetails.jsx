@@ -53,7 +53,7 @@ const ProductDetails = () => {
         <div className='flex-1 text-center lg:text-left'>
           <div className='flex mb-6'>
             {
-              product.colors.map((col, i) => {
+              product.colors.length > 2 ? product.colors.map((col, i) => {
                 return <div
                   onClick={() => {
                     setImageIndex(0);
@@ -69,7 +69,7 @@ const ProductDetails = () => {
                     marginRight: '16px',
                     border: colorIndex === i ? '3px solid black' : '1px solid black'
                   }} />
-              })
+              }) : null
             }
           </div>
           <div className='flex mb-6'>
@@ -113,7 +113,7 @@ const ProductDetails = () => {
           </p>
 
           <button onClick={() => {
-            if (sizeIndex) {
+            if (sizeIndex !== undefined) {
               setValidateAttempt(false);
               addToCart({
                 id: product._id,
