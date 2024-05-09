@@ -95,7 +95,7 @@ const Checkout = () => {
         }
     };
 
-    return <div className=' p-32'>
+    return <div className=' p-32 bg-gray-100'>
         {
             loading ?
                 <div className='h-[100vh] w-full flex justify-center items-center'>
@@ -105,7 +105,7 @@ const Checkout = () => {
                     {language === 'ar' ? '...جاري الارسال' : language === 'fr' ? 'Envoi...' : 'Sending...'}
                 </div> :
                     <div className='flex flex-col lg:px-24 md:flex-row'>
-                        <div className='w-full mr-4 '>
+                        <div className='w-full mr-4 bg-white px-12 py-8'>
                             <section className='grid grid-cols-1 mt-4 md:grid-cols-1  gap-[30px] w-full max-auto md:max-w-none md:mx-0 lg:w-2/3 xl:w-1/2 '>
                                 <div key={'fullName'}>
                                     {language === 'ar' ? 'الإسم واللقب' : language === 'fr' ? 'Nom et Prénom' : 'First and Last name'}
@@ -162,7 +162,7 @@ const Checkout = () => {
                                         <input
                                             onChange={(event) => setPhoneNumber2(event.target.value)}
                                             className='bg-white p-2 w-full flex items-center justify-between
-                        text-l focus:border-transparent focus:ring-0 outline-none'
+                                            text-l focus:border-transparent focus:ring-0 outline-none'
                                             type="text">
                                         </input>
                                     </div>
@@ -174,8 +174,8 @@ const Checkout = () => {
                                         setIsCommunesOpen(false);
                                         setIsShippingTypeOpen(false);
                                     }} className='bg-white p-2 w-full flex items-center justify-between
-                    text-l tracking-wider border border-1 border-black h-11
-                    duration-300'>
+                                    text-l tracking-wider border border-1 border-black h-11
+                                    duration-300'>
                                         <div>
                                             {language === 'ar' ? selectedWilaya?.arWilaya : language === 'fr' ? selectedWilaya?.frWilaya : selectedWilaya?.enWilaya}
                                         </div>
@@ -223,7 +223,7 @@ const Checkout = () => {
                                         setIsWilayasOpen(false);
                                         setIsShippingTypeOpen(false);
                                     }} className='bg-white p-2 w-full flex items-center justify-between
-                    text-l tracking-wider border border-1 border-black h-11
+                                    text-l tracking-wider border border-1 border-black h-11
                     duration-300'>
                                         <div>
                                             {language === 'ar' ? selectedCommune?.arCommune : language === 'fr' ? selectedCommune?.frCommune : selectedCommune?.enCommune}
@@ -233,8 +233,8 @@ const Checkout = () => {
                                     {
                                         isCommunesOpen && (
                                             <div className='bg-white absolute top-[75px] flex flex-col items-start p-1 w-full z-10
-                        border border-1 border-black max-h-[400px] overflow-x-hidden overflow-y-scroll
-                        '>
+                                            border border-1 border-black max-h-[400px] overflow-x-hidden overflow-y-scroll
+                                            '>
                                                 {
                                                     data.filter(c => c.wilaya_name_ascii === selectedWilaya?.frWilaya).map((commune) => (<div
                                                         onClick={() => {
@@ -270,8 +270,8 @@ const Checkout = () => {
                                         setIsWilayasOpen(false);
                                         setIsCommunesOpen(false);
                                     }} className='bg-white p-2 w-full flex items-center justify-between
-                    text-l tracking-wider border border-1 border-black h-11
-                    duration-300'>
+                                    text-l tracking-wider border border-1 border-black h-11
+                                    duration-300'>
                                         <div>
                                             {language === 'ar' ? selectedShippingType?.arType : language === 'fr' ? selectedShippingType?.frType : selectedShippingType?.enType}
                                         </div>
@@ -280,7 +280,7 @@ const Checkout = () => {
                                     {
                                         isShippingTypeOpen && (
                                             <div className='bg-white absolute top-[75px] flex flex-col items-start p-1 w-full z-10
-                        border border-1 border-black max-h-[400px] overflow-x-hidden overflow-y-scroll
+                                            border border-1 border-black max-h-[400px] overflow-x-hidden overflow-y-scroll
                         '>
                                                 <div
                                                     onClick={() => {
@@ -323,7 +323,7 @@ const Checkout = () => {
                                         <input
                                             onChange={(event) => setNote(event.target.value)}
                                             className='bg-white p-2 w-full flex items-center justify-between
-                            text-l focus:border-transparent focus:ring-0 outline-none'
+                                            text-l focus:border-transparent focus:ring-0 outline-none'
                                             type="text">
                                         </input>
                                     </div>
@@ -343,12 +343,12 @@ const Checkout = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className='w-full flex items-center justify-center '>
-
-
-                            <div className='flex flex-col  md:border-l items-center md:pl-8 md:ml-4 w-[230px] md:items-start'>
-                                {language === 'ar' ? 'المشتريات' : language === 'fr' ? 'Achats' : 'Purchases'}
-                                <div className='flex overflow-y-scroll overflow-x-hidden border border-gray-400 my-2 max-h-[1000px] lg:max-h-[700px] w-[230px]'>
+                        <div className='flex items-start justify-center h-fit w-full md:w-[500px] lg:w-[500px] xl:w-[500px] pr-2 bg-white py-4 mt-4 md:mt-0'>
+                            <div className='flex flex-col items-center w-[230px] md:items-start pl-2'>
+                                <div className='font-bold'>
+                                    {language === 'ar' ? 'المشتريات' : language === 'fr' ? 'Achats' : 'Purchases'}
+                                </div>
+                                <div className='flex overflow-y-auto overflow-x-hidden max-h-[1000px] lg:max-h-[700px] w-[230px] border-y-2 my-4'>
                                     <div className='flex flex-col'>
                                         {
                                             cart.map((item, i) =>

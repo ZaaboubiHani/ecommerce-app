@@ -23,11 +23,11 @@ const ProductDetails = () => {
       {language === 'ar' ? '...تحميل' : language === 'fr' ? 'Chargement...' : 'Loading...'}
     </section>
   }
-  return <section className='pt-32 pb-12 lg:py-32 flex items-center mb-8'>
+  return <section className='pt-32 pb-12 lg:py-32 flex items-center mb-8 bg-gray-100'>
     <div className="container mx-auto">
       {/*image & text wrapper*/}
-      <div className='flex flex-col lg:flex-row items-start'>
-        <div className='flex lg:flex-col h-full'>
+      <div className='flex flex-col lg:flex-row items-center lg:items-start'>
+        <div className='flex lg:flex-col h-full bg-white'>
           {
             product.colors[colorIndex].images?.urls.map((url, i) => {
               return <img
@@ -45,15 +45,15 @@ const ProductDetails = () => {
           }
         </div>
         {/*image */}
-        <div className='flex flex-1 justify-center items-center mb-8 lg:mb-0'>
+        <div className='flex flex-1 justify-center items-center mb-8 lg:mb-0 bg-white mx-4'>
           <img className='max-w-[200px] lg:max-w-sm'
             src={product?.colors[colorIndex].images?.urls[imageIndex]} alt="" />
         </div>
         {/* config panel */}
-        <div className='flex-1 text-center lg:text-left'>
+        <div className='flex-1 text-center lg:text-left bg-white p-4'>
           <div className='flex mb-6'>
             {
-              product.colors.length > 2 ? product.colors.map((col, i) => {
+              product.colors.length > 1 ? product.colors.map((col, i) => {
                 return <div
                   onClick={() => {
                     setImageIndex(0);

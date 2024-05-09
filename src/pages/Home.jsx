@@ -46,18 +46,18 @@ const Home = () => {
 
   return <div className='mb-8'>
     <Hero />
-    <section className='py-16'>
+    <section className='py-16 bg-gray-100'>
       <div className="container mx-auto">
         <div className='flex flex-row'>
           <CategoryDropdown />
           <SearchField />
         </div>
         {
-          loadingProducts ? <section className='h-screen flex justify-center items-center'>
+          loadingProducts ? <section className='h-screen flex justify-center items-center '>
             {language === 'ar' ? '...تحميل' : language === 'fr' ? 'Chargement...' : 'Loading...'}
           </section> :
             <div>
-              <div className='grid grid-cols-1 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-w-sm max-auto md:max-w-none md:mx-0'>
+              <div className='grid grid-cols-1 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-w-sm max-auto md:max-w-none md:mx-0 '>
                 {products.map(product => {
                   return <Product product={product} key={product._id} />
                 })}
