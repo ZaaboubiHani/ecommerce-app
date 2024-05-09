@@ -5,12 +5,12 @@ import { LanguageContext } from '../contexts/LanguageContext';
 const Product = ({ product }) => {
   const { language } = useContext(LanguageContext);
   const { _id, category, arName, frName, engName, price, colors } = product;
-  return <div>
+  return <div className='bg-white '>
     <div className='border border-[#e4e4e4] h-[300px] mb-4 relative overflow-hidden group transition'>
       <div className='w-full h-full flex justify-center items-center'>
         {/* Image */}
         <div className='w-[200px] mx-auto flex justify-center items-center'>
-          <img className='max-h-[160px] group-hover:scale-110 transition duration-300' src={colors[0].images.urls[0]} alt="" />
+          <img className='max-h-[260px] group-hover:scale-110 transition duration-300' src={colors[0].images.urls[0]} alt="" />
         </div>
       </div>
       {/* Buttons */}
@@ -21,7 +21,7 @@ const Product = ({ product }) => {
       </div>
     </div>
     {/* catergory title and price */}
-    <div>
+    <div className='px-4 pb-4'>
       <div className='flex'>
         {
           colors.map(col => {

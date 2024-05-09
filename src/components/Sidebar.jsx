@@ -13,15 +13,15 @@ const Sidebar = () => {
 
   return <div className={`${isOpen ? 'right-0' : '-right-full'} w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] xl:max-w-[30vw] transition-all duration-300 z-20 px-4 lg:px-[35px]`}>
     <div className='flex items-center justify-between py-6 border-b'>
-      <div className='uppercase text-sm font-semibold'> 
-      {language === 'ar' ? `السلة: (${itemAmount})` : language === 'fr' ? `Panier: (${itemAmount})` : `Cart: (${itemAmount})`} 
+      <div className='uppercase text-sm font-semibold'>
+        {language === 'ar' ? `السلة: (${itemAmount})` : language === 'fr' ? `Panier: (${itemAmount})` : `Cart: (${itemAmount})`}
       </div>
       <div onClick={handleClose} className='cursor-pointer w-8 h-8 flex justify-center items-center'>
         <IoMdArrowForward className='text-2xl' />
       </div>
     </div>
     <div className='flex flex-col gap-y-2 h-[330px] lg:h-[450px] overflow-y-auto overflow-x-hidden border-b'>
-      {cart.map((item,i) => {
+      {cart.map((item, i) => {
         return <CartItem item={item} key={i} />
       })}</div>
     <div className='flex flex-col gap-y-3 py-4'>
@@ -29,19 +29,23 @@ const Sidebar = () => {
         {/* total */}
         <div className='uppercase font-semibold'>
           <span className='mr-2'>
-          {language === 'ar' ? 'المجموع: ' : language === 'fr' ? 'Total: ' : 'Total: '} 
-          </span> 
+            {language === 'ar' ? 'المجموع: ' : language === 'fr' ? 'Total: ' : 'Total: '}
+          </span>
           {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA  ' : 'DZD '}
-           {parseFloat(total).toFixed(2)}
+          {parseFloat(total).toFixed(2)}
         </div>
         {/* clear cart icon */}
         <div onClick={() => clearCart()} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
           <FiTrash2 />
         </div>
       </div>
-      
-      <Link to='/checkout' onClick={()=>handleClose()}className='bg-primary flex p-4 justify-center items-center text-white w-full font-medium '>
-      {language === 'ar' ? 'طلب' : language === 'fr' ? 'Commande' : 'Order'}
+
+      <Link to={cart.length > 0 ? '/checkout' : null} onClick={() => {
+        if (cart.length > 0) {
+          handleClose();
+        }
+      }} className={`bg-primary flex p-4 justify-center items-center text-white w-full font-medium ${cart.length > 0 ? 'opacity-100' : 'opacity-50'} ${cart.length > 0 ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
+        {language === 'ar' ? 'طلب' : language === 'fr' ? 'Commande' : 'Order'}
       </Link>
     </div>
   </div>;

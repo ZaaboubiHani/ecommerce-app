@@ -343,12 +343,12 @@ const Checkout = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className='flex items-center justify-center w-full md:w-[500px] lg:w-[500px] xl:w-[500px] pr-2 bg-white py-4 mt-4 md:mt-0'>
+                        <div className='flex items-start justify-center h-fit w-full md:w-[500px] lg:w-[500px] xl:w-[500px] pr-2 bg-white py-4 mt-4 md:mt-0'>
                             <div className='flex flex-col items-center w-[230px] md:items-start pl-2'>
                                 <div className='font-bold'>
                                     {language === 'ar' ? 'المشتريات' : language === 'fr' ? 'Achats' : 'Purchases'}
                                 </div>
-                                <div className='flex overflow-y-scroll overflow-x-hidden max-h-[1000px] lg:max-h-[700px] w-[230px] border-y-2 my-4'>
+                                <div className='flex overflow-y-auto overflow-x-hidden max-h-[1000px] lg:max-h-[700px] w-[230px] border-y-2 my-4'>
                                     <div className='flex flex-col'>
                                         {
                                             cart.map((item, i) =>
