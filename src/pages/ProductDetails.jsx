@@ -12,7 +12,7 @@ const ProductDetails = () => {
   const { products } = useContext(ProductContext);
   const { addToCart } = useContext(CartContext);
   const { language } = useContext(LanguageContext);
-  const { setIsOpen, handleClose } = useContext(SidebarContext);
+  const { handleOpenSidebar, handleCloseSidebar } = useContext(SidebarContext);
   const [colorIndex, setColorIndex] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
   const [sizeIndex, setSizeIndex] = useState();
@@ -28,11 +28,11 @@ const ProductDetails = () => {
     </section>
   }
   return <section
-    className={`pt-32 pb-10 px-32 lg:py-32 flex items-center bg-proDetails bg-cover `}>
+    className={`pt-32 pb-10 md:px-16 lg:px-16 xl:px-64 lg:py-32 flex items-center bg-proDetails bg-cover `}>
     <div className="container mx-auto">
       {/*image & text wrapper*/}
-      <div className={`flex flex-col items-center lg:items-start ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row' }`}>
-        <div className='flex lg:flex-col h-full mx-2'>
+      <div className={`flex flex-col items-center lg:items-start ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
+        <div className='flex lg:flex-col h-full mx-2  bg-red-500'>
           {
             product.colors[colorIndex].images?.urls.map((url, i) => {
               return <img
@@ -49,84 +49,91 @@ const ProductDetails = () => {
           }
         </div>
         {/*image */}
-        <img className='max-h-[500px] lg:max-w-sm'
+        <img className='max-w-sm '
           src={product?.colors[colorIndex].images?.urls[imageIndex]} alt="" />
         {/* config panel */}
-        <div className='flex-1 text-center lg:text-left w-fit p-4'>
-          <div className={ language === 'ar' ? 'text-right' : 'text-left' }>
-            {language === 'ar' ? ': لون' : language === 'fr' ? 'Couleur: ' : 'Color: '}
+        <div className='flex-1 text-center lg:text-left p-4'>
+          <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
+            <div className={language === 'ar' ? 'text-right' : 'text-left'}>
+              {language === 'ar' ? ': لون' : language === 'fr' ? 'Couleur: ' : 'Color: '}
+            </div>
+            <div className={`flex mb-6 ml-2 ${language === 'ar' ? 'justify-end' : 'justify-start'}`}>
+              {
+                product.colors.length > 1 ? product.colors.map((col, i) => {
+                  return <div
+                    onClick={() => {
+                      setImageIndex(0);
+                      setColorIndex(i);
+                    }}
+                    key={col._id}
+                    style={{
+                      cursor: 'pointer',
+                      height: '30px',
+                      width: '30px',
+                      borderRadius: '6px',
+                      backgroundColor: col.hex,
+                      marginRight: '16px',
+                      border: colorIndex === i ? '3px solid black' : '1px solid black'
+                    }} />
+                }) : null
+              }
+            </div>
           </div>
-          <div className={`flex mb-6 ${ language === 'ar' ? 'justify-end' : 'justify-start' }`}>
-            {
-              product.colors.length > 1 ? product.colors.map((col, i) => {
-                return <div
-                  onClick={() => {
-                    setImageIndex(0);
-                    setColorIndex(i);
-                  }}
-                  key={col._id}
-                  style={{
-                    cursor: 'pointer',
-                    height: '30px',
-                    width: '30px',
-                    borderRadius: '6px',
-                    backgroundColor: col.hex,
-                    marginRight: '16px',
-                    border: colorIndex === i ? '3px solid black' : '1px solid black'
-                  }} />
-              }) : null
-            }
-          </div>
-          <div className={ language === 'ar' ? 'text-right' : 'text-left' }>
-            {language === 'ar' ? ': حجم' : language === 'fr' ? 'Taille: ' : 'Size: '}
-          </div>
-          <div className={`flex mb-6 ${ language === 'ar' ? 'justify-end' : 'justify-start' }`}>
-            {
-              product.colors[colorIndex].sizes.map((size, i) => {
-                return <button
-                  onClick={() => setSizeIndex(i)}
-                  key={size._id}
-                  disabled={!size.inStock}
-                  style={{
-                    opacity: size.inStock ? '1' : '0.5',
-                    cursor: size.inStock ? 'pointer' : 'not-allowed',
-                    height: '30px',
-                    width: '30px',
-                    borderRadius: '4px',
-                    marginRight: '16px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    border: sizeIndex === i ? '3px solid black' : '1px solid black'
-                  }} >
-                  {size.size}
-                </button>
-              })
-            }
+          <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
+
+            <div className={language === 'ar' ? 'text-right' : 'text-left'}>
+              {language === 'ar' ? ': حجم' : language === 'fr' ? 'Taille: ' : 'Size: '}
+            </div>
+            <div className={`flex mb-6 ml-2 ${language === 'ar' ? 'justify-end' : 'justify-start'}`}>
+              {
+                product.colors[colorIndex].sizes.map((size, i) => {
+                  return <button
+                    onClick={() => setSizeIndex(i)}
+                    key={size._id}
+                    disabled={!size.inStock}
+                    style={{
+                      opacity: size.inStock ? '1' : '0.5',
+                      cursor: size.inStock ? 'pointer' : 'not-allowed',
+                      height: '30px',
+                      width: '30px',
+                      borderRadius: '4px',
+                      marginRight: '16px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: sizeIndex === i ? "black" : "white",
+                      color: sizeIndex === i ? "white" : "black",
+                      border: sizeIndex === i ? '3px solid black' : '1px solid black'
+                    }} >
+                    {size.size}
+                  </button>
+                })
+              }
+            </div>
           </div>
           {validateAttempt && (sizeIndex === undefined) && (
-            <div className={`text-red-500 text-sm ${ language === 'ar' ? 'text-right' : 'text-left' }`}>
+            <div className={`text-red-500 text-sm ${language === 'ar' ? 'text-right' : 'text-left'}`}>
               {language === 'ar' ? 'الرجاء تحديد حجم' : language === 'fr' ? 'Veuillez choisir une taille' : 'Please select a size'}
             </div>
           )}
 
           {/*text */}
-          <h1 className={`text-[26px] font-sedan mb-2 mx-auto lg:mx-0 ${ language === 'ar' ? 'text-right' : 'text-left' }`}>
+          <h1 className={`text-[26px] font-sedan mb-2 mx-auto lg:mx-0 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
             {language === 'ar' ? product.arName : language === 'fr' ? product.frName : product.engName}
           </h1>
-          <div className={`text-xl text-red-500 font-medium mb-6 ${ language === 'ar' ? 'text-right' : 'text-left' }`}>
+          <div className={`text-xl text-red-500 font-medium mb-6 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
             {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
             {product.price}</div>
-          <p className={`mb-8 ${ language === 'ar' ? 'text-right' : 'text-left' }`}>
+          <p className={`mb-8 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
             {language === 'ar' ? product.arDescription : language === 'fr' ? product.frDescription : product.engDescription}
           </p>
 
-          <div className={`flex ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row' }`}>
+          <div className={`flex flex-col ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
             {/* quantity */}
-            <div className={`flex items-center mr-4 ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row' }`}>
+            <div className={`flex items-center h-[60px] mb-2 mr-4 ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
               {language === 'ar' ? ': كمية' : language === 'fr' ? 'Quantité: ' : 'Quantity: '}
-              <div className={`flex flex-1 w-[100px] items-center h-full border text-primary font-medium ml-4
-              ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row' }
+              <div className={`flex flex-1 w-[100px] items-center h-full  border-2 border-primary text-primary font-medium mx-4
+              ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}
               `}>
                 {/*minus icon */}
                 <button onClick={() => setAmount((prev) => (prev - 1))}
@@ -163,16 +170,16 @@ const ProductDetails = () => {
                   amount: amount,
                 });
                 setAmount(1);
-                setIsOpen(true);
+                handleOpenSidebar();
                 setTimeout(() => {
-                  handleClose();
+                  handleCloseSidebar();
                 }, 3000);
               }
               else {
                 setValidateAttempt(true);
               }
             }}
-              className='bg-primary py-4 px-8 text-white'>
+              className='bg-primary py-4 px-8 text-white mb-2'>
               {language === 'ar' ? 'أضف إلى السلة' : language === 'fr' ? 'Ajouter au panier' : 'Add to cart'}
             </button>
           </div>

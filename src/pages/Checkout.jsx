@@ -100,15 +100,15 @@ const Checkout = () => {
         {
             loading ?
                 <div className='h-[100vh] w-full flex justify-center items-center'>
-                    <ClipLoader/>
+                    <ClipLoader />
                 </div> :
                 isValidating ? <div className='h-[100vh] w-full flex justify-center items-center'>
-                    <ClipLoader/>
+                    <ClipLoader />
                 </div> :
-                    <div className={`flex flex-col lg:px-24  ${language === 'ar' ? 'md:flex-row-reverse' : 'md:flex-row' }`}>
-                        <div className='w-full mx-4 bg-white px-12 py-8'>
-                            <section className='grid grid-cols-1 mt-4 gap-[30px] md:flex-row-reverse w-full max-auto md:max-w-none md:mx-0 lg:w-2/3 xl:w-1/2 '>
-                                <div key={'fullName'}>
+                    <div className={`flex flex-col lg:px-24 ${language === 'ar' ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
+                        <div className={`w-full mx-4 bg-white px-12 py-8 flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
+                            <section className='grid grid-cols-1 mt-4 gap-[30px]  w-full max-auto md:max-w-none md:mx-0 lg:w-2/3 xl:w-1/2 '>
+                                <div key={'fullName'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
                                     {language === 'ar' ? 'الإسم واللقب' : language === 'fr' ? 'Nom et Prénom' : 'First and Last name'}
                                     <div className="relative flex flex-row items-center border border-1 border-black ">
                                         <input
@@ -125,7 +125,7 @@ const Checkout = () => {
                                     )}
 
                                 </div>
-                                <div key={'adresse'}>
+                                <div key={'adresse'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
                                     {language === 'ar' ? 'العنوان' : language === 'fr' ? 'Adresse' : 'Address'}
                                     <div className="relative flex flex-row items-center border border-1 border-black">
                                         <input
@@ -141,7 +141,7 @@ const Checkout = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div key={'phoneNumber1'}>
+                                <div key={'phoneNumber1'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
                                     {language === 'ar' ? 'رقم الهاتف 1' : language === 'fr' ? 'Numéro de téléphone 1' : 'Phone number 1'}
                                     <div className="relative flex flex-row items-center border border-1 border-black">
                                         <input
@@ -157,7 +157,7 @@ const Checkout = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div key={'phoneNumber2'}>
+                                <div key={'phoneNumber2'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
                                     {language === 'ar' ? '(اختياري) رقم الهاتف 2' : language === 'fr' ? 'Numéro de téléphone 2 (optional)' : 'Phone number 2 (optional)'}
                                     <div className="relative flex flex-row items-center border border-1 border-black">
                                         <input
@@ -168,7 +168,7 @@ const Checkout = () => {
                                         </input>
                                     </div>
                                 </div>
-                                <div key={'ًwilaya'} className="relative flex flex-col items-start ">
+                                <div key={'ًwilaya'} className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
                                     {language === 'ar' ? 'الولاية' : language === 'fr' ? 'ًWilaya' : 'ًWilaya'}
                                     <button onClick={() => {
                                         setIsWilayasOpen((prev) => !prev);
@@ -217,7 +217,7 @@ const Checkout = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div key={'commune'} className="relative flex flex-col items-start">
+                                <div key={'commune'} className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
                                     {language === 'ar' ? 'البلدية' : language === 'fr' ? 'Commune' : 'Commune'}
                                     <button onClick={() => {
                                         setIsCommunesOpen((prev) => !prev);
@@ -264,7 +264,7 @@ const Checkout = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div key={'shippingType'} className="relative flex flex-col items-start">
+                                <div key={'shippingType'} className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
                                     {language === 'ar' ? 'نوع الشحن' : language === 'fr' ? 'Type de livraison' : 'Shipping type'}
                                     <button onClick={() => {
                                         setIsShippingTypeOpen((prev) => !prev);
@@ -318,7 +318,7 @@ const Checkout = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div key={'note'}>
+                                <div key={'note'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
                                     {language === 'ar' ? '(اختياري) ملاحظة' : language === 'fr' ? 'Note (optional)' : 'Note (optional)'}
                                     <div className="relative flex flex-row items-center border border-1 border-black">
                                         <input
@@ -331,12 +331,12 @@ const Checkout = () => {
                                 </div>
                             </section>
 
-                            <div className='flex w-full flex-col lg:flex-row items-center justify-stretch mt-4'>
+                            <div className={`flex w-full flex-col items-center justify-stretch mt-4 ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
                                 <Link to='/' className='bg-primary w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium mx-2 text-nowrap'>
                                     {language === 'ar' ? 'اشتري اكثر' : language === 'fr' ? 'Acheter plus' : 'Buy more'}
                                 </Link>
                                 <button
-                                disabled={cart.length === 0}
+                                    disabled={cart.length === 0}
                                     onClick={() => {
                                         createOrder();
                                         clearCart();
@@ -347,26 +347,24 @@ const Checkout = () => {
                             </div>
                         </div>
                         <div className='flex items-start justify-center h-fit w-full md:w-[500px] lg:w-[500px] xl:w-[500px] pr-2 bg-white py-4 mt-4 md:mt-0'>
-                            <div className='flex flex-col items-center w-[230px] md:items-start pl-2'>
+                            <div className={`flex flex-col items-center w-[230px]  pl-2 ${language === 'ar' ? 'md:items-end' : 'md:items-start'}`}>
                                 <div className='font-bold'>
                                     {language === 'ar' ? 'المشتريات' : language === 'fr' ? 'Achats' : 'Purchases'}
                                 </div>
                                 <div className='flex overflow-y-auto overflow-x-hidden max-h-[1000px] lg:max-h-[700px] w-[230px] border-y-2 my-4'>
                                     <div className='flex flex-col'>
-                                        {
-                                            cart.map((item, i) =>
-                                                <div key={i} className='w-[230px] m-4 flex'>
+                                        {cart.map((item, i) =>
+                                                <div key={i} className={`w-[230px] m-4 flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
                                                     <img className='h-[100px] object-fit' src={item.img} alt="" />
-                                                    <div className='ml-4'>
-
-                                                        <div className='flex mt-2'>
+                                                    <div className='mx-4'>
+                                                        <div className={`flex mt-2 ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
                                                             <div
                                                                 style={{
                                                                     cursor: 'pointer',
                                                                     height: '25px',
                                                                     width: '25px',
                                                                     borderRadius: '4px',
-                                                                    marginRight: '4px',
+                                                                    margin: '0px 4px',
                                                                     display: 'flex',
                                                                     justifyContent: 'center',
                                                                     alignItems: 'center',
@@ -375,14 +373,12 @@ const Checkout = () => {
                                                                 }} >
                                                                 {item.size}
                                                             </div>
-
                                                             <div
                                                                 style={{
                                                                     cursor: 'pointer',
                                                                     height: '25px',
                                                                     width: '25px',
-                                                                    borderRadius: '20px',
-                                                                    marginRight: '8px',
+                                                                    borderRadius: '4px',
                                                                     display: 'flex',
                                                                     justifyContent: 'center',
                                                                     alignItems: 'center',
@@ -390,7 +386,7 @@ const Checkout = () => {
                                                                     backgroundColor: item.color,
                                                                 }} />
                                                         </div>
-                                                        <div className='flex items-center text-center text-sm text-gray-400'>
+                                                        <div className={`flex items-center text-center text-sm text-gray-400 ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
                                                             {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
                                                             {item.price} X {item.amount}
                                                         </div>
@@ -404,22 +400,22 @@ const Checkout = () => {
                                         }
                                     </div>
                                 </div>
-                               
                                 <div className='my-2 font-bold'>
-                                    {language === 'ar' ? 'السعر الإجمالي : ' : language === 'fr' ? 'Prix total: ' : 'Total price: '}
-                                    {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                                    {total}
-                                </div>
-                                <div className='my-2 font-bold'>
-                                    {language === 'ar' ? 'رسوم الشحن : ' : language === 'fr' ? 'Frais de livraison: ' : 'Shipping fees: '}
-                                    {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                                    {selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0}
-                                </div>
-                                <div className='my-2 font-bold'>
-                                    {language === 'ar' ? 'مجموع المدفوعات : ' : language === 'fr' ? 'Total à payer: ' : 'Total to pay: '}
-                                    {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                                    {total + (selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0)}
-                                </div>
+                                        {language === 'ar' ? 'السعر الإجمالي : ' : language === 'fr' ? 'Prix total: ' : 'Total price: '}
+                                        {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
+                                        {total}
+                                    </div>
+                                    <div className='my-2 font-bold'>
+                                        {language === 'ar' ? 'رسوم الشحن : ' : language === 'fr' ? 'Frais de livraison: ' : 'Shipping fees: '}
+                                        {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
+                                        {selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0}
+                                    </div>
+                                    <div className='my-2 font-bold'>
+                                        {language === 'ar' ? 'مجموع المدفوعات : ' : language === 'fr' ? 'Total à payer: ' : 'Total to pay: '}
+                                        {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
+                                        {total + (selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0)}
+                                    </div>
+                                
                             </div>
                         </div>
                     </div>

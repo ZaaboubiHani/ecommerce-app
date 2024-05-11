@@ -9,21 +9,24 @@ import LanguageProvider from './contexts/LanguageContext';
 import CategoryProvider from './contexts/CategoryContext';
 import SearchProvider from './contexts/SearchContext';
 import SnackbarProvider from './contexts/SnackbarContext';
+import MenuProvider from './contexts/MenuContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <LanguageProvider>
     <CategoryProvider>
       <SearchProvider>
         <SidebarProvider>
-          <CartProvider>
-            <SnackbarProvider>
-              <ProductProvider>
-                <React.StrictMode>
-                  <App />
-                </React.StrictMode>
-              </ProductProvider>
-            </SnackbarProvider>
-          </CartProvider>
+          <MenuProvider>
+            <CartProvider>
+              <SnackbarProvider>
+                <ProductProvider>
+                  <React.StrictMode>
+                    <App />
+                  </React.StrictMode>
+                </ProductProvider>
+              </SnackbarProvider>
+            </CartProvider>
+          </MenuProvider>
         </SidebarProvider>
       </SearchProvider>
     </CategoryProvider>
