@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import WomanImg from '../img/woman_hero.png';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../contexts/LanguageContext';
 const Hero = () => {
@@ -21,10 +20,6 @@ const Hero = () => {
         <Link to='/about' className='self-start uppercase font-semibold border-b-2 border-primary'>
         {language === 'ar' ? 'إكتشف أكثر' : language === 'fr' ? 'Découvrir Plus' : 'Discover More'}
         </Link>
-      </div>
-      {/* image */}
-      <div className='hidden lg:block'>
-        <img src={WomanImg} alt="" />
       </div>
     </div>
   </section>;

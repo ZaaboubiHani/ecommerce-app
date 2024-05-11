@@ -10,7 +10,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 const apiInstance = Api.instance;
 const Checkout = () => {
     const { language } = useContext(LanguageContext);
-    const { cart, total, itemAmount } = useContext(CartContext);
+    const { cart, total, clearCart } = useContext(CartContext);
     const { handleOpen } = useContext(SnackbarContext);
 
     const uniqueWilayaNames = {};
@@ -105,9 +105,9 @@ const Checkout = () => {
                 isValidating ? <div className='h-[100vh] w-full flex justify-center items-center'>
                     <ClipLoader/>
                 </div> :
-                    <div className='flex flex-col lg:px-24 md:flex-row'>
-                        <div className='w-full mr-4 bg-white px-12 py-8'>
-                            <section className='grid grid-cols-1 mt-4 md:grid-cols-1  gap-[30px] w-full max-auto md:max-w-none md:mx-0 lg:w-2/3 xl:w-1/2 '>
+                    <div className={`flex flex-col lg:px-24  ${language === 'ar' ? 'md:flex-row-reverse' : 'md:flex-row' }`}>
+                        <div className='w-full mx-4 bg-white px-12 py-8'>
+                            <section className='grid grid-cols-1 mt-4 gap-[30px] md:flex-row-reverse w-full max-auto md:max-w-none md:mx-0 lg:w-2/3 xl:w-1/2 '>
                                 <div key={'fullName'}>
                                     {language === 'ar' ? 'الإسم واللقب' : language === 'fr' ? 'Nom et Prénom' : 'First and Last name'}
                                     <div className="relative flex flex-row items-center border border-1 border-black ">
@@ -336,8 +336,10 @@ const Checkout = () => {
                                     {language === 'ar' ? 'اشتري اكثر' : language === 'fr' ? 'Acheter plus' : 'Buy more'}
                                 </Link>
                                 <button
+                                disabled={cart.length === 0}
                                     onClick={() => {
                                         createOrder();
+                                        clearCart();
                                     }}
                                     className='bg-gray-500 w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium m-2'>
                                     {language === 'ar' ? 'تأكيد' : language === 'fr' ? 'Valider' : 'Validate'}
@@ -404,14 +406,14 @@ const Checkout = () => {
                                 </div>
                                
                                 <div className='my-2 font-bold'>
-                                    {language === 'ar' ? 'رسوم الشحن : ' : language === 'fr' ? 'Frais de livraison: ' : 'Shipping fees: '}
-                                    {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                                    {selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0}
-                                </div>
-                                <div className='my-2 font-bold'>
                                     {language === 'ar' ? 'السعر الإجمالي : ' : language === 'fr' ? 'Prix total: ' : 'Total price: '}
                                     {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
                                     {total}
+                                </div>
+                                <div className='my-2 font-bold'>
+                                    {language === 'ar' ? 'رسوم الشحن : ' : language === 'fr' ? 'Frais de livraison: ' : 'Shipping fees: '}
+                                    {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
+                                    {selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0}
                                 </div>
                                 <div className='my-2 font-bold'>
                                     {language === 'ar' ? 'مجموع المدفوعات : ' : language === 'fr' ? 'Total à payer: ' : 'Total to pay: '}

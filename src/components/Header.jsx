@@ -12,7 +12,7 @@ const Header = () => {
   const { language } = useContext(LanguageContext);
 
   return <header className='bg-white shadow-md
-  fixed w-full z-50 transition-all  
+  fixed w-full z-30 transition-all  
   '>
     <div className='container mx-auto flex items-center justify-between h-full '>
       {/* logo */}

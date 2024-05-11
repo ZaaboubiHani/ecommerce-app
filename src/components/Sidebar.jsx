@@ -11,7 +11,9 @@ const Sidebar = () => {
   const { language } = useContext(LanguageContext);
   const { cart, clearCart, total, itemAmount } = useContext(CartContext);
 
-  return <div className={`${isOpen ? 'right-0' : '-right-full'} w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] xl:max-w-[30vw] transition-all duration-300 z-20 px-4 lg:px-[35px]`}>
+  return <div className={`${isOpen ? 'right-0' : '-right-full'} w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] xl:max-w-[30vw] transition-all duration-300 z-30 px-4 lg:px-[35px]
+ 
+  `}>
     <div className='flex items-center justify-between py-6 border-b'>
       <div className='uppercase text-sm font-semibold'>
         {language === 'ar' ? `السلة: (${itemAmount})` : language === 'fr' ? `Panier: (${itemAmount})` : `Cart: (${itemAmount})`}
@@ -20,12 +22,12 @@ const Sidebar = () => {
         <IoMdArrowForward className='text-2xl' />
       </div>
     </div>
-    <div className='flex flex-col gap-y-2 h-[330px] lg:h-[450px] overflow-y-auto overflow-x-hidden border-b'>
+    <div className='flex flex-col gap-y-2 h-[330px] lg:h-[400px] overflow-y-auto overflow-x-hidden border-b'>
       {cart.map((item, i) => {
         return <CartItem item={item} key={i} />
       })}</div>
     <div className='flex flex-col gap-y-3 py-4'>
-      <div className='flex w-full justify-between items-center'>
+      <div className={`flex w-full justify-between items-center ${language === 'ar' ? 'flex-row-reverse' : 'flex-row' }`}>
         {/* total */}
         <div className='uppercase font-semibold'>
           <span className='mr-2'>
@@ -39,7 +41,9 @@ const Sidebar = () => {
           <FiTrash2 />
         </div>
       </div>
-
+      <Link to='/' className='bg-gray-500 w-full flex p-4 justify-center items-center text-white font-medium text-nowrap'>
+                                    {language === 'ar' ? 'اشتري اكثر' : language === 'fr' ? 'Acheter plus' : 'Buy more'}
+                                </Link>
       <Link to={cart.length > 0 ? '/checkout' : null} onClick={() => {
         if (cart.length > 0) {
           handleClose();

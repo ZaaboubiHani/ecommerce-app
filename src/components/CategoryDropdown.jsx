@@ -15,7 +15,7 @@ const CategoryDropdown = () => {
         </button>
         {
             isOpen && (
-                <div className='bg-white absolute top-[45px] flex flex-col items-start p-1 w-full z-10
+                <div className='bg-white absolute top-[45px] flex flex-col items-start p-1 w-full z-20
                 border border-1 border-black
                 '>
                     <div

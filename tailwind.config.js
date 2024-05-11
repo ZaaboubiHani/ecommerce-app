@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     fontFamily: {
       primary: 'Poppins',
+      sedan:['sedan']
     },
     container: {
       padding: {
@@ -23,6 +24,7 @@ module.exports = {
       },
       backgroundImage: {
         hero: "url('./img/bg_hero.svg')",
+        proDetails:"url('./img/bg.jfif')"
       },
     },
   },
