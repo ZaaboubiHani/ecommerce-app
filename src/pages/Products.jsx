@@ -45,9 +45,9 @@ const Products = () => {
 
 
   return <div>
-    <section className='py-16 bg-gray-100 mt-12'>
+    <section className='py-16 bg-gray-100 mt-12 '>
       <div className="container mx-auto">
-        <div className='flex flex-row'>
+        <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row' }`}>
           <CategoryDropdown />
           <SearchField />
         </div>

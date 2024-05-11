@@ -13,9 +13,9 @@ const Home = () => {
 
   const limitedProducts = products.slice(0, 5);
 
-  return <div>
+  return <div className='bg-proDetails bg-cover'>
     <Hero />
-    <section className='py-16 bg-gray-100'>
+    <section className='py-16 '>
       <div className="container mx-auto">
         <div className='flex flex-row'>
         </div>

@@ -8,3 +8,8 @@
     @apply font-primary text-primary;
   }
 }
+
+@font-face {
+  font-family: 'sedan';
+  src: local('SedanSC-Regular'), url('./assets/fonts/SedanSC-Regular.ttf') format('truetype');
+}

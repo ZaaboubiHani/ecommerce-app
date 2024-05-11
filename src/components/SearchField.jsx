@@ -6,7 +6,7 @@ const SearchField = () => {
 
     const { language } = useContext(LanguageContext);
     const { changeSearch } = useContext(SearchContext);
-    return <div className="relative flex flex-row items-center w-[180px] border border-1 border-black ml-2 bg-white">
+    return <div className="relative flex flex-row items-center w-[180px] border border-1 border-black mx-2 bg-white">
         <input
         onChange={(event)=>changeSearch(event.target.value.length === 0 ? undefined : event.target.value)}
         className='bg-white p-2 w-full flex items-center justify-between
