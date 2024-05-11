@@ -7,18 +7,18 @@ import { SidebarContext } from '../contexts/SidebarContext';
 import { CartContext } from '../contexts/CartContext';
 import { LanguageContext } from '../contexts/LanguageContext';
 const Sidebar = () => {
-  const { isOpen, handleClose } = useContext(SidebarContext);
+  const { sidebarIsOpen, handleCloseSidebar } = useContext(SidebarContext);
   const { language } = useContext(LanguageContext);
   const { cart, clearCart, total, itemAmount } = useContext(CartContext);
 
-  return <div className={`${isOpen ? 'right-0' : '-right-full'} w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] xl:max-w-[30vw] transition-all duration-300 z-30 px-4 lg:px-[35px]
+  return <div className={`${sidebarIsOpen ? 'right-0' : '-right-full'} w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] xl:max-w-[30vw] transition-all duration-300 z-30 px-4 lg:px-[35px]
  
   `}>
     <div className='flex items-center justify-between py-6 border-b'>
       <div className='uppercase text-sm font-semibold'>
         {language === 'ar' ? `السلة: (${itemAmount})` : language === 'fr' ? `Panier: (${itemAmount})` : `Cart: (${itemAmount})`}
       </div>
-      <div onClick={handleClose} className='cursor-pointer w-8 h-8 flex justify-center items-center'>
+      <div onClick={handleCloseSidebar} className='cursor-pointer w-8 h-8 flex justify-center items-center'>
         <IoMdArrowForward className='text-2xl' />
       </div>
     </div>
