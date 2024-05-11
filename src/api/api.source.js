@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class Globals {
-    static apiUrl = 'http://localhost:3000';
+    static apiUrl = 'https://api.arelaclothsy.com';
 }
 
 class Api {
