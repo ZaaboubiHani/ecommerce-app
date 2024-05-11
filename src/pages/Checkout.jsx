@@ -6,6 +6,7 @@ import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { CartContext } from '../contexts/CartContext';
 import { SnackbarContext } from '../contexts/SnackbarContext';
 import Api from '../api/api.source';
+import ClipLoader from "react-spinners/ClipLoader";
 const apiInstance = Api.instance;
 const Checkout = () => {
     const { language } = useContext(LanguageContext);
@@ -95,14 +96,14 @@ const Checkout = () => {
         }
     };
 
-    return <div className=' p-32 bg-gray-100'>
+    return <div className='p-4 lg:p-32 bg-gray-100'>
         {
             loading ?
                 <div className='h-[100vh] w-full flex justify-center items-center'>
-                    {language === 'ar' ? '...تحميل' : language === 'fr' ? 'Chargement...' : 'Loading...'}
+                    <ClipLoader/>
                 </div> :
                 isValidating ? <div className='h-[100vh] w-full flex justify-center items-center'>
-                    {language === 'ar' ? '...جاري الارسال' : language === 'fr' ? 'Envoi...' : 'Sending...'}
+                    <ClipLoader/>
                 </div> :
                     <div className='flex flex-col lg:px-24 md:flex-row'>
                         <div className='w-full mr-4 bg-white px-12 py-8'>
@@ -352,64 +353,70 @@ const Checkout = () => {
                                     <div className='flex flex-col'>
                                         {
                                             cart.map((item, i) =>
-                                                <div key={i} className='w-[230px] m-4'>
-                                                    <img className='h-[230px] object-fit' src={item.img} alt="" />
-                                                    <div className='flex mt-2'>
-                                                        <div
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                                height: '25px',
-                                                                width: '25px',
-                                                                borderRadius: '4px',
-                                                                marginRight: '4px',
-                                                                display: 'flex',
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                border: '1px solid black',
-                                                                fontSize: '14px',
-                                                            }} >
-                                                            {item.size}
+                                                <div key={i} className='w-[230px] m-4 flex'>
+                                                    <img className='h-[100px] object-fit' src={item.img} alt="" />
+                                                    <div className='ml-4'>
+
+                                                        <div className='flex mt-2'>
+                                                            <div
+                                                                style={{
+                                                                    cursor: 'pointer',
+                                                                    height: '25px',
+                                                                    width: '25px',
+                                                                    borderRadius: '4px',
+                                                                    marginRight: '4px',
+                                                                    display: 'flex',
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    border: '1px solid black',
+                                                                    fontSize: '14px',
+                                                                }} >
+                                                                {item.size}
+                                                            </div>
+
+                                                            <div
+                                                                style={{
+                                                                    cursor: 'pointer',
+                                                                    height: '25px',
+                                                                    width: '25px',
+                                                                    borderRadius: '20px',
+                                                                    marginRight: '8px',
+                                                                    display: 'flex',
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    border: '1px solid black',
+                                                                    backgroundColor: item.color,
+                                                                }} />
                                                         </div>
-                                                        <div
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                                height: '25px',
-                                                                width: '25px',
-                                                                borderRadius: '20px',
-                                                                marginRight: '8px',
-                                                                display: 'flex',
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                border: '1px solid black',
-                                                                backgroundColor: item.color,
-                                                            }} />
                                                         <div className='flex items-center text-center text-sm text-gray-400'>
                                                             {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
                                                             {item.price} X {item.amount}
                                                         </div>
-                                                    </div>
-                                                    <div>
-                                                        {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                                                        {item.price * item.amount}
+                                                        <div>
+                                                            {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
+                                                            {item.price * item.amount}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )
                                         }
                                     </div>
                                 </div>
+                               
                                 <div className='my-2 font-bold'>
-                                    {language === 'ar' ? 'عدد المشتريات: ' : language === 'fr' ? 'Nombre d\'achats: ' : 'Number of purchases: '}
-                                    {itemAmount}
-                                </div>
-                                <div className='my-2 font-bold'>
-                                    {language === 'ar' ? 'سعر الشحن : ' : language === 'fr' ? 'Prix de livraison: ' : 'Shipping price: '}
+                                    {language === 'ar' ? 'رسوم الشحن : ' : language === 'fr' ? 'Frais de livraison: ' : 'Shipping fees: '}
                                     {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
                                     {selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0}
                                 </div>
                                 <div className='my-2 font-bold'>
-                                    {language === 'ar' ? 'السعر الإجمالي: ' : language === 'fr' ? 'Prix total: ' : 'Total price: '}
+                                    {language === 'ar' ? 'السعر الإجمالي : ' : language === 'fr' ? 'Prix total: ' : 'Total price: '}
                                     {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
                                     {total}
+                                </div>
+                                <div className='my-2 font-bold'>
+                                    {language === 'ar' ? 'مجموع المدفوعات : ' : language === 'fr' ? 'Total à payer: ' : 'Total to pay: '}
+                                    {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
+                                    {total + (selectedShippingType?.enType === 'Home' ? selectedWilaya?.homePrice : selectedWilaya?.deskPrice ?? 0)}
                                 </div>
                             </div>
                         </div>

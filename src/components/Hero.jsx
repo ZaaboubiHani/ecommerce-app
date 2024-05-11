@@ -18,7 +18,7 @@ const Hero = () => {
           {language === 'ar' ? 'نساء' : language === 'fr' ? 'FEMMES' : 'WOMEN'}
           </span>
         </h1>
-        <Link to='/' className='self-start uppercase font-semibold border-b-2 border-primary'>
+        <Link to='/about' className='self-start uppercase font-semibold border-b-2 border-primary'>
         {language === 'ar' ? 'إكتشف أكثر' : language === 'fr' ? 'Découvrir Plus' : 'Discover More'}
         </Link>
       </div>
