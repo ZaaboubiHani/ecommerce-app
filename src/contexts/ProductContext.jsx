@@ -29,6 +29,7 @@ const ProductProvider = ({ children }) => {
     });
 
     if (response.status === 200) {
+      console.log( response.data);
       const totalPages = response.data.totalPages;
       pageLimit.current = totalPages;
       setProducts(response.data.docs);

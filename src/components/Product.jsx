@@ -4,13 +4,22 @@ import { BsEyeFill } from 'react-icons/bs';
 import { LanguageContext } from '../contexts/LanguageContext';
 const Product = ({ product }) => {
   const { language } = useContext(LanguageContext);
-  const { _id, category, arName, frName, engName, price, colors } = product;
-  return <div className='bg-white '>
+  const { _id, category, arName, frName, engName, price, colors, createdAt } = product;
+  console.log();
+  return <div className='bg-white relative'>
+    {/* Check if createdAt is at least a month old */}
+    {new Date(createdAt).getMonth() === new Date(Date.now()).getMonth() ? 
+    <div className='absolute bg-green-500 rounded p-1 z-10'>
+       {language === 'ar' ? 'جديد' : language === 'fr' ? 'Nouveau' : 'New'}
+    </div> : null}
+
     <div className='border border-[#e4e4e4] h-[300px] mb-4 relative overflow-hidden group transition'>
       <div className='w-full h-full flex justify-center items-center'>
         {/* Image */}
         <div className='w-[200px] mx-auto flex justify-center items-center'>
-          <img className='max-h-[260px] group-hover:scale-110 transition duration-300' src={colors[0].images.urls[0]} alt="" />
+          <Link to={`/product/${_id}`}>
+            <img className='max-h-[260px] group-hover:scale-110 transition duration-300' src={colors[0].images.urls[0]} alt="" />
+          </Link>
         </div>
       </div>
       {/* Buttons */}
@@ -29,10 +38,10 @@ const Product = ({ product }) => {
               style={{
                 height: '20px',
                 width: '20px',
-                borderRadius:'20px',
+                borderRadius: '20px',
                 backgroundColor: col.hex,
                 marginLeft: '8px',
-                border:'1px solid black'
+                border: '1px solid black'
               }} />
           })
         }

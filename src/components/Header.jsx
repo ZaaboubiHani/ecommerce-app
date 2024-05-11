@@ -1,29 +1,37 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { SidebarContext } from '../contexts/SidebarContext';
 import { BsBag } from 'react-icons/bs'
 import { CartContext } from '../contexts/CartContext';
 import { Link } from 'react-router-dom';
 import Logo from '../img/ARELA CLOTHSY.png';
 import LanguageDropdown from './LaguageDropdown';
+import { LanguageContext } from '../contexts/LanguageContext';
 const Header = () => {
-  const [isActive, setIsActive] = useState(false);
   const { setIsOpen, isOpen } = useContext(SidebarContext);
   const { itemAmount } = useContext(CartContext);
-  useEffect(() => {
-    window.addEventListener('scroll', () => {
-      window.scrollY > 60 ? setIsActive(true) : setIsActive(false);
-    });
-  }, []);
+  const { language } = useContext(LanguageContext);
 
-  return <header className={`${isActive ? 'bg-white shadow-md' : 'bg-none'}
-  fixed w-full z-10 transition-all  
-  `}>
+  return <header className='bg-white shadow-md
+  fixed w-full z-50 transition-all  
+  '>
     <div className='container mx-auto flex items-center justify-between h-full '>
       {/* logo */}
       <Link to='/'>
         <img className='h-[60px]' src={Logo} alt="" />
       </Link>
       <div className='flex items-center h-full'>
+        <Link to='/' className='hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6'>
+        {language === 'ar' ? 'إستقبال' : language === 'fr' ? 'ACCUEIL' : 'HOME'}
+        </Link>
+        <Link to='/products' className='hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6'>
+        {language === 'ar' ? 'منتجات' : language === 'fr' ? 'PRODUITS' : 'PRODUCTS'}
+        </Link>
+        <Link to='/checkout' className='hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6'>
+        {language === 'ar' ? 'السلة' : language === 'fr' ?'Panier' : 'Cart'}
+        </Link>
+        <Link to='/about' className='hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6'>
+        {language === 'ar' ? 'عنا' : language === 'fr' ? 'QUI SOMMES-NOUS' : 'ABOUT US'}
+        </Link>
         {/* language */}
         <LanguageDropdown />
         {/* cart */}

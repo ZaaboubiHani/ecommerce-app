@@ -31,14 +31,14 @@ const CartProvider = ({ children }) => {
 
   const addToCart = (product) => {
     const { id, ...other } = product;
-    const newItem = { ...product, amount: 1 };
+    const newItem = { ...product, amount: other.amount };
     const cartItem = cart.find(item => {
       return item.id === id && item.color === other.color && item.size === other.size;
     });
     if (cartItem) {
       const newCart = [...cart].map(item => {
         if (item.id === id && item.color === other.color && item.size === other.size) {
-          return { ...item, amount: cartItem.amount + 1 };
+          return { ...item, amount: cartItem.amount + other.amount };
         }
         else {
           return item;
@@ -53,7 +53,7 @@ const CartProvider = ({ children }) => {
     }
   };
 
-  const removeFromCart = (id,color,size) => {
+  const removeFromCart = (id, color, size) => {
     const newCart = cart.filter(item => {
       return item.id !== id || item.color !== color || item.size !== size;
     });
@@ -66,12 +66,12 @@ const CartProvider = ({ children }) => {
     localStorage.setItem('cart', JSON.stringify([]));
   };
 
-  const increaseAmount = (id,color,size) => {
+  const increaseAmount = (id, color, size) => {
     const item = cart.find((item) => item.id === id && item.color === color && item.size === size);
     addToCart(item);
   };
 
-  const decreaseAmount = (id,color,size) => {
+  const decreaseAmount = (id, color, size) => {
     const cartItem = cart.find((item) => item.id === id && item.color === color && item.size === size);
     if (cartItem) {
       const newCart = cart.map((item) => {

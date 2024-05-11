@@ -9,16 +9,22 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Checkout from './pages/Checkout';
+import Products from './pages/Products';
+import NotFound from './pages/NotFound';
+import AboutUs from './pages/AboutUs';
 import { SnackbarContext } from './contexts/SnackbarContext';
 const App = () => {
   const { message, isOpen } = useContext(SnackbarContext);
   return <div className='overflow-hidden'>
-    <Router>
+    <Router className='relative'>
       <Header />
-      <Routes>
+      <Routes >
         <Route path='/' element={<Home />} />
+        <Route path='/products' element={<Products />} />
         <Route path='/product/:id' element={<ProductDetails />} />
         <Route path='/checkout' element={<Checkout />} />
+        <Route path='/about' element={<AboutUs />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
       <Sidebar />
       <Footer />
