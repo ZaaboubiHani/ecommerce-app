@@ -5,7 +5,6 @@ import { ProductContext } from '../contexts/ProductContext';
 import { LanguageContext } from '../contexts/LanguageContext';
 import { SidebarContext } from '../contexts/SidebarContext';
 import { IoMdRemove, IoMdAdd } from 'react-icons/io';
-import BackgroundImg from '../img/bg.jpg';
 import ClipLoader from "react-spinners/ClipLoader";
 const ProductDetails = () => {
   const { id } = useParams();
