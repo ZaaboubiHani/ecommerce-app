@@ -12,7 +12,7 @@ const LanguageDropdown = () => {
         <button onClick={() => setIsOpen((prev) => !prev)} className='bg-white p-2 w-full flex items-center justify-between
     font-bold text-l rounded-lg tracking-wider border-4 border-transparent active:border-white
     duration-300 active:text-white'>
-            <MdLanguage />
+           <div></div>
             {language === 'ar' ? (<img className='h-[20px]' src={DZ} alt="" />) :
                 language === 'fr' ? (<img className='h-[20px]' src={FR} alt="" />) :
                     (<img className='h-[20px]' src={UK} alt="" />)
@@ -21,7 +21,7 @@ const LanguageDropdown = () => {
         </button>
         {
             isOpen && (
-                <div className='bg-white absolute top-[50px] flex flex-col items-start rounded-lg p-1 w-full'>
+                <div className='bg-white absolute top-[50px] flex flex-col items-start rounded-lg p-1 w-full shadow-lg'>
                     <div onClick={() => {
                         changeLanguage('ar');
                         setIsOpen(false);

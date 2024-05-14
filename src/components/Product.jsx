@@ -23,7 +23,7 @@ const Product = ({ product }) => {
       </div>
       {/* Buttons */}
       <div className='absolute top-2 -left-11 group-hover:left-4 p-2 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300'>
-        <Link to={`/product/${_id}`} className='w-12 h-12 bg-red-500 flex justify-center items-center text-primary drop-shadow-xl rounded-lg'>
+        <Link to={`/product/${_id}`} className='w-12 h-12 bg-black flex justify-center items-center text-primary drop-shadow-xl rounded-lg'>
           <BsEyeFill className='text-white'/>
         </Link>
       </div>
