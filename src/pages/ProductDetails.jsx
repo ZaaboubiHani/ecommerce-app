@@ -31,7 +31,7 @@ const ProductDetails = () => {
     <div className="container mx-auto">
       {/*image & text wrapper*/}
       <div className={`flex flex-col items-center lg:items-start ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
-        <div className='flex lg:flex-col h-full mx-2  bg-red-500'>
+        <div className='flex lg:flex-col mx-2 min-w-[100px]'>
           {
             product.colors[colorIndex].images?.urls.map((url, i) => {
               return <img
@@ -41,6 +41,7 @@ const ProductDetails = () => {
                 style={{
                   cursor: 'pointer',
                   height: '150px',
+                  width:'100px',
                   border: imageIndex === i ? '2px solid black' : 'none',
                   objectFit: 'cover',
                 }} />
@@ -48,10 +49,10 @@ const ProductDetails = () => {
           }
         </div>
         {/*image */}
-        <img className='max-w-sm '
+        <img className='max-w-sm'
           src={product?.colors[colorIndex].images?.urls[imageIndex]} alt="" />
         {/* config panel */}
-        <div className='flex-1 text-center lg:text-left p-4'>
+        <div className='flex-1 text-center lg:text-left p-4 w-full lg:max-w-[500px] '>
           <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
             <div className={language === 'ar' ? 'text-right' : 'text-left'}>
               {language === 'ar' ? ': لون' : language === 'fr' ? 'Couleur: ' : 'Color: '}
@@ -123,16 +124,18 @@ const ProductDetails = () => {
           <div className={`text-xl text-red-500 font-medium mb-6 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
             {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
             {product.price}</div>
-          <p className={`mb-8 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+          <p className={`mb-8  break-words ${language === 'ar' ? 'text-right' : 'text-left'}`}>
             {language === 'ar' ? product.arDescription : language === 'fr' ? product.frDescription : product.engDescription}
           </p>
 
-          <div className={`flex flex-col ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
+          <div className={`flex flex-col items-center ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
             {/* quantity */}
             <div className={`flex items-center h-[60px] mb-2 mr-4 ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
               {language === 'ar' ? ': كمية' : language === 'fr' ? 'Quantité: ' : 'Quantity: '}
-              <div className={`flex flex-1 w-[100px] items-center h-full  border-2 border-primary text-primary font-medium mx-4
+              <div className={`flex flex-1 w-[100px] items-center h-full 
+               border-2 border-primary text-primary font-medium mx-4
               ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}
+              ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}
               `}>
                 {/*minus icon */}
                 <button onClick={() => setAmount((prev) => (prev - 1))}
@@ -178,7 +181,7 @@ const ProductDetails = () => {
                 setValidateAttempt(true);
               }
             }}
-              className='bg-primary py-4 px-8 text-white mb-2'>
+              className='bg-primary py-4 px-8 text-white mb-2 items-center '>
               {language === 'ar' ? 'أضف إلى السلة' : language === 'fr' ? 'Ajouter au panier' : 'Add to cart'}
             </button>
           </div>

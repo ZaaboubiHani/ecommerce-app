@@ -151,9 +151,9 @@ const Checkout = () => {
                                             type="text">
                                         </input>
                                     </div>
-                                    {validateAttempt && (phoneNumber1 === undefined || phoneNumber1?.length === 0) && (
+                                    {validateAttempt && (phoneNumber1 === undefined || phoneNumber1?.length != 10 || phoneNumber1.startsWith("Hello")) && (
                                         <div className="text-red-500 text-sm">
-                                            {language === 'ar' ? 'من فضلك أدخل رقم هاتفك' : language === 'fr' ? 'Veuillez entrer votre Numéro de téléphone' : 'Please enter your Phone number'}
+                                            {language === 'ar' ? 'الرجاء إدخال رقم هاتف صحيح' : language === 'fr' ? 'Veuillez entrer un numéro de téléphone valide' : 'Please enter a valid Phone number'}
                                         </div>
                                     )}
                                 </div>

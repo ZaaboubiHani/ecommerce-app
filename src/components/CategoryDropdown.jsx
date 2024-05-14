@@ -16,7 +16,7 @@ const CategoryDropdown = () => {
         {
             isOpen && (
                 <div className='bg-white absolute top-[45px] flex flex-col items-start p-1 w-full z-20
-                border border-1 border-black
+                border border-1 border-black shadow-md
                 '>
                     <div
                         key={0}
@@ -24,7 +24,7 @@ const CategoryDropdown = () => {
                             changeCategory(undefined);
                             setIsOpen(false);
                         }} className='flex w-full items-center justify-between px-2 hover:bg-gray-300 cursor-pointer border-l-transparent'>
-                        <h3>{language === 'ar' ? 'لا شيء' : language === 'fr' ? 'aucun' : 'none'}</h3>
+                        <h3>{language === 'ar' ? 'كل شيء' : language === 'fr' ? 'Tout' : 'Everything'}</h3>
                     </div>
                     {
                         categories.map((category) => (<div

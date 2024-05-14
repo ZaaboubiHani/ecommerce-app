@@ -15,11 +15,13 @@ import AboutUs from './pages/AboutUs';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import Snackbar from './components/Snackbar';
 import Menu from './components/Menu';
+import ScrollToTop from './utils/ScrollToTop';
 const App = () => {
   
   return <div className='overflow-hidden'>
     <Router className='relative'>
       <ScrollToTopButton/>
+      <ScrollToTop/>
       <Header />
       <Routes >
         <Route path='/' element={<Home />} />

@@ -55,7 +55,7 @@ const Products = () => {
         {
           loadingProducts ? <section className='h-screen flex justify-center items-center '>
             <ClipLoader />
-          </section> : products.length === 0 ? <section className='h-full flex justify-center items-center text-2xl'>
+          </section> : products.length === 0 ? <section className='h-screen flex justify-center items-center text-2xl'>
           {language === 'ar' ? 'دون نتائج': language === 'fr' ? 'Aucun résultat' : 'No results'}
             <TbMoodEmpty className='text-2xl mx-2'/>
           </section> :
