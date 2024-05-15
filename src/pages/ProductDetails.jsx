@@ -6,6 +6,7 @@ import { LanguageContext } from '../contexts/LanguageContext';
 import { SidebarContext } from '../contexts/SidebarContext';
 import { IoMdRemove, IoMdAdd } from 'react-icons/io';
 import ClipLoader from "react-spinners/ClipLoader";
+import { Link } from 'react-router-dom';
 const ProductDetails = () => {
   const { id } = useParams();
   const { products } = useContext(ProductContext);
@@ -41,7 +42,7 @@ const ProductDetails = () => {
                 style={{
                   cursor: 'pointer',
                   height: '150px',
-                  width:'100px',
+                  width: '100px',
                   border: imageIndex === i ? '2px solid black' : 'none',
                   objectFit: 'cover',
                 }} />
@@ -52,8 +53,9 @@ const ProductDetails = () => {
         <img className='max-w-sm'
           src={product?.colors[colorIndex].images?.urls[imageIndex]} alt="" />
         {/* config panel */}
-        <div className='flex-1 text-center lg:text-left p-4 w-full lg:max-w-[500px] '>
-          <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
+        <div className={`flex  flex-1 flex-col text-center items-center p-4 w-full lg:max-w-[500px]
+        ${language === 'ar' ? 'lg:items-end' : 'lg:items-start'}`}>
+          <div className={`flex justify-center lg:justify-start ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
             <div className={language === 'ar' ? 'text-right' : 'text-left'}>
               {language === 'ar' ? ': لون' : language === 'fr' ? 'Couleur: ' : 'Color: '}
             </div>
@@ -79,7 +81,7 @@ const ProductDetails = () => {
               }
             </div>
           </div>
-          <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
+          <div className={`flex justify-center lg:justify-start h-8 ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
 
             <div className={language === 'ar' ? 'text-right' : 'text-left'}>
               {language === 'ar' ? ': حجم' : language === 'fr' ? 'Taille: ' : 'Size: '}
@@ -112,48 +114,51 @@ const ProductDetails = () => {
             </div>
           </div>
           {validateAttempt && (sizeIndex === undefined) && (
-            <div className={`text-red-500 text-sm ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+            <div className={`text-red-500 text-sm text-center ${language === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}>
               {language === 'ar' ? 'الرجاء تحديد حجم' : language === 'fr' ? 'Veuillez choisir une taille' : 'Please select a size'}
             </div>
           )}
 
           {/*text */}
-          <h1 className={`text-[26px] font-sedan mb-2 mx-auto lg:mx-0 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+          <h1 className={`text-[26px] font-sedan mb-2 mx-auto lg:mx-0 
+          text-center ${language === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}>
             {language === 'ar' ? product.arName : language === 'fr' ? product.frName : product.engName}
           </h1>
-          <div className={`text-xl text-red-500 font-medium mb-6 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+          <div className={`text-xl text-red-500 font-medium mb-6 
+          text-center ${language === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}>
             {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
             {product.price}</div>
-          <p className={`mb-8  break-words ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+          <p className={`mb-8  break-words text-center w-full
+           ${language === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}>
             {language === 'ar' ? product.arDescription : language === 'fr' ? product.frDescription : product.engDescription}
           </p>
 
-          <div className={`flex flex-col items-center ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
-            {/* quantity */}
-            <div className={`flex items-center h-[60px] mb-2 mr-4 ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
-              {language === 'ar' ? ': كمية' : language === 'fr' ? 'Quantité: ' : 'Quantity: '}
-              <div className={`flex flex-1 w-[100px] items-center h-full 
+          {/* quantity */}
+          <div className={`flex items-center w-[200px] h-[60px] mb-2 mr-4 ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
+            {language === 'ar' ? ': كمية' : language === 'fr' ? 'Quantité: ' : 'Quantity: '}
+            <div className={`flex flex-1 w-[100px] items-center h-full 
                border-2 border-primary text-primary font-medium mx-4
               ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}
               ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}
               `}>
-                {/*minus icon */}
-                <button onClick={() => setAmount((prev) => (prev - 1))}
-                  disabled={amount === 1}
-                  className='flex-1 h-full flex justify-center items-center cursor-pointer '>
-                  <IoMdRemove className={`${amount === 1 ? 'text-gray-300' : 'text-black'}`} />
-                </button>
-                {/*amount*/}
-                <div className='h-full flex justify-center items-center px-2'>
-                  {amount}
-                </div>
-                {/*plus icon */}
-                <div onClick={() => setAmount((prev) => (prev + 1))}
-                  className='flex-1 h-full flex justify-center items-center cursor-pointer'>
-                  <IoMdAdd />
-                </div>
+              {/*minus icon */}
+              <button onClick={() => setAmount((prev) => (prev - 1))}
+                disabled={amount === 1}
+                className='flex-1 h-full flex justify-center items-center cursor-pointer '>
+                <IoMdRemove className={`${amount === 1 ? 'text-gray-300' : 'text-black'}`} />
+              </button>
+              {/*amount*/}
+              <div className='h-full flex justify-center items-center px-2'>
+                {amount}
+              </div>
+              {/*plus icon */}
+              <div onClick={() => setAmount((prev) => (prev + 1))}
+                className='flex-1 h-full flex justify-center items-center cursor-pointer'>
+                <IoMdAdd />
               </div>
             </div>
+          </div>
+          <div className={`flex flex-col items-center ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
             <button onClick={() => {
               if (sizeIndex !== undefined) {
                 setValidateAttempt(false);
@@ -181,9 +186,41 @@ const ProductDetails = () => {
                 setValidateAttempt(true);
               }
             }}
-              className='bg-primary py-4 px-8 text-white mb-2 items-center '>
+              className='bg-primary py-4 px-8 text-white mb-2 items-center lg:mx-4'>
               {language === 'ar' ? 'أضف إلى السلة' : language === 'fr' ? 'Ajouter au panier' : 'Add to cart'}
             </button>
+            <Link to={sizeIndex !== undefined ? '/checkout' : null}>
+              <button onClick={() => {
+                if (sizeIndex !== undefined) {
+                  setValidateAttempt(false);
+                  addToCart({
+                    id: product._id,
+                    price: product.price,
+                    arDescription: product.arDescription,
+                    frDescription: product.frDescription,
+                    engDescription: product.engDescription,
+                    arName: product.arName,
+                    frName: product.frName,
+                    engName: product.engName,
+                    img: product.colors[colorIndex].images?.urls[imageIndex],
+                    size: product.colors[colorIndex].sizes[sizeIndex].size,
+                    color: product.colors[colorIndex].hex,
+                    amount: amount,
+                  });
+                  setAmount(1);
+                  handleOpenSidebar();
+                  setTimeout(() => {
+                    handleCloseSidebar();
+                  }, 3000);
+                }
+                else {
+                  setValidateAttempt(true);
+                }
+              }}
+                className='bg-gray-500 py-4 px-8 text-white mb-2 items-center '>
+                {language === 'ar' ? 'اشتري الان' : language === 'fr' ? 'Achetez maintenant' : 'Buy now'}
+              </button>
+            </Link>
           </div>
         </div>
       </div>

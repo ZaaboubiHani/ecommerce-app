@@ -8,7 +8,7 @@ const CategoryDropdown = () => {
     const [isOpen, setIsOpen] = useState(false);
     return <div className="relative flex flex-col items-center w-[150px]">
         <button onClick={() => setIsOpen((prev) => !prev)} className='bg-white p-2 w-full flex items-center justify-between
-    text-l tracking-wider border border-1 border-black
+    text-l tracking-wider border border-1 border-black rounded-lg transition-all
     duration-300'>
             {language === 'ar' ? category?.arName ?? 'أصناف' : language === 'fr' ? category?.frName ?? 'Catégories' : category?.engName ?? 'Categories'}
             {!isOpen ? (<IoMdArrowDropdown />) : (<IoMdArrowDropup />)}
@@ -16,7 +16,7 @@ const CategoryDropdown = () => {
         {
             isOpen && (
                 <div className='bg-white absolute top-[45px] flex flex-col items-start p-1 w-full z-20
-                border border-1 border-black shadow-md
+                border border-1 border-black shadow-md rounded-lg
                 '>
                     <div
                         key={0}
@@ -37,8 +37,6 @@ const CategoryDropdown = () => {
                         </div>
                         ))
                     }
-
-
                 </div>
             )
         }
