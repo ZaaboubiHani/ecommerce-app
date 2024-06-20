@@ -150,9 +150,10 @@ const Checkout = () => {
                 </div> :
                     <div className={`flex flex-col lg:px-24 ${language === 'ar' ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
                         <div className={`w-full mx-4 bg-white px-12 py-8 flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
-                            <section className='grid grid-cols-1 mt-4 gap-[30px]  w-full max-auto md:max-w-none md:mx-0 lg:w-2/3 xl:w-1/2 '>
+                            <section className='grid grid-cols-1 mt-4 gap-[30px] w-full max-auto md:max-w-none md:mx-0 lg:w-2/3 xl:w-1/2 '>
+                                <h1 className={`font-bold text-lg m-0 p-0 ${language === 'ar' ? 'text-end' : 'text-start'}`}>
+                                    {language === 'ar' ? 'اتصال' : language === 'fr' ? 'Contact' : 'Contact'}</h1>
                                 <div key={'fullName'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
-                                    {language === 'ar' ? 'الإسم واللقب' : language === 'fr' ? 'Nom et Prénom' : 'First and Last name'}
                                     <div className="relative flex flex-row items-center  border border-1 border-black rounded-lg">
                                         <input
                                             onChange={(event) => setFullName(event.target.value)}
@@ -169,25 +170,8 @@ const Checkout = () => {
                                     )}
 
                                 </div>
-                                <div key={'adresse'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
-                                    {language === 'ar' ? 'العنوان' : language === 'fr' ? 'Adresse' : 'Address'}
-                                    <div className="relative flex flex-row items-center border border-1 border-black rounded-lg">
-                                        <input
-                                            onChange={(event) => setAddress(event.target.value)}
-                                            className='bg-white p-2 w-full flex items-center justify-between
-                        text-l focus:border-transparent focus:ring-0 outline-none rounded-lg'
-                                            placeholder={language === 'ar' ? 'العنوان' : language === 'fr' ? 'Adresse' : 'Address'}
-                                            type="text" >
-                                        </input>
-                                    </div>
-                                    {validateAttempt && (address === undefined || address?.length === 0) && (
-                                        <div className="text-red-500 text-sm">
-                                            {language === 'ar' ? 'من فضلك أدخل عنوانك' : language === 'fr' ? 'Veuillez entrer votre Addresse' : 'Please enter your Address'}
-                                        </div>
-                                    )}
-                                </div>
                                 <div key={'phoneNumber1'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
-                                    {language === 'ar' ? 'رقم الهاتف 1' : language === 'fr' ? 'Numéro de téléphone 1' : 'Phone number 1'}
+                                   
                                     <div className="relative flex flex-row items-center border border-1 border-black rounded-lg">
                                         <input
                                             onChange={(event) => setPhoneNumber1(event.target.value)}
@@ -204,7 +188,7 @@ const Checkout = () => {
                                     )}
                                 </div>
                                 <div key={'phoneNumber2'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
-                                    {language === 'ar' ? '(اختياري) رقم الهاتف 2' : language === 'fr' ? 'Numéro de téléphone 2 (optional)' : 'Phone number 2 (optional)'}
+                                   
                                     <div className="relative flex flex-row items-center border border-1 border-black rounded-lg">
                                         <input
                                             onChange={(event) => setPhoneNumber2(event.target.value)}
@@ -220,8 +204,28 @@ const Checkout = () => {
                                         </div>
                                     )}
                                 </div>
+                                <h1 className={`font-bold text-lg m-0 p-0 ${language === 'ar' ? 'text-end' : 'text-start'}`}>
+                                {language === 'ar' ? 'مكان' : language === 'fr' ? 'Localisation' : 'Location'}</h1>
+                                <div key={'adresse'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
+                                  
+                                    <div className="relative flex flex-row items-center border border-1 border-black rounded-lg">
+                                        <input
+                                            onChange={(event) => setAddress(event.target.value)}
+                                            className='bg-white p-2 w-full flex items-center justify-between
+                        text-l focus:border-transparent focus:ring-0 outline-none rounded-lg'
+                                            placeholder={language === 'ar' ? 'العنوان' : language === 'fr' ? 'Adresse' : 'Address'}
+                                            type="text" >
+                                        </input>
+                                    </div>
+                                    {validateAttempt && (address === undefined || address?.length === 0) && (
+                                        <div className="text-red-500 text-sm">
+                                            {language === 'ar' ? 'من فضلك أدخل عنوانك' : language === 'fr' ? 'Veuillez entrer votre Addresse' : 'Please enter your Address'}
+                                        </div>
+                                    )}
+                                </div>
+                                
                                 <div key={'ًwilaya'} className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
-                                    {language === 'ar' ? 'الولاية' : language === 'fr' ? 'ًWilaya' : 'ًWilaya'}
+                                   
                                     <button onClick={() => {
                                         setIsWilayasOpen((prev) => !prev);
                                         setIsCommunesOpen(false);
@@ -270,7 +274,7 @@ const Checkout = () => {
                                     )}
                                 </div>
                                 <div key={'commune'} className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
-                                    {language === 'ar' ? 'البلدية' : language === 'fr' ? 'Commune' : 'Commune'}
+                                  
                                     <button onClick={() => {
                                         setIsCommunesOpen((prev) => !prev);
                                         setIsWilayasOpen(false);
@@ -316,8 +320,10 @@ const Checkout = () => {
                                         </div>
                                     )}
                                 </div>
+                                <h1 className={`font-bold text-lg m-0 p-0 ${language === 'ar' ? 'text-end' : 'text-start'}`}>
+                                {language === 'ar' ? 'الشحن' : language === 'fr' ? 'Livraison' : 'Delivery'}</h1>
                                 <div key={'shippingType'} className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
-                                    {language === 'ar' ? 'نوع الشحن' : language === 'fr' ? 'Type de livraison' : 'Shipping type'}
+                                  
                                     <button onClick={() => {
                                         setIsShippingTypeOpen((prev) => !prev);
                                         setIsWilayasOpen(false);
@@ -371,8 +377,9 @@ const Checkout = () => {
                                         </div>
                                     )}
                                 </div>
+                                <h1 className={`font-bold text-lg m-0 p-0 ${language === 'ar' ? 'text-end' : 'text-start'}`}>
+                                {language === 'ar' ? 'ملاحظة' : language === 'fr' ? 'Note' : 'Note'}</h1>
                                 <div key={'note'} className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
-                                    {language === 'ar' ? '(اختياري) ملاحظة' : language === 'fr' ? 'Note (optional)' : 'Note (optional)'}
                                     <div className="relative flex flex-row items-center border border-1 border-black rounded-lg">
                                         <input
                                             onChange={(event) => setNote(event.target.value)}
