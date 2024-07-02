@@ -10,7 +10,6 @@ const Home = () => {
   } = useContext(ProductContext);
   
   const { language } = useContext(LanguageContext);
-
   const limitedProducts = products.slice(0, 5);
 
   return <div className='bg-proDetails bg-cover'>

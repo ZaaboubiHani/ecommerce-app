@@ -38,6 +38,22 @@ const Checkout = () => {
     const [validateAttempt, setValidateAttempt] = useState(false);
     const [isValidating, setIsValidating] = useState(false);
     const [loading, setLoading] = useState(true);
+    const dropdownRef = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsWilayasOpen(false);
+            setIsCommunesOpen(false);
+            setIsShippingTypeOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => {
         loadData();
@@ -224,7 +240,9 @@ const Checkout = () => {
                                     )}
                                 </div>
                                 
-                                <div key={'ًwilaya'} className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
+                                <div key={'ًwilaya'} 
+                                className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}
+                                ref={dropdownRef}>
                                    
                                     <button onClick={() => {
                                         setIsWilayasOpen((prev) => !prev);
@@ -240,7 +258,7 @@ const Checkout = () => {
                                     </button>
                                     {
                                         isWilayasOpen && (
-                                            <div className='bg-white absolute top-[75px] flex flex-col items-start p-1 w-full z-10
+                                            <div className='bg-white absolute top-[50px] flex flex-col items-start p-1 w-full z-10
                             border border-1 border-black h-[400px] overflow-x-hidden overflow-y-scroll rounded-lg shadow-md
                             '>
                                                 {
@@ -273,7 +291,9 @@ const Checkout = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div key={'commune'} className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}>
+                                <div key={'commune'} 
+                                className={`relative flex flex-col ${language === 'ar' ? 'items-end' : 'items-start'}`}
+                                ref={dropdownRef}>
                                   
                                     <button onClick={() => {
                                         setIsCommunesOpen((prev) => !prev);
@@ -289,7 +309,7 @@ const Checkout = () => {
                                     </button>
                                     {
                                         isCommunesOpen && (
-                                            <div className='bg-white absolute top-[75px] flex flex-col items-start p-1 w-full z-10
+                                            <div className='bg-white absolute top-[50px] flex flex-col items-start p-1 w-full z-10
                                             border border-1 border-black max-h-[400px] overflow-x-hidden overflow-y-auto rounded-lg shadow-md
                                             '>
                                                 {
@@ -330,7 +350,8 @@ const Checkout = () => {
                                         setIsCommunesOpen(false);
                                     }} className='bg-white p-2 w-full flex items-center justify-between
                                     text-l tracking-wider border border-1 border-black h-11 rounded-lg
-                                    duration-300'>
+                                    duration-300'
+                                    ref={dropdownRef}>
                                         <div className={`${selectedShippingType?.arType ? 'text-black' : 'text-gray-500'}`}>
                                             {language === 'ar' ? selectedShippingType?.arType ?? 'نوع الشحن' : language === 'fr' ? selectedShippingType?.frType ?? 'Type de livraison' : selectedShippingType?.enType ?? 'Shipping type'}
                                         </div>
@@ -338,7 +359,7 @@ const Checkout = () => {
                                     </button>
                                     {
                                         isShippingTypeOpen && (
-                                            <div className='bg-white absolute top-[75px] flex flex-col items-start p-1 w-full z-10
+                                            <div className='bg-white absolute top-[50px] flex flex-col items-start p-1 w-full z-10
                                             border border-1 border-black max-h-[400px] overflow-x-hidden overflow-y-auto rounded-lg
                                             shadow-md
                         '>
@@ -393,7 +414,7 @@ const Checkout = () => {
                             </section>
 
                             <div className={`flex w-full flex-col items-center justify-stretch mt-4 ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
-                                <Link to='/' className='bg-primary w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium mx-2 text-nowrap'>
+                                <Link to='/' className='bg-primary w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium mx-2 text-nowrap rounded-2xl'>
                                     {language === 'ar' ? 'اشتري اكثر' : language === 'fr' ? 'Acheter plus' : 'Buy more'}
                                 </Link>
                                 <button
@@ -402,7 +423,7 @@ const Checkout = () => {
                                         createOrder();
 
                                     }}
-                                    className='bg-gray-500 w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium m-2'>
+                                    className='bg-gray-500 w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium m-2 rounded-2xl'>
                                     {language === 'ar' ? 'تأكيد' : language === 'fr' ? 'Valider' : 'Validate'}
                                 </button>
                             </div>

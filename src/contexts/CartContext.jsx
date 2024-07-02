@@ -1,15 +1,13 @@
 import React, { createContext, useEffect, useState } from 'react';
 
+
 export const CartContext = createContext()
 
 const CartProvider = ({ children }) => {
+  
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart') || '[]'));
   const [itemAmount, setItemAmount] = useState(0);
   const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  }, []);
 
   useEffect(() => {
     if (cart) {
@@ -64,6 +62,7 @@ const CartProvider = ({ children }) => {
   const clearCart = () => {
     setCart([]);
     localStorage.setItem('cart', JSON.stringify([]));
+    
   };
 
   const increaseAmount = (id, color, size) => {

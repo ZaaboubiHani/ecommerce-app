@@ -12,7 +12,7 @@ const Hero = () => {
           <div className='w-10 h-[2px] bg-red-500 mr-3'></div>{language === 'ar' ? 'الاتجاه الجديد' : language === 'fr' ? 'Nouvelle Tendance' : 'New Trend'}
         </div>
         {/* title */}
-        <h1 className='text-[70px] leading-[1.1] font-light mb-4'>{language === 'ar' ? 'كوني فريدة كوني جميلة' : language === 'fr' ? 'Soyez unique Soyez belle' : 'Be Unique Be Beautiful'}<br />
+        <h1 className='text-[70px] leading-[1.1] font-light mb-4'>{language === 'ar' ? 'أريلا كلوسي' : language === 'fr' ? 'Arela Clothsy' : 'Arela Clothsy'}<br />
           
         </h1>
         <Link to='/about' className='self-start uppercase font-semibold border-b-2 border-primary'>
