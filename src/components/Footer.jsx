@@ -9,20 +9,21 @@ const Footer = () => {
   return <footer className='bg-white py-8 w-full bottom-0'>
     <div className="container mx-auto flex flex-col items-center">
       <img className='h-[100px]' src={Logo} alt="" />
-      <p className='text-center flex items-center my-2'>
+      <p className={`flex items-center my-2 text-right`}>
         <FaPhoneFlip className='mr-2' />
-        {language === 'ar' ? 'الهاتف : ' : language === 'fr' ? 'Téléphone: ' : 'Phone: '}
-        0663457855
+        {language === 'ar' ? 'الهاتف : 0663 45 78 55' : language === 'fr' ? 'Téléphone: 0663 45 78 55' : 'Phone: 0663 45 78 55'}
+       
       </p>
-      <p className='text-center flex items-center my-2'>
+      <p className='flex items-center my-2 text-left'>
         <MdEmail className='mr-2' />
-        {language === 'ar' ? 'البريد الإلكتروني : ' : language === 'fr' ? 'E-mail: ' : 'Email: '}
-        example05@gmail.com
+        {language === 'ar' ? 'example05@gmail.com : البريد الإلكتروني' : language === 'fr' ? 'E-mail: example05@gmail.com' : 'Email: example05@gmail.com'}
+        
       </p>
-      <p className='text-center flex items-center my-2'>
+      <a href='https://www.instagram.com/arela_clothsy' className='text-center flex items-center my-2'>
         <FaInstagramSquare className='mr-2' />
-        instagram
-      </p>
+        {language === 'ar' ? 'arela_clothsy : إنستغرام' : language === 'fr' ? 'Instagram: arela_clothsy' : 'Instagram: arela_clothsy'}
+        
+      </a>
       <p className='text-center my-2'>
         {language === 'ar' ? '.جميع الحقوق محفوظة' : language === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}
       </p>
