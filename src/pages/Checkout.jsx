@@ -30,7 +30,6 @@ const Checkout = () => {
   const [phoneNumber2, setPhoneNumber2] = useState();
   const [validateAttempt, setValidateAttempt] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
-  const [loading, setLoading] = useState(false);
  
 
   const createOrder = async () => {
