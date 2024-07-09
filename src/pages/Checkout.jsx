@@ -142,11 +142,7 @@ const Checkout = () => {
 
   return (
     <div className="p-4 lg:p-32 bg-gray-100">
-      {loading ? (
-        <div className="h-[100vh] w-full flex justify-center items-center">
-          <ClipLoader />
-        </div>
-      ) : isValidating ? (
+      { isValidating ? (
         <div className="h-[100vh] w-full flex justify-center items-center">
           <ClipLoader />
         </div>
