@@ -20,7 +20,6 @@ const Header = () => {
     <div className='container mx-auto flex items-center justify-between h-full '>
       <div className='cursor-pointer flex relative ml-4 lg:ml-16  md:hidden' onClick={() => handleOpenMenu()}>
         <GiHamburgerMenu className='text-2xl' />
-
       </div>
       {/* logo */}
       <Link to='/'>

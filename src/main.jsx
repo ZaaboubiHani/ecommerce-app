@@ -10,25 +10,28 @@ import CategoryProvider from "./contexts/CategoryContext";
 import SearchProvider from "./contexts/SearchContext";
 import SnackbarProvider from "./contexts/SnackbarContext";
 import MenuProvider from "./contexts/MenuContext";
+import HeroProvider from "./contexts/HeroContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <LanguageProvider>
-    <MenuProvider>
-      <CategoryProvider>
-        <SearchProvider>
-          <SidebarProvider>
-            <CartProvider>
-              <SnackbarProvider>
-                <ProductProvider>
-                  <React.StrictMode>
-                    <App />
-                  </React.StrictMode>
-                </ProductProvider>
-              </SnackbarProvider>
-            </CartProvider>
-          </SidebarProvider>
-        </SearchProvider>
-      </CategoryProvider>
-    </MenuProvider>
-  </LanguageProvider>
+  <HeroProvider>
+    <LanguageProvider>
+      <MenuProvider>
+        <CategoryProvider>
+          <SearchProvider>
+            <SidebarProvider>
+              <CartProvider>
+                <SnackbarProvider>
+                  <ProductProvider>
+                    <React.StrictMode>
+                      <App />
+                    </React.StrictMode>
+                  </ProductProvider>
+                </SnackbarProvider>
+              </CartProvider>
+            </SidebarProvider>
+          </SearchProvider>
+        </CategoryProvider>
+      </MenuProvider>
+    </LanguageProvider>
+  </HeroProvider>
 );

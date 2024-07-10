@@ -8,17 +8,18 @@ const CategoryProvider = ({ children }) => {
     const [category, setCategory] = useState();
     const { menuIsOpen, handleCloseMenu } = useContext(MenuContext);
     useEffect(() => {
-        const fetchCategories = async () => {
-            apiInstance.getAxios().get('/categories')
-                .then(response => {
-                    setCategories(response.data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        };
         fetchCategories();
     }, []);
+
+    const fetchCategories = async () => {
+        apiInstance.getAxios().get('/categories')
+            .then(response => {
+                setCategories(response.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    };
 
     const changeCategory = (category) => {
         setCategory(category);
@@ -28,6 +29,7 @@ const CategoryProvider = ({ children }) => {
         categories,
         category,
         changeCategory,
+        fetchCategories,
     }}>
         {children}
     </CategoryContext.Provider>;

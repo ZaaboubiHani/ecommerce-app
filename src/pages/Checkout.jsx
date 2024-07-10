@@ -11,15 +11,19 @@ import { useNavigate } from "react-router-dom";
 import WilayaDropdown from "../components/WilayaDropdow";
 import CommuneDropdown from "../components/CommuneDropdown";
 import ShippingTypeDropdown from "../components/ShippingTypeDropdown";
+import { ProductContext } from "../contexts/ProductContext";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Product from "../components/Product";
+
 const apiInstance = Api.instance;
 const Checkout = () => {
   const navigate = useNavigate();
   const { language } = useContext(LanguageContext);
   const { cart, total, clearCart } = useContext(CartContext);
   const { handleOpen } = useContext(SnackbarContext);
+  const { products, loadingProducts, recommends } = useContext(ProductContext);
 
-  
-  
   const [selectedWilaya, setSelectedWilaya] = useState();
   const [selectedCommune, setSelectedCommune] = useState();
   const [selectedShippingType, setSelectedShippingType] = useState();
@@ -30,7 +34,6 @@ const Checkout = () => {
   const [phoneNumber2, setPhoneNumber2] = useState();
   const [validateAttempt, setValidateAttempt] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
- 
 
   const createOrder = async () => {
     if (phoneNumber2 !== undefined && phoneNumber2?.length > 0) {
@@ -142,7 +145,7 @@ const Checkout = () => {
 
   return (
     <div className="p-4 lg:p-32 bg-gray-100">
-      { isValidating ? (
+      {isValidating ? (
         <div className="h-[100vh] w-full flex justify-center items-center">
           <ClipLoader />
         </div>
@@ -311,11 +314,12 @@ const Checkout = () => {
                 validateAttempt={validateAttempt}
               />
               <CommuneDropdown
-              onSelect={(commune) => {
-                setSelectedCommune(commune);
-              }}
-              selectedWilaya={selectedWilaya}
-              validateAttempt={validateAttempt}/>
+                onSelect={(commune) => {
+                  setSelectedCommune(commune);
+                }}
+                selectedWilaya={selectedWilaya}
+                validateAttempt={validateAttempt}
+              />
               <h1
                 className={`font-bold text-lg m-0 p-0 ${
                   language === "ar" ? "text-end" : "text-start"
@@ -328,10 +332,10 @@ const Checkout = () => {
                   : "Delivery"}
               </h1>
               <ShippingTypeDropdown
-              onSelect={(type) => {
-                setSelectedShippingType(type);
-              }}
-              validateAttempt={validateAttempt}
+                onSelect={(type) => {
+                  setSelectedShippingType(type);
+                }}
+                validateAttempt={validateAttempt}
               />
               <h1
                 className={`font-bold text-lg m-0 p-0 ${
@@ -520,6 +524,41 @@ const Checkout = () => {
           </div>
         </div>
       )}
+      <div className="w-full mt-8">
+        {recommends.map((recommend) => {
+          if (recommend.products.length === 0) {
+            return null;
+          }
+          return (
+            <div className="w-full">
+              <div className="w-full flex justify-center bg-white mb-4 p-2">
+                <h1 className="text-2xl text-center max-w-[500px] font-bold uppercase ">
+                  {language === "ar"
+                    ? recommend.category?.arName
+                    : language === "fr"
+                    ? recommend.category?.frName
+                    : recommend.category?.engName}
+                </h1>
+              </div>
+              <Carousel
+                key={recommend.category._id}
+                className="w-full"
+                autoPlay={true}
+                infiniteLoop={true}
+                centerMode={true}
+              >
+                {recommend.products.map((product) => {
+                  return (
+                    <div key={product._id}>
+                      <Product product={product} key={product._id} />
+                    </div>
+                  );
+                })}
+              </Carousel>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

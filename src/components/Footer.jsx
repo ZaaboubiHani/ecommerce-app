@@ -12,17 +12,14 @@ const Footer = () => {
       <p className={`flex items-center my-2 text-right`}>
         <FaPhoneFlip className='mr-2' />
         {language === 'ar' ? 'الهاتف : 0663 45 78 55' : language === 'fr' ? 'Téléphone: 0663 45 78 55' : 'Phone: 0663 45 78 55'}
-       
       </p>
       <p className='flex items-center my-2 text-left'>
         <MdEmail className='mr-2' />
         {language === 'ar' ? 'example05@gmail.com : البريد الإلكتروني' : language === 'fr' ? 'E-mail: example05@gmail.com' : 'Email: example05@gmail.com'}
-        
       </p>
       <a href='https://www.instagram.com/arela_clothsy' className='text-center flex items-center my-2'>
         <FaInstagramSquare className='mr-2' />
         {language === 'ar' ? 'arela_clothsy : إنستغرام' : language === 'fr' ? 'Instagram: arela_clothsy' : 'Instagram: arela_clothsy'}
-        
       </a>
       <p className='text-center my-2'>
         {language === 'ar' ? '.جميع الحقوق محفوظة' : language === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}
