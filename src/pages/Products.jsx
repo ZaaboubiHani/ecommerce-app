@@ -46,7 +46,7 @@ const Products = () => {
 
 
   return <div>
-    <section className='py-16 bg-gray-100 mt-12 '>
+    <section className='py-16 bg-gray-100 mt-16 '>
       <div className="container mx-auto">
         <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
           <CategoryDropdown />
@@ -60,7 +60,7 @@ const Products = () => {
             <TbMoodEmpty className='text-2xl mx-2'/>
           </section> :
             <div>
-              <div className='grid grid-cols-1 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-w-sm max-auto md:max-w-none md:mx-0 '>
+              <div className='grid grid-cols-2 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-auto max-w-none md:mx-0 '>
                 {products.map(product => {
                   return <Product product={product} key={product._id} />
                 })}
