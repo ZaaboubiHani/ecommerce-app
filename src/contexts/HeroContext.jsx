@@ -4,7 +4,7 @@ import axios from "axios";
 import Api from "../api/api.source";
 const apiInstance = Api.instance;
 const HeroProvider = ({ children }) => {
-  const [heros, setHeros] = useState();
+  const [heros, setHeros] = useState([]);
 
   const fetchHeros = async () => {
     const response = await apiInstance.getAxios().get(`/heroes`);
