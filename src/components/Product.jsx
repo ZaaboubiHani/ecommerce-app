@@ -20,7 +20,7 @@ const Product = ({ product }) => {
     color.sizes.some(size => size.inStock)
   );
   return (
-    <div className="bg-white relative rounded-2xl shadow-md">
+    <div className="bg-white relative rounded-2xl shadow-md w-[240px]">
       {/* Check if createdAt is at least a month old */}
       {Math.floor(
         (new Date(createdAt).getTime() - new Date(Date.now()).getTime()) /
@@ -48,7 +48,7 @@ const Product = ({ product }) => {
           <div className="w-full mx-auto flex justify-center items-center">
             <Link to={`/product/${_id}`}>
               <img
-                className="max-w-[270px] m-2 group-hover:scale-110 transition duration-[2000ms] rounded-2xl"
+                className=" group-hover:scale-110 transition duration-[2000ms] rounded-2xl"
                 src={colors[0].images.urls[0]}
                 alt=""
               />
