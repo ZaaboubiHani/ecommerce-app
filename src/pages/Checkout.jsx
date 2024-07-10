@@ -36,14 +36,7 @@ const Checkout = () => {
   const [isValidating, setIsValidating] = useState(false);
 
   const createOrder = async () => {
-    if (phoneNumber2 !== undefined && phoneNumber2?.length > 0) {
-      if (
-        phoneNumber2?.length !== 10 ||
-        !/^(05|06|07)\d{8}$/.test(phoneNumber2)
-      ) {
-        setValidateAttempt(true);
-      }
-    }
+   
     if (
       fullName === undefined ||
       fullName?.length === 0 ||
