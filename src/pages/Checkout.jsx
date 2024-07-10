@@ -517,14 +517,14 @@ const Checkout = () => {
           </div>
         </div>
       )}
-      <div className="w-full mt-8">
-        {recommends.map((recommend) => {
+      <div className="w-full">
+      {recommends.map((recommend) => {
           if (recommend.products.length === 0) {
             return null;
           }
           return (
-            <div className="w-full">
-              <div className="w-full flex justify-center bg-white mb-4 p-2">
+            <div className="w-full mb-6 ">
+              <div  className="w-full flex justify-center bg-white mb-4 p-2">
                 <h1 className="text-2xl text-center max-w-[500px] font-bold uppercase ">
                   {language === "ar"
                     ? recommend.category?.arName
@@ -535,7 +535,7 @@ const Checkout = () => {
               </div>
               <div
                 key={recommend.category._id}
-                className="w-full flex justify-center overflow-x-auto pb-2"
+                className=" flex overflow-x-auto pb-2 "
               
               >
                 {recommend.products.map((product) => {

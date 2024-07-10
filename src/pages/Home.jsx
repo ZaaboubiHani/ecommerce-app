@@ -63,7 +63,7 @@ const Home = () => {
               </div>
               <div
                 key={recommend.category._id}
-                className="w-full flex justify-center overflow-x-auto pb-2"
+                className=" flex overflow-x-auto pb-2 "
               
               >
                 {recommend.products.map((product) => {
