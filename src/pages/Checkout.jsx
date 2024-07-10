@@ -539,6 +539,7 @@ const Checkout = () => {
                 autoPlay={true}
                 infiniteLoop={true}
                 centerMode={true}
+                centerSlidePercentage={20}
               >
                 {recommend.products.map((product) => {
                   return (

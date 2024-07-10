@@ -7,6 +7,16 @@ import { LanguageContext } from "../contexts/LanguageContext";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
+
+// import required modules
+import { FreeMode, Pagination } from 'swiper/modules';
 
 const Home = () => {
   const { products, loadingProducts, recommends } = useContext(ProductContext);
@@ -57,6 +67,7 @@ const Home = () => {
                 autoPlay={true}
                 infiniteLoop={true}
                 centerMode={true}
+                centerSlidePercentage={20}
               >
                 {recommend.products.map((product) => {
                   return (
