@@ -533,22 +533,19 @@ const Checkout = () => {
                     : recommend.category?.engName}
                 </h1>
               </div>
-              <Carousel
+              <div
                 key={recommend.category._id}
-                className="w-full"
-                autoPlay={true}
-                infiniteLoop={true}
-                centerMode={true}
-                centerSlidePercentage={20}
+                className="w-full flex justify-center overflow-x-auto pb-2"
+              
               >
                 {recommend.products.map((product) => {
                   return (
-                    <div key={product._id}>
+                    <div key={product._id} className="mx-2">
                       <Product product={product} key={product._id} />
                     </div>
                   );
                 })}
-              </Carousel>
+              </div>
             </div>
           );
         })}
