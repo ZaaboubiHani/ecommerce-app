@@ -15,7 +15,7 @@ const Footer = () => {
       </p>
       <p className='flex items-center my-2 text-left'>
         <MdEmail className='mr-2' />
-        {language === 'ar' ? 'example05@gmail.com : البريد الإلكتروني' : language === 'fr' ? 'E-mail: example05@gmail.com' : 'Email: example05@gmail.com'}
+        {language === 'ar' ? 'Arelaclothsy@gmail.com : البريد الإلكتروني' : language === 'fr' ? 'E-mail: Arelaclothsy@gmail.com' : 'Email: Arelaclothsy@gmail.com'}
       </p>
       <a href='https://www.instagram.com/arela_clothsy' className='text-center flex items-center my-2'>
         <FaInstagramSquare className='mr-2' />
