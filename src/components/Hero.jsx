@@ -47,7 +47,11 @@ const Hero = () => {
             </Link>
           </div>
         </div>
-      ) : <ClipLoader />}
+      ) : (
+        <div className="h-full w-full flex justify-center items-center">
+          <ClipLoader />
+        </div>
+      )}
     </section>
   );
 };
