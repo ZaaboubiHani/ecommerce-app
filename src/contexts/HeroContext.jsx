@@ -9,7 +9,6 @@ const HeroProvider = ({ children }) => {
   const fetchHeros = async () => {
     const response = await apiInstance.getAxios().get(`/heroes`);
     setHeros(response.data);
-    console.log(response.data);
   };
 
   return (

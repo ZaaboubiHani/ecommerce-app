@@ -13,7 +13,7 @@ const Home = () => {
   const limitedProducts = products.slice(0, 5);
 
   return (
-    <div className="bg-proDetails bg-cover">
+    <div className="bg-cover">
       <Hero />
       <section className="py-16 ">
         <div className="container mx-auto">
@@ -33,6 +33,17 @@ const Home = () => {
           )}
         </div>
       </section>
+      <div className="w-full flex justify-center">
+        <div className="bg-gray-800 m-6 p-8 w-[500px]">
+          <h1 className="text-3xl  text-white  text-center  uppercase ">
+            Bestselling
+          </h1>
+          <div
+            className="border border-b-1 border-b-white-500 mt-4
+          "
+          />
+        </div>
+      </div>
       <div className="flex flex-col items-center">
         {recommends.map((recommend) => {
           if (recommend.products.length === 0) {
@@ -40,8 +51,8 @@ const Home = () => {
           }
           return (
             <div className="w-full mb-6 ">
-              <div  className="w-full flex justify-center bg-white mb-4 p-2">
-                <h1 className="text-2xl text-center max-w-[500px] font-bold uppercase ">
+              <div className="w-full flex justify-center bg-orange-200 mb-4 p-2">
+                <h1 className="text-2xl text-center max-w-[500px] font-bold uppercase font-primary">
                   {language === "ar"
                     ? recommend.category?.arName
                     : language === "fr"
@@ -52,7 +63,6 @@ const Home = () => {
               <div
                 key={recommend.category._id}
                 className=" flex overflow-x-auto pb-2 "
-              
               >
                 {recommend.products.map((product) => {
                   return (

@@ -4,7 +4,7 @@ import { LanguageContext } from '../contexts/LanguageContext';
 import DZ from '../img/dz.png';
 import FR from '../img/fr.png';
 import UK from '../img/uk.png';
-
+import { GrLanguage } from "react-icons/gr";
 const LanguageDropdown = () => {
     const { language, changeLanguage } = useContext(LanguageContext);
     const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +32,11 @@ const LanguageDropdown = () => {
                            duration-300 active:text-white'
             >
                 <div></div>
-                {language === 'ar' ? (<img className='h-[20px]' src={DZ} alt="" />) :
+                <GrLanguage></GrLanguage>
+                {/* {language === 'ar' ? (<img className='h-[20px]' src={DZ} alt="" />) :
                     language === 'fr' ? (<img className='h-[20px]' src={FR} alt="" />) :
                         (<img className='h-[20px]' src={UK} alt="" />)
-                }
+                } */}
                 {!isOpen ? (<IoMdArrowDropdown />) : (<IoMdArrowDropup />)}
             </button>
             {isOpen && (
