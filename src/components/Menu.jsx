@@ -49,13 +49,15 @@ const Menu = () => {
             ? "PRODUITS"
             : "PRODUCTS"}
         </Link>
-        <CategoryDropdown
+       
+      </div>
+      <div></div>
+      <CategoryDropdown
           onSelect={() => {
             handleCloseMenu();
             navigate("/products");
           }}
         />
-      </div>
       <Link
         to="/about"
         onClick={() => handleCloseMenu()}

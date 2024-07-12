@@ -66,8 +66,9 @@ const ProductProvider = ({ children }) => {
         },
         cancelToken: source?.current?.token,
       });
-      recoList.push({ category: cat, products: response.data.docs });
+      recoList.push(...response.data.docs);
     }
+    console.log(recoList);
     setRecommends(recoList);
   };
 

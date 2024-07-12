@@ -18,6 +18,21 @@ const toDoubleStruck = (text) => {
   return text.split('').map(char => doubleStruckMap[char] || char).join('');
 };
 
+const toScriptFont = (text) => {
+  const scriptMap = {
+    'A': '𝒜', 'B': '𝒝', 'C': '𝒞', 'D': '𝒟', 'E': '𝐸', 'F': '𝒻', 'G': '𝒢',
+    'H': '𝐻', 'I': '𝐼', 'J': '𝒥', 'K': '𝒦', 'L': '𝐿', 'M': '𝒦', 'N': '𝒩',
+    'O': '𝒪', 'P': '𝒫', 'Q': '𝒬', 'R': '𝑅', 'S': '𝒮', 'T': '𝒯', 'U': '𝒰',
+    'V': '𝒱', 'W': '𝒲', 'X': '𝒳', 'Y': '𝒴', 'Z': '𝒵', 'a': '𝒶', 'b': '𝒷',
+    'c': '𝒸', 'd': '𝒹', 'e': '𝒺', 'f': '𝒻', 'g': '𝒼', 'h': '𝒽', 'i': '𝒾',
+    'j': '𝒿', 'k': '𝓀', 'l': '𝓁', 'm': '𝓂', 'n': '𝓃', 'o': '𝑜', 'p': '𝓅',
+    'q': '𝓆', 'r': '𝓇', 's': '𝓈', 't': '𝓉', 'u': '𝓊', 'v': '𝓋', 'w': '𝓌',
+    'x': '𝓍', 'y': '𝓎', 'z': '𝓏', ' ': ' ',
+  };
+  return text.split('').map(char => scriptMap[char] || char).join('');
+};
+
+
 const Hero = () => {
   const { language } = useContext(LanguageContext);
   const { fetchHeros, heros } = useContext(HeroContext);
@@ -33,13 +48,12 @@ const Hero = () => {
           <div className="flex flex-col justify-center">
             {/* pretitle */}
             <div className="text-2xl flex items-center uppercase font-double-struck justify-center  ">
-              <div className="w-6 h-[2px] bg-red-500 mr-3"></div>
+              
               {toDoubleStruck(language === "ar"
                 ? heros[0].arName
                 : language === "fr"
                 ? heros[0].frName
                 : heros[0].engName)}
-                <div className="w-6 h-[2px] bg-red-500 ml-3"></div>
             </div>
             {/* title */}
             <h1 className="text-[70px] md:text-[100px] lg:text-[120px] xl:text-[170px] leading-[1.1] font-title mb-4 whitespace-nowrap text-center">
@@ -51,7 +65,7 @@ const Hero = () => {
               <br />
             </h1>
             <h1
-              className="uppercase font-primary font-light text-center text-2xl"
+              className="uppercase font-primary font-light text-center text-md"
             >
               {language === "ar"
                 ? heros[2].arName

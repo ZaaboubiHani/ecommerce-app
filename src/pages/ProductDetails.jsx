@@ -42,7 +42,7 @@ const ProductDetails = () => {
             language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"
           }`}
         >
-          <div className="flex lg:flex-col mx-2 min-w-[100px] h-[510px] overflow-y-auto">
+          <div className="flex lg:flex-col mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
             {product.colors[colorIndex].images?.urls.map((url, i) => {
               return (
                 <img

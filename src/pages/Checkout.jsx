@@ -15,7 +15,7 @@ import { ProductContext } from "../contexts/ProductContext";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Product from "../components/Product";
-
+import BestsellingCarousel from "../components/BestsellingCarousel";
 const apiInstance = Api.instance;
 const Checkout = () => {
   const navigate = useNavigate();
@@ -517,39 +517,18 @@ const Checkout = () => {
           </div>
         </div>
       )}
-      <div className="w-full">
-      {recommends.map((recommend) => {
-          if (recommend.products.length === 0) {
-            return null;
-          }
-          return (
-            <div className="w-full mb-6 ">
-              <div  className="w-full flex justify-center bg-white mb-4 p-2">
-                <h1 className="text-2xl text-center max-w-[500px] font-bold uppercase ">
-                  {language === "ar"
-                    ? recommend.category?.arName
-                    : language === "fr"
-                    ? recommend.category?.frName
-                    : recommend.category?.engName}
-                </h1>
-              </div>
-              <div
-                key={recommend.category._id}
-                className=" flex overflow-x-auto pb-2 "
-              
-              >
-                {recommend.products.map((product) => {
-                  return (
-                    <div key={product._id} className="mx-2">
-                      <Product product={product} key={product._id} />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+      <div className="w-full flex justify-center">
+        <div className="bg-gray-800 m-6 p-8 w-[500px]">
+          <h1 className="text-3xl  text-white  text-center  uppercase ">
+            Bestselling
+          </h1>
+          <div
+            className="border border-b-1 border-b-white-500 mt-4
+          "
+          />
+        </div>
       </div>
+      <BestsellingCarousel products={recommends}/>
     </div>
   );
 };
