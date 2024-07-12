@@ -20,7 +20,7 @@ const Product = ({ product }) => {
     color.sizes.some(size => size.inStock)
   );
   return (
-    <div className="bg-white relative rounded-2xl shadow-md w-[240px]">
+    <div className="bg-white relative rounded-2xl shadow-md w-[200px]">
       {/* Check if createdAt is at least a month old */}
       {Math.floor(
         (new Date(createdAt).getTime() - new Date(Date.now()).getTime()) /
@@ -42,7 +42,7 @@ const Product = ({ product }) => {
       {language === "ar" ? "غير متوفر" : language === "fr" ? "Indisponible" : "Unvailable"}
       <IoClose className="text-white" />
     </div>}
-      <div className="border border-[#e4e4e4] h-[300px] mb-4 relative overflow-hidden group transition rounded-2xl">
+      <div className="border border-[#e4e4e4] h-[250px] mb-4 relative overflow-hidden group transition rounded-2xl">
         <div className="w-full h-full flex justify-center items-center">
           {/* Image */}
           <div className="w-full mx-auto flex justify-center items-center">
