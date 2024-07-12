@@ -520,7 +520,11 @@ const Checkout = () => {
      <div className="w-full flex justify-center ">
         <div className=" m-6 p-8 w-[500px] shadow-md">
           <h1 className="text-3xl text-center  uppercase ">
-            Bestselling
+          {language === "ar"
+              ? "الأكثر مبيعا"
+              : language === "fr"
+              ? "Besy-Seller"
+              : "Bestselling"}
           </h1>
           <div
             className="border border-b-1 border-b-black mt-4
