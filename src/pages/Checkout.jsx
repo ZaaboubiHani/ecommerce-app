@@ -517,13 +517,13 @@ const Checkout = () => {
           </div>
         </div>
       )}
-      <div className="w-full flex justify-center">
-        <div className="bg-gray-800 m-6 p-8 w-[500px]">
-          <h1 className="text-3xl  text-white  text-center  uppercase ">
+     <div className="w-full flex justify-center ">
+        <div className=" m-6 p-8 w-[500px] shadow-md">
+          <h1 className="text-3xl text-center  uppercase ">
             Bestselling
           </h1>
           <div
-            className="border border-b-1 border-b-white-500 mt-4
+            className="border border-b-1 border-b-black mt-4
           "
           />
         </div>

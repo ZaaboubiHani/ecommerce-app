@@ -56,7 +56,7 @@ const Hero = () => {
                 : heros[0].engName)}
             </div>
             {/* title */}
-            <h1 className="text-[70px] md:text-[100px] lg:text-[120px] xl:text-[170px] leading-[1.1] font-title mb-4 whitespace-nowrap text-center">
+            <h1 className="text-[50px] md:text-[100px] lg:text-[120px] xl:text-[170px] leading-[1.1] font-title mb-4 whitespace-nowrap text-center">
               {language === "ar"
                 ? heros[1].arName
                 : language === "fr"
@@ -65,7 +65,7 @@ const Hero = () => {
               <br />
             </h1>
             <h1
-              className="uppercase font-primary font-light text-center text-md"
+              className="uppercase font-primary font-light text-center text-sm"
             >
               {language === "ar"
                 ? heros[2].arName
