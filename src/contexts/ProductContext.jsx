@@ -68,7 +68,6 @@ const ProductProvider = ({ children }) => {
       });
       recoList.push(...response.data.docs);
     }
-    console.log(recoList);
     setRecommends(recoList);
   };
 

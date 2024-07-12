@@ -16,7 +16,7 @@ const Home = () => {
     <div className="bg-cover">
       <Hero />
       <section className="py-16 ">
-        <div className="container mx-auto">
+        <div className="">
           <div className="flex flex-row"></div>
           {loadingProducts ? (
             <section className="h-screen flex justify-center items-center ">
@@ -24,7 +24,7 @@ const Home = () => {
             </section>
           ) : (
             <div>
-              <div className='grid grid-cols-2 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-auto max-w-none md:mx-0 '>
+              <div className="grid grid-cols-2 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[16px] max-auto max-w-none md:mx-0 p-4">
                 {limitedProducts.map((product) => {
                   return <Product product={product} key={product._id} />;
                 })}
@@ -36,7 +36,11 @@ const Home = () => {
       <div className="w-full flex justify-center ">
         <div className=" m-6 p-8 w-[500px] shadow-md">
           <h1 className="text-3xl text-center  uppercase ">
-            Bestselling
+            {language === "ar"
+              ? "الأكثر مبيعا"
+              : language === "fr"
+              ? "Besy-Seller"
+              : "Bestselling"}
           </h1>
           <div
             className="border border-b-1 border-b-black mt-4
@@ -45,7 +49,7 @@ const Home = () => {
         </div>
       </div>
 
-      <BestsellingCarousel products={recommends}/>
+      <BestsellingCarousel products={recommends} />
     </div>
   );
 };
