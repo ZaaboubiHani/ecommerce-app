@@ -16,7 +16,7 @@ const Home = () => {
     <div className="bg-cover">
       <Hero />
       <section className="py-16 ">
-        <div className="container mx-auto">
+        <div className="">
           <div className="flex flex-row"></div>
           {loadingProducts ? (
             <section className="h-screen flex justify-center items-center ">
@@ -24,7 +24,7 @@ const Home = () => {
             </section>
           ) : (
             <div>
-              <div className='grid grid-cols-2 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-auto max-w-none md:mx-0 '>
+              <div className='grid grid-cols-2 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[16px] max-auto max-w-none md:mx-0 p-4'>
                 {limitedProducts.map((product) => {
                   return <Product product={product} key={product._id} />;
                 })}
