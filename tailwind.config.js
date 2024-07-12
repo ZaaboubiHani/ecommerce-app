@@ -11,6 +11,7 @@ module.exports = {
       primary: ["Roboto", "sans-serif"],
       title: "Charm",
       sedan: ["sedan"],
+      script: ['"Times New Roman"', 'serif'],
     },
     container: {
       padding: {
