@@ -205,7 +205,7 @@ const ProductDetails = () => {
             </div>
             {validateAttempt && sizeIndex === undefined && (
               <div
-                className={`text-red-500 text-sm text-center ${
+                className={`text-pink-300 text-sm text-center ${
                   language === "ar" ? "lg:text-right" : "lg:text-left"
                 }`}
               >
@@ -229,7 +229,7 @@ const ProductDetails = () => {
                 : product.engName}
             </h1>
             <div
-              className={`text-xl text-red-500 font-medium mb-6 
+              className={`text-xl text-pink-300 font-medium mb-6 
           text-center ${language === "ar" ? "lg:text-right" : "lg:text-left"}`}
             >
               {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
@@ -359,7 +359,7 @@ const ProductDetails = () => {
                       setValidateAttempt(true);
                     }
                   }}
-                  className="bg-red-500 py-4 px-8 text-white mb-2 items-center rounded-2xl"
+                  className="bg-pink-300 py-4 px-8 text-white mb-2 items-center rounded-2xl"
                 >
                   {language === "ar"
                     ? "اشتري الان"

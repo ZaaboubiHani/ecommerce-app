@@ -2,10 +2,12 @@ import React, { useState, useContext } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { LanguageContext } from '../contexts/LanguageContext';
 import { SearchContext } from '../contexts/SearchContext';
-const SearchField = () => {
 
+
+const SearchField = () => {
+    
     const { language } = useContext(LanguageContext);
-    const { changeSearch } = useContext(SearchContext);
+    const { changeSearch,setSearchDialogOpen,searchDialogOpen } = useContext(SearchContext);
     return <div className="relative flex flex-row items-center w-[180px] border border-1 border-black mx-2 bg-white rounded-lg">
         <input
         onChange={(event)=>changeSearch(event.target.value.length === 0 ? undefined : event.target.value)}

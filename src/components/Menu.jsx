@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { GiLoincloth } from "react-icons/gi";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import CategoryDropdown from "../components/CategoryDropdown";
+import { RiDiscountPercentFill } from "react-icons/ri";
+import { CategoryContext } from "../contexts/CategoryContext";
 const Menu = () => {
   const navigate = useNavigate();
   const { menuIsOpen, handleCloseMenu } = useContext(MenuContext);
   const { language } = useContext(LanguageContext);
+  const { categories, changeCategory } = useContext(CategoryContext);
 
   return (
     <div
@@ -36,28 +38,50 @@ const Menu = () => {
         <FaHome className="text-2xl mr-4" />
         {language === "ar" ? "إستقبال" : language === "fr" ? "ACCUEIL" : "HOME"}
       </Link>
-      <div className="flex items-center">
-        <Link
-          to="/products"
-          onClick={() => () => handleCloseMenu()}
-          className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6 flex items-center"
-        >
-          <GiLoincloth className="text-2xl mr-4" />
-          {language === "ar"
-            ? "منتجات"
-            : language === "fr"
-            ? "PRODUITS"
-            : "PRODUCTS"}
-        </Link>
-       
-      </div>
-      <div></div>
-      <CategoryDropdown
-          onSelect={() => {
-            handleCloseMenu();
-            navigate("/products");
-          }}
-        />
+
+      <Link
+        to="/products"
+        onClick={() => handleCloseMenu()}
+        className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6 flex items-center"
+      >
+        <GiLoincloth className="text-2xl mr-4" />
+        {language === "ar"
+          ? "منتجات"
+          : language === "fr"
+          ? "PRODUITS"
+          : "PRODUCTS"}
+      </Link>
+
+      {categories.map((category) => (
+        <div className="ml-16">
+          <h3
+            className="uppercase p-4"
+            onClick={() => {
+              changeCategory(category);
+              navigate('/products')
+              handleCloseMenu();
+            }}
+          >
+            {language === "ar"
+              ? category.arName
+              : language === "fr"
+              ? category.frName
+              : category.engName}
+          </h3>
+        </div>
+      ))}
+      <Link
+        to="/about"
+        onClick={() => handleCloseMenu()}
+        className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6 flex items-center"
+      >
+        <RiDiscountPercentFill className="text-3xl mr-4" />
+        {language === "ar"
+          ? "ترويج"
+          : language === "fr"
+          ? "PROMOTION"
+          : "PROMOTION"}
+      </Link>
       <Link
         to="/about"
         onClick={() => handleCloseMenu()}

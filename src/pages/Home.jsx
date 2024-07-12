@@ -24,7 +24,7 @@ const Home = () => {
             </section>
           ) : (
             <div>
-              <div className="grid grid-cols-1 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-w-sm max-auto md:max-w-none md:mx-0 ">
+              <div className='grid grid-cols-2 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-auto max-w-none md:mx-0 '>
                 {limitedProducts.map((product) => {
                   return <Product product={product} key={product._id} />;
                 })}
@@ -33,13 +33,13 @@ const Home = () => {
           )}
         </div>
       </section>
-      <div className="w-full flex justify-center">
-        <div className="bg-gray-800 m-6 p-8 w-[500px]">
-          <h1 className="text-3xl  text-white  text-center  uppercase ">
+      <div className="w-full flex justify-center ">
+        <div className=" m-6 p-8 w-[500px] shadow-md">
+          <h1 className="text-3xl text-center  uppercase ">
             Bestselling
           </h1>
           <div
-            className="border border-b-1 border-b-white-500 mt-4
+            className="border border-b-1 border-b-black mt-4
           "
           />
         </div>
