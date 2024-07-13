@@ -9,9 +9,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from "react-router-dom";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { MdArrowBackIosNew } from "react-icons/md";
+import BestsellingCarousel from "../components/BestsellingCarousel";
+import TitleCard from "../components/TitleCard";
 const ProductDetails = () => {
   const { id } = useParams();
-  const { products } = useContext(ProductContext);
+  const { products, recommends } = useContext(ProductContext);
   const { addToCart } = useContext(CartContext);
   const { language } = useContext(LanguageContext);
   const { handleOpenSidebar, handleCloseSidebar } = useContext(SidebarContext);
@@ -20,7 +22,6 @@ const ProductDetails = () => {
   const [sizeIndex, setSizeIndex] = useState();
   const [amount, setAmount] = useState(1);
   const [validateAttempt, setValidateAttempt] = useState(false);
-
   const product = products.find((item) => {
     return item._id === id;
   });
@@ -32,334 +33,302 @@ const ProductDetails = () => {
     );
   }
   return (
-    <section
-      className={`pt-32 pb-10 md:px-16 lg:px-16 xl:px-64 lg:py-32 flex items-center bg-hero bg-cover `}
-    >
-      <div className="container mx-auto">
-        {/*image & text wrapper*/}
-        <div
-          className={`flex flex-col items-center lg:items-start ${
-            language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"
-          }`}
-        >
-           {/* side images */}
-          <div className="hidden lg:flex flex-col mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
-            {product.colors[colorIndex].images?.urls.map((url, i) => {
-              return (
-                <img
-                  onClick={() => setImageIndex(i)}
-                  key={i}
-                  src={url}
-                  style={{
-                    cursor: "pointer",
-                    height: "150px",
-                    width: "100px",
-                    border: imageIndex === i ? "2px solid black" : "none",
-                    objectFit: "cover",
-                  }}
-                />
-              );
-            })}
-          </div>
-          {/*image */}
-          <div className="relative ">
-            <img
-              className="max-w-sm"
-              src={product?.colors[colorIndex].images?.urls[imageIndex]}
-              alt=""
-            />
-            {/* botton images */}
-            <div className="flex lg:hidden mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
-            {product.colors[colorIndex].images?.urls.map((url, i) => {
-              return (
-                <img
-                  onClick={() => setImageIndex(i)}
-                  key={i}
-                  src={url}
-                  style={{
-                    cursor: "pointer",
-                    height: "150px",
-                    width: "100px",
-                    border: imageIndex === i ? "2px solid black" : "none",
-                    objectFit: "cover",
-                  }}
-                />
-              );
-            })}
-          </div>
-          <div className="flex w-full justify-center my-2">
-              {product.colors[colorIndex].images?.urls.map((url, i) => (
-                <div
-                  key={i}
-                  className={`h-2 w-2 rounded-full cursor-pointer mr-4
-                  ${imageIndex === i ? "bg-black" : "bg-gray-400"}`}
-                  onClick={() => {
-                    setImageIndex(i);
-                  }}
-                ></div>
-              ))}
-            </div>
-            <div
-              className="absolute h-full top-0 flex items-center right-0"
-              onClick={() => {
-                if (
-                  imageIndex <
-                  product.colors[colorIndex].images?.urls.length - 1
-                ) {
-                  setImageIndex(imageIndex + 1);
-                }
-              }}
-            >
-              <MdOutlineArrowForwardIos
-                className={`text-4xl text-white 
-                ${
-                  imageIndex <
-                  product.colors[colorIndex].images?.urls.length - 1
-                    ? "opacity-100"
-                    : "opacity-25"
-                }`}
-              />
-            </div>
-            <div
-              className="absolute h-full top-0 flex items-center left-0"
-              onClick={() => {
-                if (imageIndex > 0) {
-                  setImageIndex(imageIndex - 1);
-                }
-              }}
-            >
-              <MdArrowBackIosNew
-                className={`text-4xl text-white 
-                ${imageIndex > 0 ? "opacity-100" : "opacity-25"}`}
-              />
-            </div>
-          </div>
-          {/* config panel */}
+    <div className="bg-gray-100">
+      <section
+        className={`pt-32 pb-10 md:px-16 lg:px-16 xl:px-64 lg:py-32 flex items-center bg-hero bg-cover `}
+      >
+        <div className="container mx-auto">
+          {/*image & text wrapper*/}
           <div
-            className={`flex  flex-1 flex-col text-center items-center p-4 w-full lg:max-w-[500px]
-        ${language === "ar" ? "lg:items-end" : "lg:items-start"}`}
+            className={`flex flex-col items-center lg:items-start ${
+              language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"
+            }`}
           >
-            <div
-              className={`flex justify-center lg:justify-start ${
-                language === "ar" ? "flex-row-reverse" : "flex-row"
-              }`}
-            >
-              <div className={language === "ar" ? "text-right" : "text-left"}>
-                {language === "ar"
-                  ? ": لون"
-                  : language === "fr"
-                  ? "Couleur: "
-                  : "Color: "}
-              </div>
-              <div
-                className={`flex mb-6 ml-2 max-w-[300px] overflow-y-auto h-[30px] ${
-                  language === "ar" ? "justify-end" : "justify-start"
-                }`}
-              >
-                {product.colors.length > 1
-                  ? product.colors.map((col, i) => {
-                      return (
-                        <div
-                          className="flex-shrink-0"
-                          onClick={() => {
-                            setImageIndex(0);
-                            setColorIndex(i);
-                          }}
-                          key={col._id}
-                          style={{
-                            cursor: "pointer",
-                            height: "30px",
-                            width: "30px",
-                            borderRadius: "6px",
-                            backgroundColor: col.hex,
-                            marginRight: "16px",
-                            border:
-                              colorIndex === i
-                                ? "3px solid black"
-                                : "1px solid black",
-                          }}
-                        />
-                      );
-                    })
-                  : null}
-              </div>
+            {/* side images */}
+            <div className="hidden lg:flex flex-col mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
+              {product.colors[colorIndex].images?.urls.map((url, i) => {
+                return (
+                  <img
+                    onClick={() => setImageIndex(i)}
+                    key={i}
+                    src={url}
+                    style={{
+                      cursor: "pointer",
+                      height: "150px",
+                      width: "100px",
+                      border: imageIndex === i ? "2px solid black" : "none",
+                      objectFit: "cover",
+                    }}
+                  />
+                );
+              })}
             </div>
-            <div
-              className={`flex justify-center lg:justify-start h-8 ${
-                language === "ar" ? "flex-row-reverse" : "flex-row"
-              }`}
-            >
-              <div className={language === "ar" ? "text-right" : "text-left"}>
-                {language === "ar"
-                  ? ": حجم"
-                  : language === "fr"
-                  ? "Taille: "
-                  : "Size: "}
-              </div>
-              <div
-                className={`flex mb-6 ml-2 max-w-[300px] overflow-y-auto h-[30px] ${
-                  language === "ar" ? "justify-end" : "justify-start"
-                }`}
-              >
-                {product.colors[colorIndex].sizes.map((size, i) => {
+            {/*image */}
+            <div className="relative ">
+              <img
+                className="max-w-sm"
+                src={product?.colors[colorIndex].images?.urls[imageIndex]}
+                alt=""
+              />
+              {/* botton images */}
+              <div className="flex lg:hidden mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
+                {product.colors[colorIndex].images?.urls.map((url, i) => {
                   return (
-                    <button
-                      className="flex-shrink-0"
-                      onClick={() => setSizeIndex(i)}
-                      key={size._id}
+                    <img
+                      onClick={() => setImageIndex(i)}
+                      key={i}
+                      src={url}
                       style={{
-                        opacity: size.inStock ? "1" : "0.5",
-                        cursor: size.inStock ? "pointer" : "not-allowed",
-                        height: "30px",
-                        width: "30px",
-                        borderRadius: "4px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginLeft: "8px",
-                        backgroundColor: sizeIndex === i ? "black" : "white",
-                        color: sizeIndex === i ? "white" : "black",
-                        border:
-                          sizeIndex === i
-                            ? "3px solid black"
-                            : "1px solid black",
-                        boxSizing: "border-box", // Ensures padding and border are included in the element's total width and height
-                        // Adds some spacing between the boxes
+                        cursor: "pointer",
+                        height: "150px",
+                        width: "100px",
+                        border: imageIndex === i ? "2px solid black" : "none",
+                        objectFit: "cover",
                       }}
-                    >
-                      {size.size}
-                    </button>
+                    />
                   );
                 })}
               </div>
-            </div>
-            {validateAttempt && sizeIndex === undefined && (
+              <div className="flex w-full justify-center my-2">
+                {product.colors[colorIndex].images?.urls.map((url, i) => (
+                  <div
+                    key={i}
+                    className={`h-2 w-2 rounded-full cursor-pointer mr-4
+                  ${imageIndex === i ? "bg-black" : "bg-gray-400"}`}
+                    onClick={() => {
+                      setImageIndex(i);
+                    }}
+                  ></div>
+                ))}
+              </div>
               <div
-                className={`text-pink-300 text-sm text-center ${
+                className="absolute h-full top-0 flex items-center right-0"
+                onClick={() => {
+                  if (
+                    imageIndex <
+                    product.colors[colorIndex].images?.urls.length - 1
+                  ) {
+                    setImageIndex(imageIndex + 1);
+                  }
+                }}
+              >
+                <MdOutlineArrowForwardIos
+                  className={`text-4xl text-white 
+                  ${
+                    imageIndex <
+                    product.colors[colorIndex].images?.urls.length - 1
+                      ? "opacity-100"
+                      : "opacity-25"
+                  }`}
+                />
+              </div>
+              <div
+                className="absolute h-full top-0 flex items-center left-0"
+                onClick={() => {
+                  if (imageIndex > 0) {
+                    setImageIndex(imageIndex - 1);
+                  }
+                }}
+              >
+                <MdArrowBackIosNew
+                  className={`text-4xl text-white 
+                  ${imageIndex > 0 ? "opacity-100" : "opacity-25"}`}
+                />
+              </div>
+            </div>
+            {/* config panel */}
+            <div
+              className={`flex  flex-1 flex-col text-center items-center p-4 w-full lg:max-w-[500px]
+              ${language === "ar" ? "lg:items-end" : "lg:items-start"}`}
+            >
+              <div
+                className={`flex justify-center lg:justify-start ${
+                  language === "ar" ? "flex-row-reverse" : "flex-row"
+                }`}
+              >
+                <div className={language === "ar" ? "text-right" : "text-left"}>
+                  {language === "ar"
+                    ? ": لون"
+                    : language === "fr"
+                    ? "Couleur: "
+                    : "Color: "}
+                </div>
+                <div
+                  className={`flex mb-6 ml-2 max-w-[310px] overflow-y-auto h-[50px] ${
+                    language === "ar" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {product.colors.length > 1
+                    ? product.colors.map((col, i) => {
+                        return (
+                          <div
+                            className="flex-shrink-0"
+                            onClick={() => {
+                              setImageIndex(0);
+                              setColorIndex(i);
+                            }}
+                            key={col._id}
+                            style={{
+                              cursor: "pointer",
+                              height: "30px",
+                              width: "30px",
+                              borderRadius: "6px",
+                              backgroundColor: col.hex,
+                              marginRight: "16px",
+                              border:
+                                colorIndex === i
+                                  ? "3px solid black"
+                                  : "1px solid black",
+                            }}
+                          />
+                        );
+                      })
+                    : null}
+                </div>
+              </div>
+              <div
+                className={`flex justify-center lg:justify-start h-8 ${
+                  language === "ar" ? "flex-row-reverse" : "flex-row"
+                }`}
+              >
+                <div className={language === "ar" ? "text-right" : "text-left"}>
+                  {language === "ar"
+                    ? ": حجم"
+                    : language === "fr"
+                    ? "Taille: "
+                    : "Size: "}
+                </div>
+                <div
+                  className={`flex mb-6 ml-2 max-w-[310px] overflow-y-auto h-[50px] ${
+                    language === "ar" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {product.colors[colorIndex].sizes.map((size, i) => {
+                    return (
+                      <button
+                        className="flex-shrink-0"
+                        onClick={() => setSizeIndex(i)}
+                        key={size._id}
+                        style={{
+                          opacity: size.inStock ? "1" : "0.5",
+                          cursor: size.inStock ? "pointer" : "not-allowed",
+                          height: "30px",
+                          width: "30px",
+                          borderRadius: "4px",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginLeft: "8px",
+                          backgroundColor: sizeIndex === i ? "black" : "white",
+                          color: sizeIndex === i ? "white" : "black",
+                          border:
+                            sizeIndex === i
+                              ? "3px solid black"
+                              : "1px solid black",
+                          boxSizing: "border-box", 
+                        }}
+                      >
+                        {size.size}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              {validateAttempt && sizeIndex === undefined && (
+                <div
+                  className={`text-pink-300 text-sm text-center ${
+                    language === "ar" ? "lg:text-right" : "lg:text-left"
+                  }`}
+                >
+                  {language === "ar"
+                    ? "الرجاء تحديد حجم"
+                    : language === "fr"
+                    ? "Veuillez choisir une taille"
+                    : "Please select a size"}
+                </div>
+              )}
+
+              {/*text */}
+              <h1
+                className={`text-[26px] font-sedan my-2 lg:mx-0 
+                text-center ${
                   language === "ar" ? "lg:text-right" : "lg:text-left"
                 }`}
               >
                 {language === "ar"
-                  ? "الرجاء تحديد حجم"
+                  ? product.arName
                   : language === "fr"
-                  ? "Veuillez choisir une taille"
-                  : "Please select a size"}
-              </div>
-            )}
-
-            {/*text */}
-            <h1
-              className={`text-[26px] font-sedan mb-2 mx-auto lg:mx-0 
-          text-center ${language === "ar" ? "lg:text-right" : "lg:text-left"}`}
-            >
-              {language === "ar"
-                ? product.arName
-                : language === "fr"
-                ? product.frName
-                : product.engName}
-            </h1>
-            <div
-              className={`text-xl text-pink-300 font-medium mb-6 
-          text-center ${language === "ar" ? "lg:text-right" : "lg:text-left"}`}
-            >
-              {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
-              {product.price}
-            </div>
-            <p
-              className={`mb-8  break-words text-center w-full
-           ${language === "ar" ? "lg:text-right" : "lg:text-left"}`}
-            >
-              {language === "ar"
-                ? product.arDescription
-                : language === "fr"
-                ? product.frDescription
-                : product.engDescription}
-            </p>
-
-            {/* quantity */}
-            <div
-              className={`flex items-center w-[200px] h-[60px] mb-2 mr-4 ${
-                language === "ar" ? "flex-row-reverse" : "flex-row"
-              }`}
-            >
-              {language === "ar"
-                ? ": كمية"
-                : language === "fr"
-                ? "Quantité: "
-                : "Quantity: "}
+                  ? product.frName
+                  : product.engName}
+              </h1>
               <div
-                className={`flex flex-1 w-[100px] items-center h-full 
-               border-2 border-primary text-primary font-medium mx-4 rounded-2xl
-              ${language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"}
-              ${language === "ar" ? "flex-row-reverse" : "flex-row"}
-              `}
+                className={`text-xl text-pink-300 font-medium mb-6 
+                text-center ${
+                  language === "ar" ? "lg:text-right" : "lg:text-left"
+                }`}
               >
-                {/*minus icon */}
-                <button
-                  onClick={() => setAmount((prev) => prev - 1)}
-                  disabled={amount === 1}
-                  className="flex-1 h-full flex justify-center items-center cursor-pointer "
-                >
-                  <IoMdRemove
-                    className={`${
-                      amount === 1 ? "text-gray-300" : "text-black"
-                    }`}
-                  />
-                </button>
-                {/*amount*/}
-                <div className="h-full flex justify-center items-center px-2">
-                  {amount}
-                </div>
-                {/*plus icon */}
-                <div
-                  onClick={() => setAmount((prev) => prev + 1)}
-                  className="flex-1 h-full flex justify-center items-center cursor-pointer"
-                >
-                  <IoMdAdd />
-                </div>
+                {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
+                {product.price}
               </div>
-            </div>
-            <div
-              className={`flex flex-col items-center ${
-                language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"
-              }`}
-            >
-              <button
-                onClick={() => {
-                  if (sizeIndex !== undefined) {
-                    setValidateAttempt(false);
-                    addToCart({
-                      id: product._id,
-                      price: product.price,
-                      arDescription: product.arDescription,
-                      frDescription: product.frDescription,
-                      engDescription: product.engDescription,
-                      arName: product.arName,
-                      frName: product.frName,
-                      engName: product.engName,
-                      img: product.colors[colorIndex].images?.urls[imageIndex],
-                      size: product.colors[colorIndex].sizes[sizeIndex].size,
-                      color: product.colors[colorIndex].hex,
-                      amount: amount,
-                    });
-                    setAmount(1);
-                    handleOpenSidebar();
-                    setTimeout(() => {
-                      handleCloseSidebar();
-                    }, 3000);
-                  } else {
-                    setValidateAttempt(true);
-                  }
-                }}
-                className="bg-primary py-4 px-8 text-white mb-2 items-center lg:mx-4 rounded-2xl"
+              <p
+                className={`mb-8  break-words text-center w-full
+                ${language === "ar" ? "lg:text-right" : "lg:text-left"}`}
               >
                 {language === "ar"
-                  ? "أضف إلى السلة"
+                  ? product.arDescription
                   : language === "fr"
-                  ? "Ajouter au panier"
-                  : "Add to cart"}
-              </button>
-              <Link to={sizeIndex !== undefined ? "/checkout" : null}>
+                  ? product.frDescription
+                  : product.engDescription}
+              </p>
+
+              {/* quantity */}
+              <div
+                className={`flex items-center w-[200px] h-[60px] mb-2 mr-4 ${
+                  language === "ar" ? "flex-row-reverse" : "flex-row"
+                }`}
+              >
+                {language === "ar"
+                  ? ": كمية"
+                  : language === "fr"
+                  ? "Quantité: "
+                  : "Quantity: "}
+                <div
+                  className={`flex flex-1 w-[100px] items-center h-full 
+                  border-2 border-primary text-primary font-medium mx-4 rounded-2xl
+                  ${language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"}
+                  ${language === "ar" ? "flex-row-reverse" : "flex-row"}
+                  `}
+                >
+                  {/*minus icon */}
+                  <button
+                    onClick={() => setAmount((prev) => prev - 1)}
+                    disabled={amount === 1}
+                    className="flex-1 h-full flex justify-center items-center cursor-pointer "
+                  >
+                    <IoMdRemove
+                      className={`${
+                        amount === 1 ? "text-gray-300" : "text-black"
+                      }`}
+                    />
+                  </button>
+                  {/*amount*/}
+                  <div className="h-full flex justify-center items-center px-2">
+                    {amount}
+                  </div>
+                  {/*plus icon */}
+                  <div
+                    onClick={() => setAmount((prev) => prev + 1)}
+                    className="flex-1 h-full flex justify-center items-center cursor-pointer"
+                  >
+                    <IoMdAdd />
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`flex flex-col items-center ${
+                  language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"
+                }`}
+              >
                 <button
                   onClick={() => {
                     if (sizeIndex !== undefined) {
@@ -389,20 +358,69 @@ const ProductDetails = () => {
                       setValidateAttempt(true);
                     }
                   }}
-                  className="bg-pink-300 py-4 px-8 text-white mb-2 items-center rounded-2xl"
+                  className="bg-primary py-4 px-8 text-white mb-2 items-center lg:mx-4 rounded-2xl"
                 >
                   {language === "ar"
-                    ? "اشتري الان"
+                    ? "أضف إلى السلة"
                     : language === "fr"
-                    ? "Achetez maintenant"
-                    : "Buy now"}
+                    ? "Ajouter au panier"
+                    : "Add to cart"}
                 </button>
-              </Link>
+                <Link to={sizeIndex !== undefined ? "/checkout" : null}>
+                  <button
+                    onClick={() => {
+                      if (sizeIndex !== undefined) {
+                        setValidateAttempt(false);
+                        addToCart({
+                          id: product._id,
+                          price: product.price,
+                          arDescription: product.arDescription,
+                          frDescription: product.frDescription,
+                          engDescription: product.engDescription,
+                          arName: product.arName,
+                          frName: product.frName,
+                          engName: product.engName,
+                          img: product.colors[colorIndex].images?.urls[
+                            imageIndex
+                          ],
+                          size: product.colors[colorIndex].sizes[sizeIndex]
+                            .size,
+                          color: product.colors[colorIndex].hex,
+                          amount: amount,
+                        });
+                        setAmount(1);
+                        handleOpenSidebar();
+                        setTimeout(() => {
+                          handleCloseSidebar();
+                        }, 3000);
+                      } else {
+                        setValidateAttempt(true);
+                      }
+                    }}
+                    className="bg-pink-300 py-4 px-8 text-white mb-2 items-center rounded-2xl"
+                  >
+                    {language === "ar"
+                      ? "اشتري الان"
+                      : language === "fr"
+                      ? "Achetez maintenant"
+                      : "Buy now"}
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <TitleCard
+        title={language === "ar"
+          ? "المنتجات المشابهة"
+          : language === "fr"
+          ? "produits similaires"
+          : "similiar products"}
+      />
+     
+      <BestsellingCarousel products={recommends} />
+    </div>
   );
 };
 

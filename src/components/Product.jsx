@@ -20,27 +20,27 @@ const Product = ({ product }) => {
     color.sizes.some(size => size.inStock)
   );
   return (
-    <div className="bg-white relative rounded-2xl shadow-md w-[150px] sm:w-[240px]">
+    <div className="bg-white relative rounded-2xl shadow-md w-[180px] sm:w-[240px]">
       {/* Check if createdAt is at least a month old */}
       {Math.floor(
         (new Date(createdAt).getTime() - new Date(Date.now()).getTime()) /
           (1000 * 60 * 60 * 24)
       ) <= 14 ? (
-        <div className={`absolute bg-yellow-500 text-white top-2 rounded p-1 z-10 text-xs opacity-75
+        <div className={`absolute bg-white top-2 rounded p-1 z-10 text-xs opacity-60
         ${language === "ar" ? 'right-2' : 'left-2'}`}>
           {language === "ar" ? "جديد" : language === "fr" ? "Nouveau" : "New"}
         </div>
       ) : null}
       {isAvailable ? (
-        <div className={`absolute bg-green-500 text-white top-10 rounded p-1 z-10 flex items-center text-xs opacity-75
+        <div className={`absolute bg-white top-10 rounded p-1 z-10 flex items-center text-xs opacity-60
         ${language === "ar" ? 'flex-row-reverse' : ''} ${language === "ar" ? 'right-2' : 'left-2'}`}>
           {language === "ar" ? "متوفر" : language === "fr" ? "Disponible" : "Available"}
-          <IoCheckmark className="text-white" />
+          <IoCheckmark className="text-black" />
         </div>
-      ) : <div className={`absolute bg-red-500 text-white top-12 rounded p-1 z-10 flex items-center
+      ) : <div className={`absolute bg-white top-10 rounded p-1 z-10 flex items-center text-xs opacity-60
        ${language === "ar" ? 'flex-row-reverse' : ''} ${language === "ar" ? 'right-2' : 'left-2'}`}>
       {language === "ar" ? "غير متوفر" : language === "fr" ? "Indisponible" : "Unvailable"}
-      <IoClose className="text-white" />
+      <IoClose className="text-black" />
     </div>}
       <div className="border border-[#e4e4e4] h-[200] sm:h-[300px] mb-4 relative overflow-hidden group transition rounded-2xl">
         <div className="w-full h-full flex justify-center items-center">
