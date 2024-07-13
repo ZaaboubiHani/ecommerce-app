@@ -17,6 +17,23 @@ const BestsellingCarousel = ({ products }) => {
     }
   }, [products]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (carouselRef.current && cardWidth) {
+        const index = Math.round(carouselRef.current.scrollLeft / cardWidth);
+        setCurrentIndex(index);
+      }
+    };
+    
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener('scroll', handleScroll);
+      return () => {
+        carousel.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [cardWidth]);
+
   const scrollToIndex = (index) => {
     if (carouselRef.current && cardWidth) {
       carouselRef.current.scrollTo({
@@ -43,11 +60,10 @@ const BestsellingCarousel = ({ products }) => {
     <div className="relative">
       <div
         ref={carouselRef}
-        className="flex flex-row w-full overflow-hidden scroll-smooth items-center"
-        style={{ pointerEvents: 'none' }}
+        className="flex flex-row w-full overflow-x-auto scroll-smooth items-center"
       >
         {products.map((product) => (
-          <div key={product._id} className="m-2 card" style={{ pointerEvents: 'auto' }}>
+          <div key={product._id} className="m-2 card">
             <BestsellingCard product={product} />
           </div>
         ))}

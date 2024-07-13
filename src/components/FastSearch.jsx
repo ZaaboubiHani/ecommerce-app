@@ -9,14 +9,16 @@ const FastSearch = () => {
   const navigate = useNavigate();
   return (
     <div className={`w-full h-screen justify-center items-center ${searchDialogOpen ? 'flex' : 'hidden'}`}>
-      <div className="w-full h-screen bg-black fixed z-50 top-0 opacity-70 flex justify-center items-center">
+      <div className="w-full h-screen bg-black fixed z-50 top-0 opacity-70 flex justify-center items-center"
+      onClick={()=>setSearchDialogOpen(false)}
+      >
         <input
           onChange={(event) =>
             setSearchText(
               event.target.value.length === 0 ? undefined : event.target.value
             )
           }
-          className="bg-white p-2 flex items-center justify-between
+          className="bg-white p-2 flex items-center justify-between ml-2
         text-l focus:border-transparent focus:ring-0 outline-none rounded-lg w-[500px]"
           type="text"
         ></input>

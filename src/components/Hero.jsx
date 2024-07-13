@@ -27,7 +27,7 @@ const Hero = () => {
     fetchHeros();
   }, []);
   return (
-    <section className="h-[800px] bg-hero lg:bg-hero1 bg-no-repeat bg-cover bg-center py-24">
+    <section className="h-[500px] bg-hero bg-no-repeat bg-cover bg-center py-24">
       {heros.length > 0 ? (
         <div className="container mx-auto flex justify-around font-primary h-full transition-all duration-300">
           {/* text */}

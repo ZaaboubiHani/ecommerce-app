@@ -27,7 +27,7 @@ const LanguageDropdown = () => {
         <div className="relative flex flex-col items-center w-[120px]" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen((prev) => !prev)}
-                className='bg-white p-2 w-full flex items-center justify-between
+                className='bg-white p-2 w-[60px] flex items-center justify-between
                            font-bold text-l rounded-lg tracking-wider border-4 border-transparent active:border-white
                            duration-300 active:text-white'
             >
