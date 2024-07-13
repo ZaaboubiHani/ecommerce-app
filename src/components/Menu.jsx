@@ -71,11 +71,11 @@ const Menu = () => {
         </div>
       ))}
       <Link
-        to="/about"
+        to="/promotion"
         onClick={() => handleCloseMenu()}
-        className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6 flex items-center"
+        className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-5 flex items-center"
       >
-        <RiDiscountPercentFill className="text-3xl mr-4" />
+        <RiDiscountPercentFill className="text-3xl mr-3" />
         {language === "ar"
           ? "ترويج"
           : language === "fr"

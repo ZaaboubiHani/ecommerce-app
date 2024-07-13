@@ -6,6 +6,8 @@ import Hero from "../components/Hero";
 import { LanguageContext } from "../contexts/LanguageContext";
 import ClipLoader from "react-spinners/ClipLoader";
 import BestsellingCarousel from "../components/BestsellingCarousel";
+import SingleCarousel from "../components/SingleCarousel";
+import TitleCard from "../components/TitleCard";
 const Home = () => {
   const { products, loadingProducts, recommends } = useContext(ProductContext);
 
@@ -13,25 +15,31 @@ const Home = () => {
   const limitedProducts = products.slice(0, 5);
 
   return (
-    <div className="bg-cover">
+    <div className="bg-cover bg-gray-100">
       <Hero />
-      <div className="w-full flex justify-center ">
-        <div className=" m-6 p-8 w-[500px] shadow-md">
-          <h1 className="text-3xl text-center  uppercase ">
-            {language === "ar"
-              ? "مقترحات"
-              : language === "fr"
-              ? "Recommandations"
-              : "Recommendations"}
-          </h1>
-          <div
-            className="border border-b-1 border-b-black mt-4
-          "
-          />
-        </div>
-      </div>
-      <section className="">
-        <div className="">
+      <TitleCard
+        title={
+          language === "ar"
+            ? "مجموعة جديدة"
+            : language === "fr"
+            ? "Nouvelle Collection"
+            : "New Collection"
+        }
+      />
+
+      <SingleCarousel products={recommends} />
+      <TitleCard
+        title={
+          language === "ar"
+            ? "مقترحات"
+            : language === "fr"
+            ? "Recommandations"
+            : "Recommendations"
+        }
+      />
+
+      <section >
+        <div >
           <div className="flex flex-row"></div>
           {loadingProducts ? (
             <section className="h-screen flex justify-center items-center ">
@@ -39,7 +47,7 @@ const Home = () => {
             </section>
           ) : (
             <div>
-              <div className="grid grid-cols-2 mt-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[16px] max-auto max-w-none md:mx-0 p-4">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[16px] max-auto max-w-none md:mx-0 p-4">
                 {limitedProducts.map((product) => {
                   return <Product product={product} key={product._id} />;
                 })}
@@ -48,22 +56,15 @@ const Home = () => {
           )}
         </div>
       </section>
-      <div className="w-full flex justify-center ">
-        <div className=" m-6 p-8 w-[500px] shadow-md">
-          <h1 className="text-3xl text-center  uppercase ">
-            {language === "ar"
-              ? "الأكثر مبيعا"
-              : language === "fr"
-              ? "Best-Seller"
-              : "Bestselling"}
-          </h1>
-          <div
-            className="border border-b-1 border-b-black mt-4
-          "
-          />
-        </div>
-      </div>
-
+      <TitleCard
+        title={
+          language === "ar"
+            ? "الأكثر مبيعا"
+            : language === "fr"
+            ? "Best-Seller"
+            : "Bestselling"
+        }
+      />
       <BestsellingCarousel products={recommends} />
     </div>
   );

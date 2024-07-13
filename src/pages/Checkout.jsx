@@ -16,6 +16,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Product from "../components/Product";
 import BestsellingCarousel from "../components/BestsellingCarousel";
+import TitleCard from "../components/TitleCard";
 const apiInstance = Api.instance;
 const Checkout = () => {
   const navigate = useNavigate();
@@ -517,21 +518,14 @@ const Checkout = () => {
           </div>
         </div>
       )}
-     <div className="w-full flex justify-center ">
-        <div className=" m-6 p-8 w-[500px] shadow-md">
-          <h1 className="text-3xl text-center  uppercase ">
-          {language === "ar"
-              ? "الأكثر مبيعا"
-              : language === "fr"
-              ? "Besy-Seller"
-              : "Bestselling"}
-          </h1>
-          <div
-            className="border border-b-1 border-b-black mt-4
-          "
-          />
-        </div>
-      </div>
+       <TitleCard
+        title={language === "ar"
+          ? "الأكثر مبيعا"
+          : language === "fr"
+          ? "Besy-Seller"
+          : "Bestselling"}
+      />
+    
       <BestsellingCarousel products={recommends}/>
     </div>
   );

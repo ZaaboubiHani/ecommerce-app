@@ -13,7 +13,7 @@ import ScrollToTopButton from "./components/ScrollToTopButton";
 import Snackbar from "./components/Snackbar";
 import Menu from "./components/Menu";
 import ScrollToTop from "./utils/ScrollToTop";
-
+import Promotion from './pages/Promotion';
 import FastSearch from "./components/FastSearch";
 const App = () => {
   return (
@@ -27,6 +27,7 @@ const App = () => {
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/promotion" element={<Promotion />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

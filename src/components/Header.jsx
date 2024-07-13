@@ -23,7 +23,7 @@ const Header = () => {
   fixed w-full z-30 transition-all h-[60px]
   "
     >
-      <div className="container mx-auto flex items-center justify-between h-full p-4">
+      <div className=" mx-auto flex items-center justify-between h-full p-4">
         <div
           className="cursor-pointer flex relative md:hidden"
           onClick={() => handleOpenMenu()}
@@ -32,7 +32,7 @@ const Header = () => {
         </div>
         {/* logo */}
         <Link to="/">
-          <img className="h-[60px] hidden md:block" src={Logo} alt="" />
+          <img className="h-[60px] hidden lg:block" src={Logo} alt="" />
         </Link>
         <div className="flex items-center h-full">
           <Link
@@ -54,6 +54,16 @@ const Header = () => {
               : language === "fr"
               ? "PRODUITS"
               : "PRODUCTS"}
+          </Link>
+          <Link
+            to="/promotion"
+            className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6 hidden md:block"
+          >
+            {language === "ar"
+              ? "ترويج"
+              : language === "fr"
+              ? "PROMOTION"
+              : "PROMOTION"}
           </Link>
           <Link
             to="/about"
