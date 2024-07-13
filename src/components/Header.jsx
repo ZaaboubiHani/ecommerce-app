@@ -20,12 +20,12 @@ const Header = () => {
   return (
     <header
       className="bg-white shadow-md
-  fixed w-full z-30 transition-all  h-[60px]
+  fixed w-full z-30 transition-all h-[60px]
   "
     >
-      <div className="container mx-auto flex items-center justify-between h-full ">
+      <div className="container mx-auto flex items-center justify-between h-full p-4">
         <div
-          className="cursor-pointer flex relative ml-4 lg:ml-16  md:hidden"
+          className="cursor-pointer flex relative md:hidden"
           onClick={() => handleOpenMenu()}
         >
           <GiHamburgerMenu className="text-2xl" />
@@ -78,7 +78,7 @@ const Header = () => {
           >
             <BsBag className="text-2xl" />
             <div
-              className="bg-red-500 absolute -right-2 -bottom-2 text-[12px] w-[18px] h-[18px]
+              className="bg-black absolute -right-2 -bottom-2 text-[12px] w-[18px] h-[18px]
       text-white rounded-full flex justify-center items-center
       "
             >

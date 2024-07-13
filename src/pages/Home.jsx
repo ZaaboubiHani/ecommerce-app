@@ -15,7 +15,22 @@ const Home = () => {
   return (
     <div className="bg-cover">
       <Hero />
-      <section className="py-16 ">
+      <div className="w-full flex justify-center ">
+        <div className=" m-6 p-8 w-[500px] shadow-md">
+          <h1 className="text-3xl text-center  uppercase ">
+            {language === "ar"
+              ? "مقترحات"
+              : language === "fr"
+              ? "Recommandations"
+              : "Recommendations"}
+          </h1>
+          <div
+            className="border border-b-1 border-b-black mt-4
+          "
+          />
+        </div>
+      </div>
+      <section className="">
         <div className="">
           <div className="flex flex-row"></div>
           {loadingProducts ? (
@@ -39,7 +54,7 @@ const Home = () => {
             {language === "ar"
               ? "الأكثر مبيعا"
               : language === "fr"
-              ? "Besy-Seller"
+              ? "Best-Seller"
               : "Bestselling"}
           </h1>
           <div

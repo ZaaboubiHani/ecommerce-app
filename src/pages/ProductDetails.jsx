@@ -33,7 +33,7 @@ const ProductDetails = () => {
   }
   return (
     <section
-      className={`pt-32 pb-10 md:px-16 lg:px-16 xl:px-64 lg:py-32 flex items-center bg-proDetails bg-cover `}
+      className={`pt-32 pb-10 md:px-16 lg:px-16 xl:px-64 lg:py-32 flex items-center bg-hero bg-cover `}
     >
       <div className="container mx-auto">
         {/*image & text wrapper*/}
@@ -42,7 +42,8 @@ const ProductDetails = () => {
             language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"
           }`}
         >
-          <div className="flex lg:flex-col mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
+           {/* side images */}
+          <div className="hidden lg:flex flex-col mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
             {product.colors[colorIndex].images?.urls.map((url, i) => {
               return (
                 <img
@@ -67,10 +68,29 @@ const ProductDetails = () => {
               src={product?.colors[colorIndex].images?.urls[imageIndex]}
               alt=""
             />
-            <div className="flex w-full justify-center mt-2">
+            {/* botton images */}
+            <div className="flex lg:hidden mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
+            {product.colors[colorIndex].images?.urls.map((url, i) => {
+              return (
+                <img
+                  onClick={() => setImageIndex(i)}
+                  key={i}
+                  src={url}
+                  style={{
+                    cursor: "pointer",
+                    height: "150px",
+                    width: "100px",
+                    border: imageIndex === i ? "2px solid black" : "none",
+                    objectFit: "cover",
+                  }}
+                />
+              );
+            })}
+          </div>
+          <div className="flex w-full justify-center my-2">
               {product.colors[colorIndex].images?.urls.map((url, i) => (
                 <div
-                key={i}
+                  key={i}
                   className={`h-2 w-2 rounded-full cursor-pointer mr-4
                   ${imageIndex === i ? "bg-black" : "bg-gray-400"}`}
                   onClick={() => {
@@ -83,28 +103,35 @@ const ProductDetails = () => {
               className="absolute h-full top-0 flex items-center right-0"
               onClick={() => {
                 if (
-                  imageIndex < product.colors[colorIndex].images?.urls.length -1
+                  imageIndex <
+                  product.colors[colorIndex].images?.urls.length - 1
                 ) {
                   setImageIndex(imageIndex + 1);
                 }
               }}
             >
-              <MdOutlineArrowForwardIos className={`text-4xl text-white 
-                ${imageIndex < product.colors[colorIndex].images?.urls.length -1 ? 'opacity-100' : 'opacity-25'}`} />
+              <MdOutlineArrowForwardIos
+                className={`text-4xl text-white 
+                ${
+                  imageIndex <
+                  product.colors[colorIndex].images?.urls.length - 1
+                    ? "opacity-100"
+                    : "opacity-25"
+                }`}
+              />
             </div>
             <div
               className="absolute h-full top-0 flex items-center left-0"
               onClick={() => {
-               
-                if (
-                  imageIndex > 0
-                ) {
+                if (imageIndex > 0) {
                   setImageIndex(imageIndex - 1);
                 }
               }}
             >
-              <MdArrowBackIosNew className={`text-4xl text-white 
-                ${imageIndex > 0 ? 'opacity-100' : 'opacity-25'}`} />
+              <MdArrowBackIosNew
+                className={`text-4xl text-white 
+                ${imageIndex > 0 ? "opacity-100" : "opacity-25"}`}
+              />
             </div>
           </div>
           {/* config panel */}
@@ -125,7 +152,7 @@ const ProductDetails = () => {
                   : "Color: "}
               </div>
               <div
-                className={`flex mb-6 ml-2 ${
+                className={`flex mb-6 ml-2 max-w-[300px] overflow-y-auto h-[30px] ${
                   language === "ar" ? "justify-end" : "justify-start"
                 }`}
               >
@@ -133,6 +160,7 @@ const ProductDetails = () => {
                   ? product.colors.map((col, i) => {
                       return (
                         <div
+                          className="flex-shrink-0"
                           onClick={() => {
                             setImageIndex(0);
                             setColorIndex(i);
@@ -169,32 +197,34 @@ const ProductDetails = () => {
                   : "Size: "}
               </div>
               <div
-                className={`flex mb-6 ml-2 ${
+                className={`flex mb-6 ml-2 max-w-[300px] overflow-y-auto h-[30px] ${
                   language === "ar" ? "justify-end" : "justify-start"
                 }`}
               >
                 {product.colors[colorIndex].sizes.map((size, i) => {
                   return (
                     <button
+                      className="flex-shrink-0"
                       onClick={() => setSizeIndex(i)}
                       key={size._id}
-                      disabled={!size.inStock}
                       style={{
                         opacity: size.inStock ? "1" : "0.5",
                         cursor: size.inStock ? "pointer" : "not-allowed",
                         height: "30px",
                         width: "30px",
                         borderRadius: "4px",
-                        marginRight: "16px",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
+                        marginLeft: "8px",
                         backgroundColor: sizeIndex === i ? "black" : "white",
                         color: sizeIndex === i ? "white" : "black",
                         border:
                           sizeIndex === i
                             ? "3px solid black"
                             : "1px solid black",
+                        boxSizing: "border-box", // Ensures padding and border are included in the element's total width and height
+                        // Adds some spacing between the boxes
                       }}
                     >
                       {size.size}
