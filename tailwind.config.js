@@ -31,7 +31,8 @@ module.exports = {
         secondary: "#F5E6E0",
       },
       backgroundImage: {
-        hero: "url('./img/bg_hero1.jpg')",
+        hero1: "url('./img/bg_hero1.jpg')",
+        hero: "url('./img/bg_hero.jpg')",
         proDetails: "url('./img/bg.jfif')",
       },
     },

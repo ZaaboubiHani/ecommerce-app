@@ -18,20 +18,6 @@ const toDoubleStruck = (text) => {
   return text.split('').map(char => doubleStruckMap[char] || char).join('');
 };
 
-const toScriptFont = (text) => {
-  const scriptMap = {
-    'A': '𝒜', 'B': '𝒝', 'C': '𝒞', 'D': '𝒟', 'E': '𝐸', 'F': '𝒻', 'G': '𝒢',
-    'H': '𝐻', 'I': '𝐼', 'J': '𝒥', 'K': '𝒦', 'L': '𝐿', 'M': '𝒦', 'N': '𝒩',
-    'O': '𝒪', 'P': '𝒫', 'Q': '𝒬', 'R': '𝑅', 'S': '𝒮', 'T': '𝒯', 'U': '𝒰',
-    'V': '𝒱', 'W': '𝒲', 'X': '𝒳', 'Y': '𝒴', 'Z': '𝒵', 'a': '𝒶', 'b': '𝒷',
-    'c': '𝒸', 'd': '𝒹', 'e': '𝒺', 'f': '𝒻', 'g': '𝒼', 'h': '𝒽', 'i': '𝒾',
-    'j': '𝒿', 'k': '𝓀', 'l': '𝓁', 'm': '𝓂', 'n': '𝓃', 'o': '𝑜', 'p': '𝓅',
-    'q': '𝓆', 'r': '𝓇', 's': '𝓈', 't': '𝓉', 'u': '𝓊', 'v': '𝓋', 'w': '𝓌',
-    'x': '𝓍', 'y': '𝓎', 'z': '𝓏', ' ': ' ',
-  };
-  return text.split('').map(char => scriptMap[char] || char).join('');
-};
-
 
 const Hero = () => {
   const { language } = useContext(LanguageContext);
@@ -41,7 +27,7 @@ const Hero = () => {
     fetchHeros();
   }, []);
   return (
-    <section className="h-[800px] bg-hero bg-no-repeat bg-cover bg-center py-24">
+    <section className="h-[800px] bg-hero lg:bg-hero1 bg-no-repeat bg-cover bg-center py-24">
       {heros.length > 0 ? (
         <div className="container mx-auto flex justify-around font-primary h-full transition-all duration-300">
           {/* text */}
