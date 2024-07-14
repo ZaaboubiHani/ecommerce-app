@@ -24,7 +24,7 @@ const LanguageDropdown = () => {
     }, []);
 
     return (
-        <div className="relative flex flex-col items-center w-[120px]" ref={dropdownRef}>
+        <div className="relative flex flex-col items-center w-[80px]" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen((prev) => !prev)}
                 className='bg-white p-2 w-[60px] flex items-center justify-between
@@ -40,7 +40,7 @@ const LanguageDropdown = () => {
                 {!isOpen ? (<IoMdArrowDropdown />) : (<IoMdArrowDropup />)}
             </button>
             {isOpen && (
-                <div className='bg-white absolute top-[50px] flex flex-col items-start rounded-lg p-1 w-full shadow-lg'>
+                <div className='bg-white absolute top-[50px] w-[120px] flex flex-col items-start rounded-lg p-1 shadow-lg'>
                     <div
                         onClick={() => {
                             changeLanguage('ar');
