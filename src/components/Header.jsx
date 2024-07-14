@@ -32,7 +32,7 @@ const Header = () => {
         </div>
         {/* logo */}
         <Link to="/">
-          <img className="h-[60px] hidden lg:block" src={Logo} alt="" />
+          <img className="h-[60px] hidden lg:block lg:ml-16" src={Logo} alt="" />
         </Link>
         <div className="flex items-center h-full">
           <Link
@@ -83,7 +83,7 @@ const Header = () => {
           <LanguageDropdown />
           {/* cart */}
           <div
-            className="cursor-pointer flex relative ml-4 lg:ml-16"
+            className="cursor-pointer flex relative lg:ml-16 lg:mr-16"
             onClick={() => handleOpenSidebar()}
           >
             <BsBag className="text-2xl" />

@@ -141,51 +141,7 @@ const ProductDetails = () => {
               className={`flex  flex-1 flex-col text-center items-center p-4 w-full lg:max-w-[500px]
               ${language === "ar" ? "lg:items-end" : "lg:items-start"}`}
             >
-              <div
-                className={`flex justify-center lg:justify-start ${
-                  language === "ar" ? "flex-row-reverse" : "flex-row"
-                }`}
-              >
-                <div className={language === "ar" ? "text-right" : "text-left"}>
-                  {language === "ar"
-                    ? ": لون"
-                    : language === "fr"
-                    ? "Couleur: "
-                    : "Color: "}
-                </div>
-                <div
-                  className={`flex mb-6 ml-2 max-w-[310px] overflow-y-auto h-[50px] ${
-                    language === "ar" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  {product.colors.length > 1
-                    ? product.colors.map((col, i) => {
-                        return (
-                          <div
-                            className="flex-shrink-0"
-                            onClick={() => {
-                              setImageIndex(0);
-                              setColorIndex(i);
-                            }}
-                            key={col._id}
-                            style={{
-                              cursor: "pointer",
-                              height: "30px",
-                              width: "30px",
-                              borderRadius: "6px",
-                              backgroundColor: col.hex,
-                              marginRight: "16px",
-                              border:
-                                colorIndex === i
-                                  ? "3px solid black"
-                                  : "1px solid black",
-                            }}
-                          />
-                        );
-                      })
-                    : null}
-                </div>
-              </div>
+              
               <div
                 className={`flex justify-center lg:justify-start h-8 ${
                   language === "ar" ? "flex-row-reverse" : "flex-row"
