@@ -16,6 +16,7 @@ const Product = ({ product }) => {
     images,
     sizes,
     isSale,
+    salePrice,
     new: isNew,
     createdAt,
   } = product;
@@ -134,7 +135,7 @@ const Product = ({ product }) => {
               }`}
             >
               {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
-              {price}
+              {salePrice}
             </div>
           ) : null}
         </div>

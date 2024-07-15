@@ -23,7 +23,8 @@ const Checkout = () => {
   const { language } = useContext(LanguageContext);
   const { cart, total, clearCart } = useContext(CartContext);
   const { handleOpen } = useContext(SnackbarContext);
-  const { products, loadingProducts, recommends } = useContext(ProductContext);
+  const { products, loadingProducts, recommends, randomProducts } =
+    useContext(ProductContext);
 
   const [selectedWilaya, setSelectedWilaya] = useState();
   const [selectedCommune, setSelectedCommune] = useState();
@@ -37,7 +38,6 @@ const Checkout = () => {
   const [isValidating, setIsValidating] = useState(false);
 
   const createOrder = async () => {
-   
     if (
       fullName === undefined ||
       fullName?.length === 0 ||
@@ -77,7 +77,6 @@ const Checkout = () => {
               product: item.id,
               quantity: item.amount,
               price: item.price,
-              hex: item.color,
               size: item.size,
             })),
           });
@@ -116,7 +115,6 @@ const Checkout = () => {
             product: item.id,
             quantity: item.amount,
             price: item.price,
-            hex: item.color,
             size: item.size,
           })),
         });
@@ -443,19 +441,6 @@ const Checkout = () => {
                           >
                             {item.size}
                           </div>
-                          <div
-                            style={{
-                              cursor: "pointer",
-                              height: "25px",
-                              width: "25px",
-                              borderRadius: "4px",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              border: "1px solid black",
-                              backgroundColor: item.color,
-                            }}
-                          />
                         </div>
                         <div
                           className={`flex items-center text-center text-sm text-gray-400 ${
@@ -518,15 +503,17 @@ const Checkout = () => {
           </div>
         </div>
       )}
-       <TitleCard
-        title={language === "ar"
-          ? "الأكثر مبيعا"
-          : language === "fr"
-          ? "Besy-Seller"
-          : "Bestselling"}
+      <TitleCard
+        title={
+          language === "ar"
+            ? "الأكثر مبيعا"
+            : language === "fr"
+            ? "Besy-Seller"
+            : "Bestselling"
+        }
       />
-    
-      <BestsellingCarousel products={recommends}/>
+
+      <BestsellingCarousel products={randomProducts} />
     </div>
   );
 };

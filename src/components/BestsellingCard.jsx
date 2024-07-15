@@ -27,7 +27,7 @@ const BestsellingCard = ({ product }) => {
             <Link to={`/product/${_id}`}>
               <img
                 className=" group-hover:scale-110 transition duration-[2000ms] rounded-lg"
-                src={images.urls[0]}
+                src={images.urls[0] ?? undefined}
                 alt=""
               />
             </Link>

@@ -13,11 +13,11 @@ import BestsellingCarousel from "../components/BestsellingCarousel";
 import TitleCard from "../components/TitleCard";
 const ProductDetails = () => {
   const { id } = useParams();
-  const { products, recommends } = useContext(ProductContext);
+  const { products, randomProcuts } = useContext(ProductContext);
   const { addToCart } = useContext(CartContext);
   const { language } = useContext(LanguageContext);
   const { handleOpenSidebar, handleCloseSidebar } = useContext(SidebarContext);
-  const [colorIndex, setColorIndex] = useState(0);
+
   const [imageIndex, setImageIndex] = useState(0);
   const [sizeIndex, setSizeIndex] = useState();
   const [amount, setAmount] = useState(1);
@@ -46,7 +46,7 @@ const ProductDetails = () => {
           >
             {/* side images */}
             <div className="hidden lg:flex flex-col mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
-              {product.colors[colorIndex].images?.urls.map((url, i) => {
+              {product.images?.urls.map((url, i) => {
                 return (
                   <img
                     onClick={() => setImageIndex(i)}
@@ -67,12 +67,12 @@ const ProductDetails = () => {
             <div className="relative ">
               <img
                 className="max-w-sm"
-                src={product?.colors[colorIndex].images?.urls[imageIndex]}
+                src={product?.images?.urls[imageIndex]}
                 alt=""
               />
               {/* botton images */}
               <div className="flex lg:hidden mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
-                {product.colors[colorIndex].images?.urls.map((url, i) => {
+                {product.images?.urls.map((url, i) => {
                   return (
                     <img
                       onClick={() => setImageIndex(i)}
@@ -90,7 +90,7 @@ const ProductDetails = () => {
                 })}
               </div>
               <div className="flex w-full justify-center my-2">
-                {product.colors[colorIndex].images?.urls.map((url, i) => (
+                {product.images?.urls.map((url, i) => (
                   <div
                     key={i}
                     className={`h-2 w-2 rounded-full cursor-pointer mr-4
@@ -104,10 +104,7 @@ const ProductDetails = () => {
               <div
                 className="absolute h-full top-0 flex items-center right-0"
                 onClick={() => {
-                  if (
-                    imageIndex <
-                    product.colors[colorIndex].images?.urls.length - 1
-                  ) {
+                  if (imageIndex < product.images?.urls.length - 1) {
                     setImageIndex(imageIndex + 1);
                   }
                 }}
@@ -115,8 +112,7 @@ const ProductDetails = () => {
                 <MdOutlineArrowForwardIos
                   className={`text-4xl text-white 
                   ${
-                    imageIndex <
-                    product.colors[colorIndex].images?.urls.length - 1
+                    imageIndex < product.images?.urls.length - 1
                       ? "opacity-100"
                       : "opacity-25"
                   }`}
@@ -141,7 +137,6 @@ const ProductDetails = () => {
               className={`flex  flex-1 flex-col text-center items-center p-4 w-full lg:max-w-[500px]
               ${language === "ar" ? "lg:items-end" : "lg:items-start"}`}
             >
-              
               <div
                 className={`flex justify-center lg:justify-start h-8 ${
                   language === "ar" ? "flex-row-reverse" : "flex-row"
@@ -159,7 +154,7 @@ const ProductDetails = () => {
                     language === "ar" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  {product.colors[colorIndex].sizes.map((size, i) => {
+                  {product.sizes.map((size, i) => {
                     return (
                       <button
                         className="flex-shrink-0"
@@ -181,7 +176,7 @@ const ProductDetails = () => {
                             sizeIndex === i
                               ? "3px solid black"
                               : "1px solid black",
-                          boxSizing: "border-box", 
+                          boxSizing: "border-box",
                         }}
                       >
                         {size.size}
@@ -218,13 +213,40 @@ const ProductDetails = () => {
                   : product.engName}
               </h1>
               <div
-                className={`text-xl text-pink-300 font-medium mb-6 
-                text-center ${
-                  language === "ar" ? "lg:text-right" : "lg:text-left"
-                }`}
+                className={`flex ${
+                  language === "ar" ? "flex-row-reverse" : "flex-row"
+                } `}
               >
-                {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
-                {product.price}
+                <div
+                  className={`text-xl  font-medium mb-6 
+                  text-center ${
+                    language === "ar"
+                      ? "lg:text-right ml-4"
+                      : "lg:text-left mr-4"
+                  }
+                  ${product.isSale ? "line-through text-gray-400" : "text-pink-300"}`}
+                >
+                  {language === "ar"
+                    ? "دج "
+                    : language === "fr"
+                    ? "DA "
+                    : "DZD "}
+                  {product.price}
+                </div>
+                {product.isSale ? (
+                  <div
+                    className={`font-semibold text-pink-300 ${
+                      language === "ar" ? "text-right" : "text-left"
+                    }`}
+                  >
+                    {language === "ar"
+                      ? "دج "
+                      : language === "fr"
+                      ? "DA "
+                      : "DZD "}
+                    {product.salePrice}
+                  </div>
+                ) : null}
               </div>
               <p
                 className={`mb-8  break-words text-center w-full
@@ -298,11 +320,10 @@ const ProductDetails = () => {
                         arName: product.arName,
                         frName: product.frName,
                         engName: product.engName,
-                        img: product.colors[colorIndex].images?.urls[
-                          imageIndex
-                        ],
-                        size: product.colors[colorIndex].sizes[sizeIndex].size,
-                        color: product.colors[colorIndex].hex,
+                        isSale: product.isSale,
+                        salePrice: product.salePrice,
+                        img: product.images?.urls[imageIndex],
+                        size: product.sizes[sizeIndex].size,
                         amount: amount,
                       });
                       setAmount(1);
@@ -336,12 +357,11 @@ const ProductDetails = () => {
                           arName: product.arName,
                           frName: product.frName,
                           engName: product.engName,
-                          img: product.colors[colorIndex].images?.urls[
-                            imageIndex
-                          ],
-                          size: product.colors[colorIndex].sizes[sizeIndex]
-                            .size,
-                          color: product.colors[colorIndex].hex,
+                          isSale: product.isSale,
+                          salePrice: product.salePrice,
+                          img: product.images?.urls[imageIndex],
+                          size: product.sizes[sizeIndex].size,
+                          color: product.hex,
                           amount: amount,
                         });
                         setAmount(1);
@@ -367,15 +387,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </section>
-      <TitleCard
-        title={language === "ar"
-          ? "المنتجات المشابهة"
-          : language === "fr"
-          ? "produits similaires"
-          : "similiar products"}
-      />
      
-      <BestsellingCarousel products={recommends} />
     </div>
   );
 };
