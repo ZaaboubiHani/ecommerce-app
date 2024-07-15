@@ -40,6 +40,7 @@ const ProductProvider = ({ children }) => {
       },
       cancelToken: source?.current?.token,
     });
+    
     if (response.status === 200) {
       const totalPages = response.data.totalPages;
       pageLimit.current = totalPages;
