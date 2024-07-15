@@ -14,9 +14,13 @@ import { SearchContext } from "./SearchContext";
 
 const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [newProducts, setNewProducts] = useState([]);
+  const [randomProducts, setRandomProducts] = useState([]);
+  const [bestsellings, setBestsellings] = useState([]);
+  const [promotions, setPromotions] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [limitReached, setLimitReached] = useState(false);
-  const [recommends, setRecommends] = useState([]);
+
 
   const page = useRef(1);
   const pageLimit = useRef(1);
@@ -36,7 +40,6 @@ const ProductProvider = ({ children }) => {
       },
       cancelToken: source?.current?.token,
     });
-
     if (response.status === 200) {
       const totalPages = response.data.totalPages;
       pageLimit.current = totalPages;
@@ -48,27 +51,52 @@ const ProductProvider = ({ children }) => {
       }
     }
   };
-  useEffect(() => {
-    if (categories.length === 0) {
-      fetchCategories();
-    } else {
-      getRecommends();
-    }
-  }, [categories]);
-  const getRecommends = async () => {
-    let recoList = [];
-    for (const cat of categories) {
-      const response = await apiInstance.getAxios().get(`/products`, {
-        params: {
-          page: 1,
-          limit: 10,
-          category: cat?._id,
-        },
-        cancelToken: source?.current?.token,
-      });
-      recoList.push(...response.data.docs);
-    }
-    setRecommends(recoList);
+ 
+ 
+  const getNewProducts = async () => {
+    const response = await apiInstance.getAxios().get(`/products`, {
+      params: {
+        page: 1,
+        limit: 10,
+        new: true,
+      },
+      cancelToken: source?.current?.token,
+    });
+    setNewProducts(response.data.docs);
+  };
+  const getRandomProducts = async () => {
+    const response = await apiInstance.getAxios().get(`/products/random`, {
+      params: {
+        number: 1,
+      },
+      cancelToken: source?.current?.token,
+    });
+    
+    setRandomProducts(response.data);
+  };
+  const getPromotions = async () => {
+    const response = await apiInstance.getAxios().get(`/products`, {
+      params: {
+        page: 1,
+        limit: 10,
+        isSale: true,
+      },
+      cancelToken: source?.current?.token,
+    });
+    
+    setPromotions(response.data.docs);
+  };
+  const getBestsellings = async () => {
+    const response = await apiInstance.getAxios().get(`/products`, {
+      params: {
+        page: 1,
+        limit: 10,
+        bestselling: true,
+      },
+      cancelToken: source?.current?.token,
+    });
+
+    setBestsellings(response.data.docs);
   };
 
   const reloadProducts = async () => {
@@ -132,6 +160,10 @@ const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     fetchProducts();
+    getNewProducts();
+    getRandomProducts();
+    getBestsellings();
+    getPromotions();
   }, []);
 
   useEffect(() => {
@@ -142,10 +174,13 @@ const ProductProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         products,
+        newProducts,
+        promotions,
+        randomProducts,
+        bestsellings,
         loadingProducts,
         limitReached,
         fetchMoreProducts,
-        recommends,
       }}
     >
       {children}

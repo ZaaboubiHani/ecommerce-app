@@ -9,10 +9,10 @@ import BestsellingCarousel from "../components/BestsellingCarousel";
 import SingleCarousel from "../components/SingleCarousel";
 import TitleCard from "../components/TitleCard";
 const Home = () => {
-  const { products, loadingProducts, recommends } = useContext(ProductContext);
+  const { loadingProducts, newProducts ,randomProducts,bestsellings} = useContext(ProductContext);
 
   const { language } = useContext(LanguageContext);
-  const limitedProducts = products.slice(0, 5);
+  
 
   return (
     <div className="bg-cover bg-gray-100">
@@ -27,7 +27,7 @@ const Home = () => {
         }
       />
 
-      <SingleCarousel products={recommends} />
+      <SingleCarousel products={newProducts} />
       <TitleCard
         title={
           language === "ar"
@@ -48,7 +48,7 @@ const Home = () => {
           ) : (
             <div>
               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[16px] max-auto max-w-none md:mx-0 p-4">
-                {limitedProducts.map((product) => {
+                {randomProducts.map((product) => {
                   return <Product product={product} key={product._id} />;
                 })}
               </div>
@@ -65,7 +65,7 @@ const Home = () => {
             : "Bestselling"
         }
       />
-      <BestsellingCarousel products={recommends} />
+      <BestsellingCarousel products={bestsellings} />
     </div>
   );
 };
