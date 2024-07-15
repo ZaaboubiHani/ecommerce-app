@@ -53,7 +53,7 @@ const Menu = () => {
       </Link>
 
       {categories.map((category) => (
-        <div className="ml-16">
+        <div className="ml-16" key={category._id}>
           <h3
             className="uppercase p-4"
             onClick={() => {

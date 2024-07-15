@@ -13,12 +13,10 @@ const BestsellingCard = ({ product }) => {
     frName,
     engName,
     price,
-    colors,
+    images,
     createdAt,
   } = product;
-  const isAvailable = colors?.some(color =>
-    color.sizes.some(size => size.inStock)
-  );
+ 
   return (
     <div className="bg-white relative rounded-lg shadow-md w-[240px]">
      
@@ -29,7 +27,7 @@ const BestsellingCard = ({ product }) => {
             <Link to={`/product/${_id}`}>
               <img
                 className=" group-hover:scale-110 transition duration-[2000ms] rounded-lg"
-                src={colors[0].images.urls[0]}
+                src={images.urls[0]}
                 alt=""
               />
             </Link>

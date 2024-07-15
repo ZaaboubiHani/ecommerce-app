@@ -13,35 +13,54 @@ const Product = ({ product }) => {
     frName,
     engName,
     price,
-    colors,
+    images,
+    sizes,
+    isSale,
+    new: isNew,
     createdAt,
   } = product;
-  const isAvailable = colors?.some(color =>
-    color.sizes.some(size => size.inStock)
-  );
+
+  const isAvailable = sizes.some((size) => size.inStock);
   return (
     <div className="bg-white relative rounded-2xl shadow-md w-[180px] sm:w-[240px]">
       {/* Check if createdAt is at least a month old */}
-      {Math.floor(
-        (new Date(createdAt).getTime() - new Date(Date.now()).getTime()) /
-          (1000 * 60 * 60 * 24)
-      ) <= 14 ? (
-        <div className={`absolute bg-white top-2 rounded p-1 z-10 text-xs opacity-60
-        ${language === "ar" ? 'right-2' : 'left-2'}`}>
+      {isNew ? (
+        <div
+          className={`absolute bg-white top-2 rounded p-1 z-10 text-xs opacity-60
+        ${language === "ar" ? "right-2" : "left-2"}`}
+        >
           {language === "ar" ? "جديد" : language === "fr" ? "Nouveau" : "New"}
         </div>
       ) : null}
       {isAvailable ? (
-        <div className={`absolute bg-white top-10 rounded p-1 z-10 flex items-center text-xs opacity-60
-        ${language === "ar" ? 'flex-row-reverse' : ''} ${language === "ar" ? 'right-2' : 'left-2'}`}>
-          {language === "ar" ? "متوفر" : language === "fr" ? "Disponible" : "Available"}
+        <div
+          className={`absolute bg-white top-10 rounded p-1 z-10 flex items-center text-xs opacity-60
+        ${language === "ar" ? "flex-row-reverse" : ""} ${
+            language === "ar" ? "right-2" : "left-2"
+          }`}
+        >
+          {language === "ar"
+            ? "متوفر"
+            : language === "fr"
+            ? "Disponible"
+            : "Available"}
           <IoCheckmark className="text-black" />
         </div>
-      ) : <div className={`absolute bg-white top-10 rounded p-1 z-10 flex items-center text-xs opacity-60
-       ${language === "ar" ? 'flex-row-reverse' : ''} ${language === "ar" ? 'right-2' : 'left-2'}`}>
-      {language === "ar" ? "غير متوفر" : language === "fr" ? "Indisponible" : "Unvailable"}
-      <IoClose className="text-black" />
-    </div>}
+      ) : (
+        <div
+          className={`absolute bg-white top-10 rounded p-1 z-10 flex items-center text-xs opacity-60
+       ${language === "ar" ? "flex-row-reverse" : ""} ${
+            language === "ar" ? "right-2" : "left-2"
+          }`}
+        >
+          {language === "ar"
+            ? "غير متوفر"
+            : language === "fr"
+            ? "Indisponible"
+            : "Unvailable"}
+          <IoClose className="text-black" />
+        </div>
+      )}
       <div className="border border-[#e4e4e4] h-[200] sm:h-[300px] mb-4 relative overflow-hidden group transition rounded-2xl">
         <div className="w-full h-full flex justify-center items-center">
           {/* Image */}
@@ -49,15 +68,21 @@ const Product = ({ product }) => {
             <Link to={`/product/${_id}`}>
               <img
                 className=" group-hover:scale-110 transition duration-[2000ms] rounded-2xl"
-                src={colors[0].images.urls[0]}
+                src={images?.urls[0]}
                 alt=""
               />
             </Link>
           </div>
         </div>
         {/* Buttons */}
-        <div className={`absolute top-2 p-2 flex flex-col items-center justify-center 
-        gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300 ${language === "ar" ? '-left-11 group-hover:left-4' : '-right-11 group-hover:right-4'}`}>
+        <div
+          className={`absolute top-2 p-2 flex flex-col items-center justify-center 
+        gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300 ${
+          language === "ar"
+            ? "-left-11 group-hover:left-4"
+            : "-right-11 group-hover:right-4"
+        }`}
+        >
           <Link
             to={`/product/${_id}`}
             className="w-12 h-12 bg-white flex justify-center items-center drop-shadow-xl rounded-lg opacity-40"
@@ -89,12 +114,29 @@ const Product = ({ product }) => {
           </h2>
         </Link>
         <div
-          className={`font-semibold ${
-            language === "ar" ? "text-right" : "text-left"
-          }`}
+          className={`flex ${
+            language === "ar" ? "flex-row-reverse" : "flex-row"
+          } `}
         >
-          {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
-          {price}
+          <div
+            className={`font-semibold  ${
+              language === "ar" ? "text-right ml-4" : "text-left mr-4"
+            } 
+            ${isSale ? "line-through text-gray-400" : ""}`}
+          >
+            {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
+            {price}
+          </div>
+          {isSale ? (
+            <div
+              className={`font-semibold ${
+                language === "ar" ? "text-right" : "text-left"
+              }`}
+            >
+              {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
+              {price}
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

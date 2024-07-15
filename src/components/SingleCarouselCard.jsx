@@ -14,12 +14,10 @@ const SingleCarouselCard = ({ product }) => {
     frName,
     engName,
     price,
-    colors,
+    images,
     createdAt,
   } = product;
-  const isAvailable = colors?.some(color =>
-    color.sizes.some(size => size.inStock)
-  );
+ 
   return (
     <div className="bg-white relative rounded-lg shadow-md w-[350px] h-[450px]">
       <div className="border border-[#e4e4e4] w-[350px] h-[450px] mb-4 relative overflow-hidden group transition rounded-lg">
@@ -29,7 +27,7 @@ const SingleCarouselCard = ({ product }) => {
             <Link to={`/product/${_id}`}>
               <img
                 className="object-contain group-hover:scale-110 transition duration-[2000ms] rounded-lg"
-                src={colors[0].images.urls[0]}
+                src={images.urls[0]}
                 alt=""
               />
             </Link>
