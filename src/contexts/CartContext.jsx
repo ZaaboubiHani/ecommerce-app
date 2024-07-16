@@ -33,12 +33,12 @@ const CartProvider = ({ children }) => {
     const { id, ...other } = product;
     const newItem = { ...product, amount: other.amount };
     const cartItem = cart.find(item => {
-      return item.id === id && item.color === other.color && item.size === other.size;
+      return item.id === id && item.size === other.size;
     });
     if (cartItem) {
       const newCart = [...cart].map(item => {
-        if (item.id === id && item.color === other.color && item.size === other.size) {
-          return { ...item, amount: cartItem.amount + other.amount };
+        if (item.id === id && item.size === other.size) {
+          return { ...item, amount: cartItem.amount + 1 };
         }
         else {
           return item;
@@ -53,9 +53,9 @@ const CartProvider = ({ children }) => {
     }
   };
 
-  const removeFromCart = (id, color, size) => {
+  const removeFromCart = (id, size) => {
     const newCart = cart.filter(item => {
-      return item.id !== id || item.color !== color || item.size !== size;
+      return item.id !== id || item.size !== size;
     });
     localStorage.setItem('cart', JSON.stringify(newCart));
     setCart(newCart);
@@ -67,16 +67,17 @@ const CartProvider = ({ children }) => {
     
   };
 
-  const increaseAmount = (id, color, size) => {
-    const item = cart.find((item) => item.id === id && item.color === color && item.size === size);
+  const increaseAmount = (id,  size) => {
+    const item = cart.find((item) => item.id === id && item.size === size);
+    
     addToCart(item);
   };
 
-  const decreaseAmount = (id, color, size) => {
-    const cartItem = cart.find((item) => item.id === id && item.color === color && item.size === size);
+  const decreaseAmount = (id,  size) => {
+    const cartItem = cart.find((item) => item.id === id && item.size === size);
     if (cartItem) {
       const newCart = cart.map((item) => {
-        if (item.id === id && item.color === color && item.size === size) {
+        if (item.id === id && item.size === size) {
           return { ...item, amount: cartItem.amount - 1 };
         } else {
           return item;
