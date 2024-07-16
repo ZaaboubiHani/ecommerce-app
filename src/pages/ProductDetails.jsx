@@ -158,7 +158,7 @@ const ProductDetails = () => {
                     return (
                       <button
                         className="flex-shrink-0"
-                        onClick={() => setSizeIndex(i)}
+                        onClick={size.inStock ? () => setSizeIndex(i) : undefined}
                         key={size._id}
                         style={{
                           opacity: size.inStock ? "1" : "0.5",

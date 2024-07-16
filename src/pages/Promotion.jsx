@@ -8,7 +8,7 @@ const Promotion = () => {
   const { promotions,loadingProducts } = useContext(ProductContext);
   const { language } = useContext(LanguageContext);
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center bg-gray-200">
        <section >
         <div >
           <div className="flex flex-row"></div>

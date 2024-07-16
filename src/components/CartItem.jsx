@@ -48,100 +48,114 @@ const CartItem = ({ item }) => {
               <IoMdClose className="text-gray-500 hover:text-red-500 transition" />
             </div>
           </div>
-          <div
-            className={`flex gap-x-2 h-[36px] text-sm ${
-              language === "ar" ? "flex-row-reverse" : "flex-row"
-            }`}
-          >
-            {/*  quantity */}
-            <div
-              className={`flex flex-1 max-w-[100px] items-center h-full border text-primary font-medium ${
-                language === "ar" ? "flex-row-reverse" : "flex-row"
-              }`}
-            >
-              {/*minus icon */}
-              <button
-                onClick={() => decreaseAmount(item.id, item.size)}
-                disabled={item.amount === 1}
-                className="flex-1 h-full flex justify-center items-center cursor-pointer "
-              >
-                <IoMdRemove
-                  className={`${
-                    item.amount === 1 ? "text-gray-300" : "text-black"
-                  }`}
-                />
-              </button>
-              {/*amount*/}
-              <div className="h-full flex justify-center items-center px-2">
-                {item.amount}
-              </div>
-              {/*plus icon */}
+          <div className="flex w-full">
+            <div className={`${language === "ar" ? "ml-2" : "mr-2"}`}>
+              {/*  quantity */}
               <div
-                onClick={() => increaseAmount(item.id, item.size)}
-                className="flex-1 h-full flex justify-center items-center cursor-pointer"
+                className={`flex flex-1 max-w-[100px] items-center h-[30px] border text-primary font-medium  mb-2 ${
+                  language === "ar" ? "flex-row-reverse" : "flex-row"
+                }`}
               >
-                <IoMdAdd />
+                {/*minus icon */}
+                <button
+                  onClick={() => decreaseAmount(item.id, item.size)}
+                  disabled={item.amount === 1}
+                  className="flex-1 h-full flex justify-center items-center cursor-pointer "
+                >
+                  <IoMdRemove
+                    className={`${
+                      item.amount === 1 ? "text-gray-300" : "text-black"
+                    }`}
+                  />
+                </button>
+                {/*amount*/}
+                <div className="h-full flex justify-center items-center px-2">
+                  {item.amount}
+                </div>
+                {/*plus icon */}
+                <div
+                  onClick={() => increaseAmount(item.id, item.size)}
+                  className="flex-1 h-full flex justify-center items-center cursor-pointer"
+                >
+                  <IoMdAdd />
+                </div>
+              </div>
+              {/* size */}
+              <div
+                style={{
+                  cursor: "pointer",
+                  height: "25px",
+                  width: "25px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: "4px",
+                  border: "1px solid black",
+                }}
+              >
+                {item.size}
               </div>
             </div>
-            {/*  item price */}
-            <div
-              className={`flex-1 flex justify-around items-center
-              ${item.isSale ? "line-through text-gray-400" : ""}`}
-            >
-              {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
-              {parseFloat(item.price).toFixed(2)}
-            </div>
-            {/*  final price */}
-            <div
-              className={`flex-1 flex justify-end items-center text-primary font-medium
-              ${item.isSale ? "line-through text-gray-400" : ""}`}
-            >
-              {language === "ar" ? "دج " : language === "fr" ? "DA " : "DZD "}
-
-              {parseFloat(item.price * item.amount).toFixed(2)}
-            </div>
-          </div>
-          <div
-            className={`flex gap-x-2 mt-2  w-full justify-between h-[36px] text-sm ${
-              language === "ar" ? "flex-row-reverse" : "flex-row"
-            }`}
-          >
-            <div
-              style={{
-                cursor: "pointer",
-                height: "25px",
-                width: "25px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: "4px",
-                border: "1px solid black",
-              }}
-            >
-              {item.size}
-            </div>
-            {item.isSale ? (
-              <div className="flex max-w-[130px] justify-between">
+            {/* prices labels */}
+            <div className=" w-full">
+              <div
+                className={`flex gap-x-2 justify-start h-[36px] text-sm ${
+                  language === "ar" ? "flex-row-reverse" : "flex-row"
+                }`}
+              >
                 {/*  item price */}
-                <div className="flex-1 flex justify-around items-center">
+                <div
+                  className={`flex items-center 
+              ${item.isSale ? "line-through text-gray-400" : ""}`}
+                >
                   {language === "ar"
                     ? "دج "
                     : language === "fr"
                     ? "DA "
                     : "DZD "}
-                  {parseFloat(item.salePrice).toFixed(2)}
+                  {parseFloat(item.price).toFixed(2)}
                 </div>
                 {/*  final price */}
-                <div className="flex-1 flex justify-end items-center text-primary font-medium">
+                <div
+                  className={`flex items-center text-primary font-medium 
+              ${item.isSale ? "line-through text-gray-400" : ""}`}
+                >
                   {language === "ar"
                     ? "دج "
                     : language === "fr"
                     ? "DA "
                     : "DZD "}
-                  {parseFloat(item.salePrice * item.amount).toFixed(2)}
+
+                  {parseFloat(item.price * item.amount).toFixed(2)}
                 </div>
               </div>
-            ) : null}
+              {item.isSale ? (
+                <div
+                  className={`flex gap-x-2 h-[36px] text-sm  ${
+                    language === "ar" ? "flex-row-reverse" : "flex-row"
+                  }`}
+                >
+                  {/*  item price */}
+                  <div className="flex items-center">
+                    {language === "ar"
+                      ? "دج "
+                      : language === "fr"
+                      ? "DA "
+                      : "DZD "}
+                    {parseFloat(item.salePrice).toFixed(2)}
+                  </div>
+                  {/*  final price */}
+                  <div className="flex items-center text-primary font-medium">
+                    {language === "ar"
+                      ? "دج "
+                      : language === "fr"
+                      ? "DA "
+                      : "DZD "}
+                    {parseFloat(item.salePrice * item.amount).toFixed(2)}
+                  </div>
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>

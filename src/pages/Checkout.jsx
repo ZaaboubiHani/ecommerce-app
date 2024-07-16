@@ -12,9 +12,7 @@ import WilayaDropdown from "../components/WilayaDropdow";
 import CommuneDropdown from "../components/CommuneDropdown";
 import ShippingTypeDropdown from "../components/ShippingTypeDropdown";
 import { ProductContext } from "../contexts/ProductContext";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Product from "../components/Product";
 import BestsellingCarousel from "../components/BestsellingCarousel";
 import TitleCard from "../components/TitleCard";
 const apiInstance = Api.instance;
@@ -77,6 +75,8 @@ const Checkout = () => {
               product: item.id,
               quantity: item.amount,
               price: item.price,
+              salePrice: item.salePrice,
+              isSale: item.isSale,
               size: item.size,
             })),
           });
@@ -115,6 +115,8 @@ const Checkout = () => {
             product: item.id,
             quantity: item.amount,
             price: item.price,
+            salePrice: item.salePrice,
+            isSale: item.isSale,
             size: item.size,
           })),
         });
@@ -452,7 +454,8 @@ const Checkout = () => {
                             : language === "fr"
                             ? "DA "
                             : "DZD "}
-                          {item.price} X {item.amount}
+                          {item.isSale ? item.salePrice : item.price} X{" "}
+                          {item.amount}
                         </div>
                         <div>
                           {language === "ar"
@@ -460,7 +463,9 @@ const Checkout = () => {
                             : language === "fr"
                             ? "DA "
                             : "DZD "}
-                          {item.price * item.amount}
+                          {item.isSale
+                            ? item.salePrice
+                            : item.price * item.amount}
                         </div>
                       </div>
                     </div>

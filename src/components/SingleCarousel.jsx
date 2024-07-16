@@ -26,11 +26,23 @@ const SingleCarousel = ({ products }) => {
       }
     };
 
+    const handleWheel = (event) => {
+      event.preventDefault();
+      if (carouselRef.current && cardWidth) {
+        carouselRef.current.scrollBy({
+          left: event.deltaY > 0 ? cardWidth : -cardWidth,
+          behavior: "smooth",
+        });
+      }
+    };
+
     const carousel = carouselRef.current;
     if (carousel) {
       carousel.addEventListener("scroll", handleScroll);
+      carousel.addEventListener("wheel", handleWheel); // Add the wheel event listener here
       return () => {
         carousel.removeEventListener("scroll", handleScroll);
+        carousel.removeEventListener("wheel", handleWheel); // Remove the wheel event listener here
       };
     }
   }, [cardWidth]);
@@ -62,7 +74,7 @@ const SingleCarousel = ({ products }) => {
       <div className="relative w-[350px] h-[450px]">
         <div
           ref={carouselRef}
-          className="flex flex-row overflow-x-auto scroll-smooth items-center snap-x snap-mandatory"
+          className="flex flex-row overflow-x-auto scroll-smooth items-center snap-x snap-mandatory no-scrollbar"
         >
           {products.map((product) => (
             <div key={product._id} className="card snap-start">

@@ -25,11 +25,23 @@ const BestsellingCarousel = ({ products }) => {
       }
     };
 
+    const handleWheel = (event) => {
+      event.preventDefault();
+      if (carouselRef.current) {
+        carouselRef.current.scrollBy({
+          left: event.deltaY,
+          behavior: "smooth",
+        });
+      }
+    };
+
     const carousel = carouselRef.current;
     if (carousel) {
       carousel.addEventListener("scroll", handleScroll);
+      carousel.addEventListener("wheel", handleWheel); // Add the wheel event listener here
       return () => {
         carousel.removeEventListener("scroll", handleScroll);
+        carousel.removeEventListener("wheel", handleWheel); // Remove the wheel event listener here
       };
     }
   }, [cardWidth]);
@@ -60,7 +72,7 @@ const BestsellingCarousel = ({ products }) => {
     <div className="relative mb-4 pb-4">
       <div
         ref={carouselRef}
-        className="flex flex-row w-full overflow-x-auto scroll-smooth items-center"
+        className="flex flex-row w-full overflow-x-auto scroll-smooth items-center no-scrollbar"
       >
         {products.map((product) => (
           <div key={product._id} className="m-2 card">
@@ -68,7 +80,7 @@ const BestsellingCarousel = ({ products }) => {
           </div>
         ))}
       </div>
-      <div className="flex w-full justify-center mt-2 ">
+      <div className="flex w-full justify-center mt-2">
         {products.map((_, i) => (
           <div
             key={i}
