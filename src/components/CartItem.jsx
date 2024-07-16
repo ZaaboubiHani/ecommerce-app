@@ -48,7 +48,7 @@ const CartItem = ({ item }) => {
               <IoMdClose className="text-gray-500 hover:text-red-500 transition" />
             </div>
           </div>
-          <div className="flex w-full">
+          <div className={`flex w-full items-start ${language === "ar" ? "flex-row-reverse" : "flex-row"}`}>
             <div className={`${language === "ar" ? "ml-2" : "mr-2"}`}>
               {/*  quantity */}
               <div

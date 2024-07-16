@@ -187,7 +187,7 @@ const ProductDetails = () => {
               </div>
               {validateAttempt && sizeIndex === undefined && (
                 <div
-                  className={`text-pink-300 text-sm text-center ${
+                  className={`text-red-500 text-sm text-center ${
                     language === "ar" ? "lg:text-right" : "lg:text-left"
                   }`}
                 >
