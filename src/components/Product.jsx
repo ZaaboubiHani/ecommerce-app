@@ -62,7 +62,7 @@ const Product = ({ product }) => {
           <IoClose className="text-black" />
         </div>
       )}
-      <div className="border border-[#e4e4e4] h-[200] sm:h-[300px] mb-4 relative overflow-hidden group transition rounded-2xl">
+      <div className="border border-[#e4e4e4] h-[200px] sm:h-[300px] mb-4 relative overflow-hidden group transition rounded-2xl">
         <div className="w-full h-full flex justify-center items-center">
           {/* Image */}
           <div className="w-full mx-auto flex justify-center items-center">
