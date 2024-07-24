@@ -60,7 +60,6 @@ const ProductProvider = ({ children }) => {
     const response = await apiInstance.getAxios().get(`/products/${id}`);
     
     if (response.status === 200) {
-      console.log(response.data);
       return response.data;
     }
   };
