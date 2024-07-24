@@ -4,29 +4,33 @@ import React, {
   useEffect,
   useContext,
   useRef,
-} from 'react'
-export const ProductContext = createContext()
-import axios from 'axios'
-import Api from '../api/api.source'
-const apiInstance = Api.instance
-import { CategoryContext } from './CategoryContext'
-import { SearchContext } from './SearchContext'
+
+} from "react";
+export const ProductContext = createContext();
+import axios from "axios";
+import Api from "../api/api.source";
+const apiInstance = Api.instance;
+import { CategoryContext } from "./CategoryContext";
+import { SearchContext } from "./SearchContext";
+import { data } from "autoprefixer";
 
 const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState([])
-  const [newProducts, setNewProducts] = useState([])
-  const [randomProducts, setRandomProducts] = useState([])
-  const [bestsellings, setBestsellings] = useState([])
-  const [promotions, setPromotions] = useState([])
-  const [loadingProducts, setLoadingProducts] = useState(true)
-  const [limitReached, setLimitReached] = useState(false)
+  const [products, setProducts] = useState([]);
+  const [newProducts, setNewProducts] = useState([]);
+  const [randomProducts, setRandomProducts] = useState([]);
+  const [bestsellings, setBestsellings] = useState([]);
+  const [promotions, setPromotions] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [limitReached, setLimitReached] = useState(false);
 
-  const page = useRef(1)
-  const pageLimit = useRef(1)
-  const localLoadingProducts = useRef(false)
-  const { category, categories, fetchCategories } = useContext(CategoryContext)
-  const { text } = useContext(SearchContext)
-  const source = useRef(null)
+
+  const page = useRef(1);
+  const pageLimit = useRef(1);
+  const localLoadingProducts = useRef(false);
+  const { category, fetchCategories } = useContext(CategoryContext);
+  const { text } = useContext(SearchContext);
+  const source = useRef(null);
+
 
   const fetchProducts = async () => {
     await fetchCategories()
@@ -50,8 +54,21 @@ const ProductProvider = ({ children }) => {
         setLimitReached(true)
       }
     }
-  }
 
+  };
+
+  const fetchSingleProduct = async (id) => {
+    await fetchCategories();
+
+    const response = await apiInstance.getAxios().get(`/products/${id}`);
+    
+    if (response.status === 200) {
+      console.log(response.data);
+      return response.data;
+    }
+  };
+ 
+ 
   const getNewProducts = async () => {
     const response = await apiInstance.getAxios().get(`/products`, {
       params: {
@@ -180,6 +197,7 @@ const ProductProvider = ({ children }) => {
         loadingProducts,
         limitReached,
         fetchMoreProducts,
+        fetchSingleProduct,
       }}
     >
       {children}

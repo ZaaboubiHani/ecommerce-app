@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../contexts/CartContext";
 import { ProductContext } from "../contexts/ProductContext";
@@ -13,7 +13,7 @@ import BestsellingCarousel from "../components/BestsellingCarousel";
 import TitleCard from "../components/TitleCard";
 const ProductDetails = () => {
   const { id } = useParams();
-  const { products, randomProcuts } = useContext(ProductContext);
+  const { products,fetchSingleProduct } = useContext(ProductContext);
   const { addToCart } = useContext(CartContext);
   const { language } = useContext(LanguageContext);
   const { handleOpenSidebar, handleCloseSidebar } = useContext(SidebarContext);
@@ -22,17 +22,19 @@ const ProductDetails = () => {
   const [sizeIndex, setSizeIndex] = useState();
   const [amount, setAmount] = useState(1);
   const [validateAttempt, setValidateAttempt] = useState(false);
-  const product = products.find((item) => {
-    return item._id === id;
-  });
-  if (!product) {
-    return (
-      <section className="h-screen flex justify-center items-center">
-        <ClipLoader />
-      </section>
-    );
+  const [product, setProduct] = useState();
+  
+  useEffect(()=>{
+    initData();
+  },[]);
+  const initData = async()=>{
+    setProduct(await fetchSingleProduct(id))
   }
+
   return (
+    !product  ? <section className="h-screen flex justify-center items-center">
+    <ClipLoader />
+  </section>:
     <div className="bg-gray-100">
       <section
         className={`pt-32 pb-10 md:px-16 lg:px-16 xl:px-64 lg:py-32 flex items-center bg-hero bg-cover `}
