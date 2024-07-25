@@ -19,7 +19,10 @@ const apiInstance = Api.instance
 const Checkout = () => {
   const navigate = useNavigate()
   const { language } = useContext(LanguageContext)
-  const { cart, total, clearCart } = useContext(CartContext)
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem('cart') || '[]')
+  )
+  const { total, clearCart } = useContext(CartContext)
   const { handleOpen } = useContext(SnackbarContext)
   const { randomProducts } = useContext(ProductContext)
 
