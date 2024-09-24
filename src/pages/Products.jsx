@@ -31,7 +31,7 @@ const Products = () => {
 
   const [loadingMoreProducts, setLoadingMoreProducts] = useState(false)
   const loadMore = async () => {
-    if (!loadingMoreProducts) {
+    if (!loadingMoreProducts && !limitReached) {
       setLoadingMoreProducts(true)
       await fetchMoreProducts()
       setLoadingMoreProducts(false)
@@ -42,19 +42,23 @@ const Products = () => {
     <div>
       <section className='py-16 bg-gray-100 mt-16'>
         <div className='container mx-auto px-2 sm:px-4'>
+          {/* Filters: Category Dropdown and Search Field */}
           <div
-            className={`flex ${
-              language === 'ar' ? 'flex-row-reverse' : 'flex-row'
+            className={`flex flex-col sm:flex-row items-center justify-between ${
+              language === 'ar' ? 'sm:flex-row-reverse' : 'sm:flex-row'
             }`}
           >
             <CategoryDropdown />
             <SearchField />
           </div>
+
+          {/* Loading State */}
           {loadingProducts ? (
             <section className='h-screen flex justify-center items-center'>
               <ClipLoader />
             </section>
           ) : products.length === 0 ? (
+            /* No Results State */
             <section className='h-screen flex justify-center items-center text-2xl'>
               {language === 'ar'
                 ? 'دون نتائج'
@@ -64,20 +68,20 @@ const Products = () => {
               <TbMoodEmpty className='text-2xl mx-2' />
             </section>
           ) : (
+            /* Products Grid */
             <div>
-              <div className='grid grid-cols-2 gap-2 sm:gap-4 mt-4'>
+              <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 mt-4'>
                 {products.map((product) => (
                   <div key={product._id} className='px-1'>
                     <Product product={product} />
                   </div>
                 ))}
               </div>
-              {!limitReached ? (
-                <div ref={loadingRef} className='text-center mt-4'>
+              {/* Loading More Products */}
+              {!limitReached && (
+                <div ref={loadingRef} className='flex justify-center mt-4'>
                   <ClipLoader />
                 </div>
-              ) : (
-                <div className='text-center mt-4'></div>
               )}
             </div>
           )}

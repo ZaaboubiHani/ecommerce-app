@@ -1,321 +1,305 @@
-import React, { useContext, useState,useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { CartContext } from "../contexts/CartContext";
-import { ProductContext } from "../contexts/ProductContext";
-import { LanguageContext } from "../contexts/LanguageContext";
-import { SidebarContext } from "../contexts/SidebarContext";
-import { IoMdRemove, IoMdAdd } from "react-icons/io";
-import ClipLoader from "react-spinners/ClipLoader";
-import { Link } from "react-router-dom";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { MdArrowBackIosNew } from "react-icons/md";
-import BestsellingCarousel from "../components/BestsellingCarousel";
-import TitleCard from "../components/TitleCard";
-const ProductDetails = () => {
-  const { id } = useParams();
-  const { products,fetchSingleProduct } = useContext(ProductContext);
-  const { addToCart } = useContext(CartContext);
-  const { language } = useContext(LanguageContext);
-  const { handleOpenSidebar, handleCloseSidebar } = useContext(SidebarContext);
+import React, { useContext, useState, useEffect } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import { CartContext } from '../contexts/CartContext'
+import { ProductContext } from '../contexts/ProductContext'
+import { LanguageContext } from '../contexts/LanguageContext'
+import { SidebarContext } from '../contexts/SidebarContext'
+import { IoMdRemove, IoMdAdd } from 'react-icons/io'
+import ClipLoader from 'react-spinners/ClipLoader'
+import { MdOutlineArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
+import BestsellingCarousel from '../components/BestsellingCarousel'
+import TitleCard from '../components/TitleCard'
 
-  const [imageIndex, setImageIndex] = useState(0);
-  const [sizeIndex, setSizeIndex] = useState();
-  const [amount, setAmount] = useState(1);
-  const [validateAttempt, setValidateAttempt] = useState(false);
-  const [product, setProduct] = useState();
-  
-  useEffect(()=>{
-    initData();
-  },[]);
-  const initData = async()=>{
-    setProduct(await fetchSingleProduct(id))
+const ProductDetails = () => {
+  const { id } = useParams()
+  const { fetchSingleProduct } = useContext(ProductContext)
+  const { addToCart } = useContext(CartContext)
+  const { language } = useContext(LanguageContext)
+  const { handleOpenSidebar, handleCloseSidebar } = useContext(SidebarContext)
+
+  const [imageIndex, setImageIndex] = useState(0)
+  const [sizeIndex, setSizeIndex] = useState()
+  const [amount, setAmount] = useState(1)
+  const [validateAttempt, setValidateAttempt] = useState(false)
+  const [product, setProduct] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const initData = async () => {
+      const fetchedProduct = await fetchSingleProduct(id)
+      setProduct(fetchedProduct)
+      setLoading(false)
+    }
+    initData()
+  }, [fetchSingleProduct, id])
+
+  useEffect(() => {
+    console.log('Current Image Index:', imageIndex)
+  }, [imageIndex])
+
+  if (loading) {
+    return (
+      <section className='h-screen flex justify-center items-center bg-gray-100'>
+        <ClipLoader size={50} color='#4A90E2' />
+      </section>
+    )
+  }
+
+  if (!product) {
+    return (
+      <section className='h-screen flex justify-center items-center bg-gray-100'>
+        <p className='text-xl text-gray-500'>
+          {language === 'ar'
+            ? 'المنتج غير موجود'
+            : language === 'fr'
+            ? 'Produit non trouvé'
+            : 'Product not found'}
+        </p>
+      </section>
+    )
   }
 
   return (
-    !product  ? <section className="h-screen flex justify-center items-center">
-    <ClipLoader />
-  </section>:
-    <div className="bg-gray-100">
-      <section
-        className={`pt-32 pb-10 md:px-16 lg:px-16 xl:px-64 lg:py-32 flex items-center bg-hero bg-cover `}
-      >
-        <div className="container mx-auto">
-          {/*image & text wrapper*/}
+    <div className='bg-slate-100'>
+      <section className='py-12 px-4 md:px-8 lg:px-16 xl:px-32'>
+        <div className='container mx-auto'>
           <div
-            className={`flex flex-col items-center lg:items-start ${
-              language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"
-            }`}
+            className={`flex flex-col lg:flex-row items-center ${
+              language === 'ar' ? 'lg:flex-row-reverse' : ''
+            } gap-8`}
           >
-            {/* side images */}
-            <div className="hidden lg:flex flex-col mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
-              {product.images?.urls.map((url, i) => {
-                return (
-                  <img
-                    onClick={() => setImageIndex(i)}
-                    key={i}
-                    src={url}
-                    style={{
-                      cursor: "pointer",
-                      height: "150px",
-                      width: "100px",
-                      border: imageIndex === i ? "2px solid black" : "none",
-                      objectFit: "cover",
-                    }}
-                  />
-                );
-              })}
-            </div>
-            {/*image */}
-            <div className="relative ">
-              <img
-                className="max-w-sm"
-                src={product?.images?.urls[imageIndex]}
-                alt=""
-              />
-              {/* botton images */}
-              <div className="flex lg:hidden mx-2 min-w-[100px] max-h-[510px] max-w-[350px] overflow-auto">
-                {product.images?.urls.map((url, i) => {
-                  return (
-                    <img
-                      onClick={() => setImageIndex(i)}
-                      key={i}
-                      src={url}
-                      style={{
-                        cursor: "pointer",
-                        height: "150px",
-                        width: "100px",
-                        border: imageIndex === i ? "2px solid black" : "none",
-                        objectFit: "cover",
-                      }}
-                    />
-                  );
-                })}
+            {/* Image Gallery */}
+            <div className='w-full lg:w-1/2 flex flex-col items-center'>
+              <div className='relative w-full max-w-md lg:max-w-lg'>
+                {/* Main Image */}
+                <img
+                  src={product.images.urls[imageIndex]}
+                  alt={
+                    language === 'ar'
+                      ? product.arName
+                      : language === 'fr'
+                      ? product.frName
+                      : product.engName
+                  }
+                  className='w-full h-auto rounded-lg object-contain'
+                />
+
+                {/* Navigation Arrows */}
+                <button
+                  onClick={() => {
+                    setImageIndex((prev) => {
+                      const newIndex = Math.max(prev - 1, 0)
+                      console.log('Navigating to previous image:', newIndex)
+                      return newIndex
+                    })
+                  }}
+                  className={`absolute top-1/2 left-2 transform -translate-y-1/2 bg-white bg-opacity-75 p-2 rounded-full hover:bg-opacity-100 transition ${
+                    imageIndex === 0 ? 'hidden' : 'flex'
+                  }`}
+                  aria-label='Previous Image'
+                >
+                  <MdArrowBackIosNew className='text-xl text-gray-700' />
+                </button>
+                <button
+                  onClick={() => {
+                    setImageIndex((prev) => {
+                      const newIndex = Math.min(
+                        prev + 1,
+                        product.images.urls.length - 1
+                      )
+                      console.log('Navigating to next image:', newIndex)
+                      return newIndex
+                    })
+                  }}
+                  className={`absolute top-1/2 right-2 transform -translate-y-1/2 bg-white bg-opacity-75 p-2 rounded-full hover:bg-opacity-100 transition ${
+                    imageIndex === product.images.urls.length - 1
+                      ? 'hidden'
+                      : 'flex'
+                  }`}
+                  aria-label='Next Image'
+                >
+                  <MdOutlineArrowForwardIos className='text-xl text-gray-700' />
+                </button>
               </div>
-              <div className="flex w-full justify-center my-2">
-                {product.images?.urls.map((url, i) => (
-                  <div
-                    key={i}
-                    className={`h-2 w-2 rounded-full cursor-pointer mr-4
-                  ${imageIndex === i ? "bg-black" : "bg-gray-400"}`}
+
+              {/* Thumbnail Images */}
+              <div className='flex mt-4 space-x-2 overflow-x-auto justify-center lg:justify-start'>
+                {product.images.urls.map((url, idx) => (
+                  <img
+                    key={idx}
+                    src={url}
+                    alt={`${
+                      language === 'ar'
+                        ? product.arName
+                        : language === 'fr'
+                        ? product.frName
+                        : product.engName
+                    } ${idx + 1}`}
                     onClick={() => {
-                      setImageIndex(i);
+                      setImageIndex(idx)
+                      console.log('Thumbnail clicked, set image index to:', idx)
                     }}
-                  ></div>
+                    className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 ${
+                      imageIndex === idx
+                        ? 'border-primary'
+                        : 'border-transparent'
+                    } hover:border-primary transition`}
+                  />
                 ))}
               </div>
-              <div
-                className="absolute h-full top-0 flex items-center right-0"
-                onClick={() => {
-                  if (imageIndex < product.images?.urls.length - 1) {
-                    setImageIndex(imageIndex + 1);
-                  }
-                }}
-              >
-                <MdOutlineArrowForwardIos
-                  className={`text-4xl text-white 
-                  ${
-                    imageIndex < product.images?.urls.length - 1
-                      ? "opacity-100"
-                      : "opacity-25"
-                  }`}
-                />
-              </div>
-              <div
-                className="absolute h-full top-0 flex items-center left-0"
-                onClick={() => {
-                  if (imageIndex > 0) {
-                    setImageIndex(imageIndex - 1);
-                  }
-                }}
-              >
-                <MdArrowBackIosNew
-                  className={`text-4xl text-white 
-                  ${imageIndex > 0 ? "opacity-100" : "opacity-25"}`}
-                />
-              </div>
             </div>
-            {/* config panel */}
-            <div
-              className={`flex  flex-1 flex-col text-center items-center p-4 w-full lg:max-w-[500px]
-              ${language === "ar" ? "lg:items-end" : "lg:items-start"}`}
-            >
-              <div
-                className={`flex justify-center lg:justify-start h-8 ${
-                  language === "ar" ? "flex-row-reverse" : "flex-row"
-                }`}
-              >
-                <div className={language === "ar" ? "text-right" : "text-left"}>
-                  {language === "ar"
-                    ? ": حجم"
-                    : language === "fr"
-                    ? "Taille: "
-                    : "Size: "}
-                </div>
-                <div
-                  className={`flex mb-6 ml-2 max-w-[310px] overflow-y-auto h-[50px] ${
-                    language === "ar" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  {product.sizes.map((size, i) => {
-                    return (
-                      <button
-                        className="flex-shrink-0"
-                        onClick={size.inStock ? () => setSizeIndex(i) : undefined}
-                        key={size._id}
-                        style={{
-                          opacity: size.inStock ? "1" : "0.5",
-                          cursor: size.inStock ? "pointer" : "not-allowed",
-                          height: "30px",
-                          width: "30px",
-                          borderRadius: "4px",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          marginLeft: "8px",
-                          backgroundColor: sizeIndex === i ? "black" : "white",
-                          color: sizeIndex === i ? "white" : "black",
-                          border:
-                            sizeIndex === i
-                              ? "3px solid black"
-                              : "1px solid black",
-                          boxSizing: "border-box",
-                        }}
-                      >
-                        {size.size}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-              {validateAttempt && sizeIndex === undefined && (
-                <div
-                  className={`text-red-500 text-sm text-center ${
-                    language === "ar" ? "lg:text-right" : "lg:text-left"
-                  }`}
-                >
-                  {language === "ar"
-                    ? "الرجاء تحديد حجم"
-                    : language === "fr"
-                    ? "Veuillez choisir une taille"
-                    : "Please select a size"}
-                </div>
-              )}
 
-              {/*text */}
-              <h1
-                className={`text-[26px] font-sedan my-2 lg:mx-0 
-                text-center ${
-                  language === "ar" ? "lg:text-right" : "lg:text-left"
-                }`}
-              >
-                {language === "ar"
+            {/* Product Details */}
+            <div className='w-full lg:w-1/2 flex flex-col'>
+              {/* Product Title */}
+              <h1 className='text-2xl md:text-3xl font-semibold mb-4 text-center lg:text-left'>
+                {language === 'ar'
                   ? product.arName
-                  : language === "fr"
+                  : language === 'fr'
                   ? product.frName
                   : product.engName}
               </h1>
-              <div
-                className={`flex ${
-                  language === "ar" ? "flex-row-reverse" : "flex-row"
-                } `}
-              >
-                <div
-                  className={`text-xl  font-medium mb-6 
-                  text-center ${
-                    language === "ar"
-                      ? "lg:text-right ml-4"
-                      : "lg:text-left mr-4"
-                  }
-                  ${product.isSale ? "line-through text-gray-400" : "text-pink-300"}`}
-                >
-                  {language === "ar"
-                    ? "دج "
-                    : language === "fr"
-                    ? "DA "
-                    : "DZD "}
-                  {product.price}
-                </div>
+
+              {/* Price */}
+              <div className='flex items-center justify-center lg:justify-start mb-4'>
                 {product.isSale ? (
-                  <div
-                    className={`font-semibold text-pink-300 ${
-                      language === "ar" ? "text-right" : "text-left"
-                    }`}
-                  >
-                    {language === "ar"
-                      ? "دج "
-                      : language === "fr"
-                      ? "DA "
-                      : "DZD "}
-                    {product.salePrice}
-                  </div>
-                ) : null}
+                  <>
+                    <span className='text-xl line-through text-gray-500 mr-2'>
+                      {language === 'ar'
+                        ? `دج ${product.price}`
+                        : language === 'fr'
+                        ? `DA ${product.price}`
+                        : `DZD ${product.price}`}
+                    </span>
+                    <span className='text-2xl font-bold text-primary'>
+                      {language === 'ar'
+                        ? `دج ${product.salePrice}`
+                        : language === 'fr'
+                        ? `DA ${product.salePrice}`
+                        : `DZD ${product.salePrice}`}
+                    </span>
+                  </>
+                ) : (
+                  <span className='text-2xl font-bold text-primary'>
+                    {language === 'ar'
+                      ? `دج ${product.price}`
+                      : language === 'fr'
+                      ? `DA ${product.price}`
+                      : `DZD ${product.price}`}
+                  </span>
+                )}
               </div>
-              <p
-                className={`mb-8  break-words text-center w-full
-                ${language === "ar" ? "lg:text-right" : "lg:text-left"}`}
-              >
-                {language === "ar"
+
+              {/* Description */}
+              <p className='text-gray-700 mb-6 text-justify lg:text-left'>
+                {language === 'ar'
                   ? product.arDescription
-                  : language === "fr"
+                  : language === 'fr'
                   ? product.frDescription
                   : product.engDescription}
               </p>
 
-              {/* quantity */}
-              <div
-                className={`flex items-center w-[200px] h-[60px] mb-2 mr-4 ${
-                  language === "ar" ? "flex-row-reverse" : "flex-row"
-                }`}
-              >
-                {language === "ar"
-                  ? ": كمية"
-                  : language === "fr"
-                  ? "Quantité: "
-                  : "Quantity: "}
-                <div
-                  className={`flex flex-1 w-[100px] items-center h-full 
-                  border-2 border-primary text-primary font-medium mx-4 rounded-2xl
-                  ${language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"}
-                  ${language === "ar" ? "flex-row-reverse" : "flex-row"}
-                  `}
-                >
-                  {/*minus icon */}
-                  <button
-                    onClick={() => setAmount((prev) => prev - 1)}
-                    disabled={amount === 1}
-                    className="flex-1 h-full flex justify-center items-center cursor-pointer "
-                  >
-                    <IoMdRemove
-                      className={`${
-                        amount === 1 ? "text-gray-300" : "text-black"
+              {/* Size Selection */}
+              <div className='mb-6'>
+                <h2 className='text-lg font-medium mb-2'>
+                  {language === 'ar'
+                    ? 'الحجم'
+                    : language === 'fr'
+                    ? 'Taille'
+                    : 'Size'}
+                  :
+                </h2>
+                <div className='flex space-x-2 overflow-x-auto'>
+                  {product.sizes.map((size, idx) => (
+                    <button
+                      key={size._id}
+                      onClick={() => {
+                        if (size.inStock) {
+                          setSizeIndex(idx)
+                          console.log('Selected size index:', idx)
+                        }
+                      }}
+                      disabled={!size.inStock}
+                      className={`px-4 py-2 rounded ${
+                        sizeIndex === idx
+                          ? 'bg-primary text-white'
+                          : 'bg-white text-gray-700 border border-gray-300'
+                      } ${
+                        !size.inStock
+                          ? 'opacity-50 cursor-not-allowed'
+                          : 'hover:bg-primary hover:text-white transition'
                       }`}
-                    />
-                  </button>
-                  {/*amount*/}
-                  <div className="h-full flex justify-center items-center px-2">
-                    {amount}
-                  </div>
-                  {/*plus icon */}
-                  <div
-                    onClick={() => setAmount((prev) => prev + 1)}
-                    className="flex-1 h-full flex justify-center items-center cursor-pointer"
+                    >
+                      {size.size}
+                    </button>
+                  ))}
+                </div>
+                {validateAttempt && sizeIndex === undefined && (
+                  <p className='text-red-500 text-sm mt-2'>
+                    {language === 'ar'
+                      ? 'الرجاء تحديد حجم'
+                      : language === 'fr'
+                      ? 'Veuillez choisir une taille'
+                      : 'Please select a size'}
+                  </p>
+                )}
+              </div>
+
+              {/* Quantity Selector */}
+              <div className='mb-6 flex items-center'>
+                <h2 className='text-lg font-medium mr-4'>
+                  {language === 'ar'
+                    ? 'الكمية'
+                    : language === 'fr'
+                    ? 'Quantité'
+                    : 'Quantity'}
+                  :
+                </h2>
+                <div className='flex items-center border border-gray-300 rounded-lg overflow-hidden'>
+                  <button
+                    onClick={() => {
+                      setAmount((prev) => {
+                        const newAmount = Math.max(prev - 1, 1)
+                        console.log('Decreased amount to:', newAmount)
+                        return newAmount
+                      })
+                    }}
+                    disabled={amount === 1}
+                    className={`px-3 py-1 ${
+                      amount === 1
+                        ? 'cursor-not-allowed text-gray-400'
+                        : 'hover:bg-gray-200'
+                    }`}
                   >
-                    <IoMdAdd />
-                  </div>
+                    <IoMdRemove size={20} />
+                  </button>
+                  <span className='px-4 py-1'>{amount}</span>
+                  <button
+                    onClick={() => {
+                      setAmount((prev) => {
+                        const newAmount = prev + 1
+                        console.log('Increased amount to:', newAmount)
+                        return newAmount
+                      })
+                    }}
+                    className='px-3 py-1 hover:bg-gray-200'
+                  >
+                    <IoMdAdd size={20} />
+                  </button>
                 </div>
               </div>
-              <div
-                className={`flex flex-col items-center ${
-                  language === "ar" ? "lg:flex-row-reverse" : "lg:flex-row"
-                }`}
-              >
+
+              {/* Action Buttons */}
+              <div className='flex flex-col sm:flex-row gap-4'>
                 <button
                   onClick={() => {
                     if (sizeIndex !== undefined) {
-                      setValidateAttempt(false);
+                      setValidateAttempt(false)
                       addToCart({
                         id: product._id,
-                        price: product.price,
+                        price: product.isSale
+                          ? product.salePrice
+                          : product.price,
                         arDescription: product.arDescription,
                         frDescription: product.frDescription,
                         engDescription: product.engDescription,
@@ -324,35 +308,38 @@ const ProductDetails = () => {
                         engName: product.engName,
                         isSale: product.isSale,
                         salePrice: product.salePrice,
-                        img: product.images?.urls[imageIndex],
+                        img: product.images.urls[imageIndex],
                         size: product.sizes[sizeIndex].size,
                         amount: amount,
-                      });
-                      setAmount(1);
-                      handleOpenSidebar();
+                      })
+                      setAmount(1)
+                      handleOpenSidebar()
                       setTimeout(() => {
-                        handleCloseSidebar();
-                      }, 3000);
+                        handleCloseSidebar()
+                      }, 3000)
+                      console.log('Added to cart:', product.engName)
                     } else {
-                      setValidateAttempt(true);
+                      setValidateAttempt(true)
                     }
                   }}
-                  className="bg-primary py-4 px-8 text-white mb-2 items-center lg:mx-4 rounded-2xl"
+                  className='w-full sm:w-auto bg-primary text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition'
                 >
-                  {language === "ar"
-                    ? "أضف إلى السلة"
-                    : language === "fr"
-                    ? "Ajouter au panier"
-                    : "Add to cart"}
+                  {language === 'ar'
+                    ? 'أضف إلى السلة'
+                    : language === 'fr'
+                    ? 'Ajouter au panier'
+                    : 'Add to Cart'}
                 </button>
-                <Link to={sizeIndex !== undefined ? "/checkout" : null}>
+                <Link to={sizeIndex !== undefined ? '/checkout' : '#'}>
                   <button
                     onClick={() => {
                       if (sizeIndex !== undefined) {
-                        setValidateAttempt(false);
+                        setValidateAttempt(false)
                         addToCart({
                           id: product._id,
-                          price: product.price,
+                          price: product.isSale
+                            ? product.salePrice
+                            : product.price,
                           arDescription: product.arDescription,
                           frDescription: product.frDescription,
                           engDescription: product.engDescription,
@@ -361,27 +348,27 @@ const ProductDetails = () => {
                           engName: product.engName,
                           isSale: product.isSale,
                           salePrice: product.salePrice,
-                          img: product.images?.urls[imageIndex],
+                          img: product.images.urls[imageIndex],
                           size: product.sizes[sizeIndex].size,
-                          color: product.hex,
                           amount: amount,
-                        });
-                        setAmount(1);
-                        handleOpenSidebar();
+                        })
+                        setAmount(1)
+                        handleOpenSidebar()
                         setTimeout(() => {
-                          handleCloseSidebar();
-                        }, 3000);
+                          handleCloseSidebar()
+                        }, 3000)
+                        console.log('Proceeding to checkout:', product.engName)
                       } else {
-                        setValidateAttempt(true);
+                        setValidateAttempt(true)
                       }
                     }}
-                    className="bg-pink-300 py-4 px-8 text-white mb-2 items-center rounded-2xl"
+                    className='w-full sm:w-auto bg-pink-500 text-white py-3 px-6 rounded-lg hover:bg-pink-600 transition'
                   >
-                    {language === "ar"
-                      ? "اشتري الان"
-                      : language === "fr"
-                      ? "Achetez maintenant"
-                      : "Buy now"}
+                    {language === 'ar'
+                      ? 'اشتري الآن'
+                      : language === 'fr'
+                      ? 'Achetez maintenant'
+                      : 'Buy Now'}
                   </button>
                 </Link>
               </div>
@@ -389,9 +376,8 @@ const ProductDetails = () => {
           </div>
         </div>
       </section>
-     
     </div>
-  );
-};
+  )
+}
 
-export default ProductDetails;
+export default ProductDetails
