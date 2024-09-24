@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { LanguageContext } from '../contexts/LanguageContext'
 import Logo from '../img/ARELA CLOTHSY.png'
 import { MdEmail } from 'react-icons/md'
