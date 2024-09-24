@@ -152,7 +152,7 @@ const ProductDetails = () => {
             {/* Product Details */}
             <div className='w-full lg:w-1/2 flex flex-col'>
               {/* Product Title */}
-              <h1 className='text-2xl md:text-3xl font-semibold mb-4 text-center lg:text-left'>
+              <h1 className='text-2xl md:text-3xl font-sedan mb-4 text-center lg:text-left'>
                 {language === 'ar'
                   ? product.arName
                   : language === 'fr'
