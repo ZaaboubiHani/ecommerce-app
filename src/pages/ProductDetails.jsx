@@ -39,7 +39,7 @@ const ProductDetails = () => {
 
   if (loading) {
     return (
-      <section className='h-screen flex justify-center items-center bg-gray-100'>
+      <section className='h-screen flex justify-center items-center bg-white'>
         <ClipLoader size={50} color='#4A90E2' />
       </section>
     )
@@ -47,7 +47,7 @@ const ProductDetails = () => {
 
   if (!product) {
     return (
-      <section className='h-screen flex justify-center items-center bg-gray-100'>
+      <section className='h-screen flex justify-center items-center bg-white'>
         <p className='text-xl text-gray-500'>
           {language === 'ar'
             ? 'المنتج غير موجود'
@@ -60,7 +60,7 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className='bg-slate-100'>
+    <div className='bg-white'>
       <section className='py-12 px-4 md:px-8 lg:px-16 xl:px-32'>
         <div className='container mx-auto'>
           <div
@@ -70,7 +70,7 @@ const ProductDetails = () => {
           >
             {/* Image Gallery */}
             <div className='w-full lg:w-1/2 flex flex-col items-center'>
-              <div className='relative w-full max-w-md lg:max-w-lg'>
+              <div className='relative w-full max-w-md lg:max-w-lg mt-4'>
                 {/* Main Image */}
                 <img
                   src={product.images.urls[imageIndex]}
@@ -322,7 +322,7 @@ const ProductDetails = () => {
                       setValidateAttempt(true)
                     }
                   }}
-                  className='w-full sm:w-auto bg-primary text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition'
+                  className='w-full sm:w-auto bg-primary text-white py-3 px-6 rounded-lg hover:opacity-75 transition'
                 >
                   {language === 'ar'
                     ? 'أضف إلى السلة'
@@ -362,7 +362,7 @@ const ProductDetails = () => {
                         setValidateAttempt(true)
                       }
                     }}
-                    className='w-full sm:w-auto bg-pink-500 text-white py-3 px-6 rounded-lg hover:bg-pink-600 transition'
+                    className='w-full sm:w-auto bg-rose-500 text-white py-3 px-6 rounded-lg hover:bg-rose-300 transition'
                   >
                     {language === 'ar'
                       ? 'اشتري الآن'

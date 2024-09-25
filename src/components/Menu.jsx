@@ -1,101 +1,129 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { IoMdArrowBack } from "react-icons/io";
-import { MenuContext } from "../contexts/MenuContext";
-import { LanguageContext } from "../contexts/LanguageContext";
-import { Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
-import { GiLoincloth } from "react-icons/gi";
-import { BsFillInfoCircleFill } from "react-icons/bs";
-import { RiDiscountPercentFill } from "react-icons/ri";
-import { CategoryContext } from "../contexts/CategoryContext";
+import React, { useContext } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { IoMdArrowBack } from 'react-icons/io'
+import { FaHome } from 'react-icons/fa'
+import { GiLoincloth } from 'react-icons/gi'
+import { BsFillInfoCircleFill } from 'react-icons/bs'
+import { RiDiscountPercentFill } from 'react-icons/ri'
+import { MenuContext } from '../contexts/MenuContext'
+import { LanguageContext } from '../contexts/LanguageContext'
+import { CategoryContext } from '../contexts/CategoryContext'
+
 const Menu = () => {
-  const navigate = useNavigate();
-  const { menuIsOpen, handleCloseMenu } = useContext(MenuContext);
-  const { language } = useContext(LanguageContext);
-  const { categories, changeCategory } = useContext(CategoryContext);
+  const navigate = useNavigate()
+  const { menuIsOpen, handleCloseMenu } = useContext(MenuContext)
+  const { language } = useContext(LanguageContext)
+  const { categories, changeCategory } = useContext(CategoryContext)
 
   return (
-    <div
-      className={`${
-        menuIsOpen ? "left-0" : "-left-full"
-      } flex flex-col w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] xl:max-w-[30vw] transition-all duration-300 z-30 px-4 lg:px-[35px]
- 
-  `}
-    >
+    <>
+      {/* Overlay */}
+      {menuIsOpen && (
+        <div
+          onClick={handleCloseMenu}
+          className='fixed inset-0 bg-black opacity-50 z-20'
+        ></div>
+      )}
+
+      {/* Menu */}
       <div
-        onClick={handleCloseMenu}
-        className="cursor-pointer w-8 h-16 flex justify-center items-center"
+        className={`fixed top-0 left-0 h-full w-80 bg-black text-white shadow-2xl z-30 transform ${
+          menuIsOpen ? 'translate-x-0' : '-translate-x-full'
+        } transition-transform duration-300 ease-in-out px-4 py-6 flex flex-col`}
       >
-        <IoMdArrowBack className="text-2xl" />
-      </div>
-
-      <Link
-        to="/"
-        onClick={() => handleCloseMenu()}
-        className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6 flex items-center"
-      >
-        <FaHome className="text-2xl mr-4" />
-        {language === "ar" ? "إستقبال" : language === "fr" ? "ACCUEIL" : "HOME"}
-      </Link>
-
-      <Link
-        to="/products"
-        onClick={() => handleCloseMenu()}
-        className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6 flex items-center"
-      >
-        <GiLoincloth className="text-2xl mr-4" />
-        {language === "ar"
-          ? "منتجات"
-          : language === "fr"
-          ? "PRODUITS"
-          : "PRODUCTS"}
-      </Link>
-
-      {categories.map((category) => (
-        <div className="ml-16" key={category._id}>
-          <h3
-            className="uppercase p-4"
-            onClick={() => {
-              changeCategory(category);
-              navigate('/products')
-              handleCloseMenu();
-            }}
-          >
-            {language === "ar"
-              ? category.arName
-              : language === "fr"
-              ? category.frName
-              : category.engName}
-          </h3>
+        {/* Close Button */}
+        <div
+          onClick={handleCloseMenu}
+          className='cursor-pointer mb-8 self-start'
+          aria-label='Close Menu'
+        >
+          <IoMdArrowBack className='text-2xl' />
         </div>
-      ))}
-      <Link
-        to="/promotion"
-        onClick={() => handleCloseMenu()}
-        className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-5 flex items-center"
-      >
-        <RiDiscountPercentFill className="text-3xl mr-3" />
-        {language === "ar"
-          ? "ترويج"
-          : language === "fr"
-          ? "PROMOTION"
-          : "PROMOTION"}
-      </Link>
-      <Link
-        to="/about"
-        onClick={() => handleCloseMenu()}
-        className="hover:bg-slate-100 transition-all duration-300 h-[60px] leading-[60px] px-6 flex items-center"
-      >
-        <BsFillInfoCircleFill className="text-2xl mr-4" />
-        {language === "ar"
-          ? "عنا"
-          : language === "fr"
-          ? "QUI SOMMES-NOUS"
-          : "ABOUT US"}
-      </Link>
-    </div>
-  );
-};
 
-export default Menu;
+        {/* Navigation Links */}
+        <nav className='flex flex-col space-y-4'>
+          <Link
+            to='/'
+            onClick={handleCloseMenu}
+            className='flex items-center p-2 hover:bg-slate-100 rounded transition-colors duration-300'
+          >
+            <FaHome className='text-2xl mr-4' />
+            <span>
+              {language === 'ar'
+                ? 'إستقبال'
+                : language === 'fr'
+                ? 'ACCUEIL'
+                : 'HOME'}
+            </span>
+          </Link>
+
+          <Link
+            to='/products'
+            onClick={handleCloseMenu}
+            className='flex items-center p-2 hover:bg-slate-100 rounded transition-colors duration-300'
+          >
+            <GiLoincloth className='text-2xl mr-4' />
+            <span>
+              {language === 'ar'
+                ? 'منتجات'
+                : language === 'fr'
+                ? 'PRODUITS'
+                : 'PRODUCTS'}
+            </span>
+          </Link>
+
+          {/* Category Links */}
+          {categories.map((category) => (
+            <button
+              key={category._id}
+              onClick={() => {
+                changeCategory(category)
+                navigate('/products')
+                handleCloseMenu()
+              }}
+              className='text-left pl-8 py-2 hover:bg-slate-100 rounded transition-colors duration-300'
+            >
+              {language === 'ar'
+                ? category.arName
+                : language === 'fr'
+                ? category.frName
+                : category.engName}
+            </button>
+          ))}
+
+          <Link
+            to='/promotion'
+            onClick={handleCloseMenu}
+            className='flex items-center p-2 hover:bg-slate-100 rounded transition-colors duration-300'
+          >
+            <RiDiscountPercentFill className='text-3xl mr-3' />
+            <span>
+              {language === 'ar'
+                ? 'ترويج'
+                : language === 'fr'
+                ? 'PROMOTION'
+                : 'PROMOTION'}
+            </span>
+          </Link>
+
+          <Link
+            to='/about'
+            onClick={handleCloseMenu}
+            className='flex items-center p-2 hover:bg-slate-100 rounded transition-colors duration-300'
+          >
+            <BsFillInfoCircleFill className='text-2xl mr-4' />
+            <span>
+              {language === 'ar'
+                ? 'عنا'
+                : language === 'fr'
+                ? 'QUI SOMMES-NOUS'
+                : 'ABOUT US'}
+            </span>
+          </Link>
+        </nav>
+      </div>
+    </>
+  )
+}
+
+export default Menu

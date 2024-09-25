@@ -40,11 +40,11 @@ const Products = () => {
 
   return (
     <div>
-      <section className='py-16 bg-gray-100 mt-16'>
+      <section className='py-16 bg-[#dbdee3] mt-12  '>
         <div className='container mx-auto px-2 sm:px-4'>
           {/* Filters: Category Dropdown and Search Field */}
           <div
-            className={`flex flex-col sm:flex-row items-center justify-between ${
+            className={`flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 ${
               language === 'ar' ? 'sm:flex-row-reverse' : 'sm:flex-row'
             }`}
           >

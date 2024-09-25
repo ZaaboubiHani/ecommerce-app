@@ -10,7 +10,7 @@ const Promotion = () => {
 
   return (
     <div>
-      <section className='py-16 bg-gray-100 mt-16'>
+      <section className='py-16 bg-white mt-16'>
         <div className='container mx-auto px-2 sm:px-4'>
           {loadingProducts ? (
             <section className='h-screen flex justify-center items-center'>

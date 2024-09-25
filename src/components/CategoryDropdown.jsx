@@ -2,7 +2,8 @@ import React, { useState, useContext, useRef, useEffect } from 'react'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 import { CategoryContext } from '../contexts/CategoryContext'
 import { LanguageContext } from '../contexts/LanguageContext'
-const CategoryDropdown = ({ onSelect }) => {
+
+const CategoryDropdown = () => {
   const { categories, changeCategory, category } = useContext(CategoryContext)
   const { language } = useContext(LanguageContext)
   const [isOpen, setIsOpen] = useState(false)
@@ -23,14 +24,14 @@ const CategoryDropdown = ({ onSelect }) => {
 
   return (
     <div
-      className='relative flex flex-col items-center w-[150px]'
+      className='relative flex flex-col items-center w-full sm:w-[200px] lg:w-[240px]'
       ref={dropdownRef}
     >
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className='bg-white p-2 w-full flex items-center justify-between
-    text-l tracking-wider border border-1 border-black rounded-lg transition-all
-    duration-300'
+        className='bg-gray-100 p-3 w-full flex items-center justify-between
+    text-base font-medium border border-gray-300 rounded-lg shadow-md transition-all
+    duration-300 hover:shadow-lg hover:bg-gray-100'
       >
         {language === 'ar'
           ? category?.arName ?? 'أصناف'
@@ -41,19 +42,19 @@ const CategoryDropdown = ({ onSelect }) => {
       </button>
       {isOpen && (
         <div
-          className='bg-white absolute top-[45px] flex flex-col items-start p-1 w-full z-20
-                border border-1 border-black shadow-md rounded-lg
-                '
+          className='bg-gray-100 absolute top-[55px] w-full z-20 rounded-lg shadow-lg border border-gray-300 p-2 mt-1
+          transition-all duration-300 transform origin-top'
         >
+          {/* Option for "All Categories" */}
           <div
             key={0}
             onClick={() => {
               changeCategory(undefined)
               setIsOpen(false)
             }}
-            className='flex w-full items-center justify-between px-2 hover:bg-gray-300 cursor-pointer border-l-transparent'
+            className='flex w-full items-center justify-between px-2 py-1 hover:bg-gray-400 cursor-pointer rounded'
           >
-            <h3>
+            <h3 className='text-sm font-medium'>
               {language === 'ar'
                 ? 'كل شيء'
                 : language === 'fr'
@@ -68,9 +69,9 @@ const CategoryDropdown = ({ onSelect }) => {
                 changeCategory(category)
                 setIsOpen(false)
               }}
-              className='flex w-full items-center justify-between px-2 hover:bg-gray-300 cursor-pointer border-l-transparent'
+              className='flex w-full items-center justify-between px-2 py-1 hover:bg-gray-400 cursor-pointer rounded'
             >
-              <h3>
+              <h3 className='text-sm font-medium'>
                 {language === 'ar'
                   ? category.arName
                   : language === 'fr'

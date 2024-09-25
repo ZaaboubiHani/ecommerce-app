@@ -112,7 +112,7 @@ const Checkout = () => {
   }
 
   return (
-    <div className='p-4 lg:p-32 bg-gray-100'>
+    <div className='p-4 lg:p-32 bg-white'>
       {isValidating ? (
         <div className='h-[100vh] w-full flex justify-center items-center'>
           <ClipLoader />

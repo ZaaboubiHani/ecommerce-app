@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
@@ -21,7 +24,7 @@
 }
 
 @font-face {
-  font-family: "sedan";
-  src: local("SedanSC-Regular"),
-    url("./assets/fonts/SedanSC-Regular.ttf") format("truetype");
+  font-family: 'sedan';
+  src: local('SedanSC-Regular'),
+    url('./assets/fonts/SedanSC-Regular.ttf') format('truetype');
 }
