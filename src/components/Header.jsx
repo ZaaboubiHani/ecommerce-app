@@ -5,7 +5,7 @@ import { CartContext } from '../contexts/CartContext'
 import { MenuContext } from '../contexts/MenuContext'
 import { NavLink } from 'react-router-dom'
 import Logo from '../img/ARELA CLOTHSY.png'
-import LanguageDropdown from './LaguageDropdown' // Ensure correct filename
+import LanguageDropdown from './LanguageDropdown' // Ensure correct filename
 import { LanguageContext } from '../contexts/LanguageContext'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { CiSearch } from 'react-icons/ci'
@@ -49,7 +49,7 @@ const Header = () => {
 
   return (
     <header className='bg-black text-white font-bold shadow-md fixed w-full z-30 transition-all h-[60px]'>
-      <div className='mx-auto flex items-center justify-between h-full px-4 lg:px-16'>
+      <div className='mx-auto flex items-center justify-between h-full px-4 lg:px-16 relative'>
         {/* Hamburger Menu for Mobile */}
         <div
           className='cursor-pointer flex relative md:hidden'
@@ -60,17 +60,20 @@ const Header = () => {
         </div>
 
         {/* Logo */}
-        <NavLink to='/'>
+        <NavLink
+          to='/'
+          className='absolute left-1/2 transform -translate-x-1/2 md:static md:transform-none'
+        >
           <img
-            className='h-[60px] hidden md:block'
+            className='h-[60px] w-auto'
             src={Logo}
             alt='ARELA CLOTHSY Logo'
           />
         </NavLink>
 
-        {/* Navigation Links */}
+        {/* Navigation Links and Icons */}
         <nav className='flex items-center'>
-          {/* Home Link */}
+          {/* Navigation Links (hidden on mobile) */}
           {renderNavLink(
             '/',
             language === 'ar'
@@ -80,7 +83,6 @@ const Header = () => {
               : 'HOME'
           )}
 
-          {/* Products Link */}
           {renderNavLink(
             '/products',
             language === 'ar'
@@ -90,7 +92,6 @@ const Header = () => {
               : 'PRODUCTS'
           )}
 
-          {/* Promotion Link */}
           {renderNavLink(
             '/promotion',
             language === 'ar'
@@ -100,7 +101,6 @@ const Header = () => {
               : 'PROMOTION'
           )}
 
-          {/* About Us Link */}
           {renderNavLink(
             '/about',
             language === 'ar'

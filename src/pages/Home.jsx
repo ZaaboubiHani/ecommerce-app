@@ -1,87 +1,77 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext } from 'react'
 import { ProductContext } from '../contexts/ProductContext'
-import { CategoryContext } from '../contexts/CategoryContext'
 import Product from '../components/Product'
 import Hero from '../components/Hero'
 import { LanguageContext } from '../contexts/LanguageContext'
 import ClipLoader from 'react-spinners/ClipLoader'
 import BestsellingCarousel from '../components/BestsellingCarousel'
-import SingleCarousel from '../components/SingleCarousel'
 import TitleCard from '../components/TitleCard'
 
 const Home = () => {
   const { loadingProducts, newProducts, randomProducts, bestsellings } =
     useContext(ProductContext)
-
   const { language } = useContext(LanguageContext)
+
+  // Helper function to get localized titles
+  const getTitle = (ar, fr, en) => {
+    return language === 'ar' ? ar : language === 'fr' ? fr : en
+  }
 
   return (
     <div className='bg-cover bg-white'>
       <Hero />
-      <TitleCard
-        title={
-          language === 'ar'
-            ? 'مجموعة جديدة'
-            : language === 'fr'
-            ? 'Nouvelle Collection'
-            : 'New Collection'
-        }
-      />
 
-      <section>
-        <div>
-          <div className='flex flex-row'></div>
-          {loadingProducts ? (
-            <section className='h-screen flex justify-center items-center '>
-              <ClipLoader />
-            </section>
-          ) : (
-            <div>
-              <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[16px] max-auto max-w-none md:mx-0 p-4'>
-                {newProducts.map((product) => {
-                  return <Product product={product} key={product._id} />
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
+      {/* New Collection Section */}
       <TitleCard
-        title={
-          language === 'ar'
-            ? 'مقترحات'
-            : language === 'fr'
-            ? 'Recommandations'
-            : 'Recommendations'
-        }
+        title={getTitle(
+          'مجموعة جديدة',
+          'Nouvelle Collection',
+          'New Collection'
+        )}
       />
-
       <section>
-        <div>
-          <div className='flex flex-row'></div>
-          {loadingProducts ? (
-            <section className='h-screen flex justify-center items-center '>
-              <ClipLoader />
-            </section>
-          ) : (
-            <div>
-              <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[16px] max-auto max-w-none md:mx-0 p-4'>
-                {randomProducts.map((product) => {
-                  return <Product product={product} key={product._id} />
-                })}
-              </div>
+        {loadingProducts ? (
+          <section className='h-screen flex justify-center items-center '>
+            <ClipLoader />
+          </section>
+        ) : (
+          <div>
+            <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 my-4 lg:mx-16'>
+              {newProducts.map((product) => (
+                <div key={product._id} className='px-1'>
+                  <Product product={product} />
+                </div>
+              ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </section>
+
+      {/* Recommendations Section */}
       <TitleCard
-        title={
-          language === 'ar'
-            ? 'الأكثر مبيعا'
-            : language === 'fr'
-            ? 'Best-Seller'
-            : 'Bestselling'
-        }
+        title={getTitle('مقترحات', 'Recommandations', 'Recommendations')}
+      />
+      <section>
+        {loadingProducts ? (
+          <section className='h-screen flex justify-center items-center '>
+            <ClipLoader />
+          </section>
+        ) : (
+          <div>
+            <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 my-4 lg:mx-16'>
+              {randomProducts.map((product) => (
+                <div key={product._id} className='px-1'>
+                  <Product product={product} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* Bestselling Section */}
+      <TitleCard
+        title={getTitle('الأكثر مبيعا', 'Best-Seller', 'Bestselling')}
       />
       <BestsellingCarousel products={bestsellings} />
     </div>
