@@ -42,6 +42,7 @@ module.exports = {
         winter4: 'url("./img/winter4.jpg")',
         winter5: 'url("./img/winter-5.jpg")',
         winter6: 'url("./img/winter6.jpg")',
+        hero10: 'url("./img/hero.png")',
       },
     },
   },

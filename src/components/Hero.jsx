@@ -1,74 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { LanguageContext } from '../contexts/LanguageContext'
 import { HeroContext } from '../contexts/HeroContext'
 import ClipLoader from 'react-spinners/ClipLoader'
 import Snowfall from 'react-snowfall'
-const doubleStruckMap = {
-  A: '𝔸',
-  B: '𝔹',
-  C: 'ℂ',
-  D: '𝔻',
-  E: '𝔼',
-  F: '𝔽',
-  G: '𝔾',
-  H: 'ℍ',
-  I: '𝕀',
-  J: '𝕁',
-  K: '𝕂',
-  L: '𝕃',
-  M: '𝕄',
-  N: 'ℕ',
-  O: '𝕆',
-  P: 'ℙ',
-  Q: 'ℚ',
-  R: 'ℝ',
-  S: '𝕊',
-  T: '𝕋',
-  U: '𝕌',
-  V: '𝕍',
-  W: '𝕎',
-  X: '𝕏',
-  Y: '𝕐',
-  Z: 'ℤ',
-  a: '𝕒',
-  b: '𝕓',
-  c: '𝕔',
-  d: '𝕕',
-  e: '𝕖',
-  f: '𝕗',
-  g: '𝕘',
-  h: '𝕙',
-  i: '𝕚',
-  j: '𝕛',
-  k: '𝕜',
-  l: '𝕝',
-  m: '𝕞',
-  n: '𝕟',
-  o: '𝕠',
-  p: '𝕡',
-  q: '𝕢',
-  r: '𝕣',
-  s: '𝕤',
-  t: '𝕥',
-  u: '𝕦',
-  v: '𝕧',
-  w: '𝕨',
-  x: '𝕩',
-  y: '𝕪',
-  z: '𝕫',
-}
 
 const snowflake2 = document.createElement('img')
 snowflake2.src = 'src/img/snowflake.png'
 const images = [snowflake2]
-
-const toDoubleStruck = (text) => {
-  return text
-    .split('')
-    .map((char) => doubleStruckMap[char] || char)
-    .join('')
-}
 
 const Hero = () => {
   const { language } = useContext(LanguageContext)
@@ -96,9 +35,9 @@ const Hero = () => {
   }
 
   return (
-    <section className='relative h-screen bg-winter3 bg-no-repeat bg-cover bg-center flex items-center'>
+    <section className='relative h-screen bg-hero10 bg-no-repeat bg-cover bg-center flex items-center'>
       {/* Overlay */}
-      <div className='absolute inset-0 bg-black opacity-50'>
+      <div className='absolute inset-0 bg-black opacity-15'>
         <Snowfall
           snowflakeCount={window.innerWidth > 768 ? 100 : 50}
           radius={[20, 20]}
@@ -110,7 +49,7 @@ const Hero = () => {
         <div className='container mx-auto px-4 z-10 flex flex-col items-center text-center'>
           {/* Pretitle */}
           <div className='text-2xl flex items-center uppercase font-double-struck text-white mb-4'>
-            {toDoubleStruck(getHeroText(0))}
+            {getHeroText(0)}
           </div>
 
           {/* Title */}
@@ -119,7 +58,7 @@ const Hero = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className='font-sedan text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white mb-8'>
+          <p className='font-sedan text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black mb-8'>
             {getHeroText(2)}
           </p>
 

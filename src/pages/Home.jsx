@@ -29,7 +29,7 @@ const Home = () => {
           'New Collection'
         )}
       />
-      <section>
+      <section className=''>
         {loadingProducts ? (
           <section className='h-screen flex justify-center items-center '>
             <ClipLoader />
