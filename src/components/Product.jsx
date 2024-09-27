@@ -264,7 +264,7 @@ const Product = ({ product }) => {
          shadow-xl
         transform hover:scale-105 hover:shadow-2xl
         overflow-visible
-        mt-4
+        mt-4 rounded-lg
       `}
     >
       {/* Snowflakes Decoration */}
@@ -358,10 +358,9 @@ const Product = ({ product }) => {
         </div>
         <Link to={`/product/${_id}`}>
           <h2
-            className={`
-              font-bold font-lora mb-2 text-lg sm:text-xl leading-tight text-white capitalize 
-              ${language === 'ar' ? 'text-right' : 'text-left'}
-            `}
+            className={`font-bold font-lora mb-2 text-white capitalize ${
+              language === 'ar' ? 'text-right' : 'text-left'
+            } whitespace-nowrap overflow-hidden truncate text-xs sm:text-sm md:text-base lg:text-lg leading-tight`}
             style={{
               textShadow: '1px 2px 0 #7f7f7f',
             }}
@@ -383,7 +382,7 @@ const Product = ({ product }) => {
               ${language === 'ar' ? 'ml-2' : 'mr-2'}
             `}
           >
-            <sup className='text-sm'>{getCurrencySymbol()}</sup> {price}
+            <sup className='text-xs'>{getCurrencySymbol()}</sup> {price}
           </div>
           {isSale && (
             <div className='font-semibold text-lg sm:text-xl text-red-400'>

@@ -111,11 +111,11 @@ const Header = () => {
           )}
 
           {/* Search Icon */}
-          <CiSearch
+          {/* <CiSearch
             className='text-2xl cursor-pointer mx-2'
             onClick={() => setSearchDialogOpen(true)}
             aria-label='Search'
-          />
+          /> */}
 
           {/* Language Dropdown */}
           <LanguageDropdown />
