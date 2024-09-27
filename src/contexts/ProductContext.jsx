@@ -91,7 +91,7 @@ const ProductProvider = ({ children }) => {
   const getRandomProducts = async () => {
     const response = await apiInstance.getAxios().get('/products/random', {
       params: {
-        number: 5,
+        number: 10,
       },
       cancelToken: source?.current?.token,
     })

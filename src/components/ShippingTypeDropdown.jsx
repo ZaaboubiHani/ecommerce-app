@@ -22,6 +22,7 @@ const ShippingTypeDropdown = ({ onSelect, validateAttempt }) => {
       }`}
     >
       <button
+        type='button'
         onClick={() => {
           setIsShippingTypeOpen((prev) => !prev)
         }}

@@ -1,72 +1,72 @@
+// Checkout.js
 import React, { useContext, useState } from 'react'
 import { LanguageContext } from '../contexts/LanguageContext'
 import { Link, useNavigate } from 'react-router-dom'
-import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 import { CartContext } from '../contexts/CartContext'
 import { SnackbarContext } from '../contexts/SnackbarContext'
 import Api from '../api/api.source'
 import ClipLoader from 'react-spinners/ClipLoader'
-import WilayaDropdown from '../components/WilayaDropdow'
+import WilayaDropdown from '../components/WilayaDropdown' // Ensure correct import path
 import CommuneDropdown from '../components/CommuneDropdown'
 import ShippingTypeDropdown from '../components/ShippingTypeDropdown'
 import { ProductContext } from '../contexts/ProductContext'
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import BestsellingCarousel from '../components/BestsellingCarousel'
 import TitleCard from '../components/TitleCard'
+import { FaCircleCheck, FaSpinner } from 'react-icons/fa6'
+import { useForm } from 'react-hook-form'
 
 const apiInstance = Api.instance
 
 const Checkout = () => {
   const navigate = useNavigate()
   const { language } = useContext(LanguageContext)
-  const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem('cart') || '[]')
-  )
   const { total, clearCart } = useContext(CartContext)
   const { handleOpen } = useContext(SnackbarContext)
   const { randomProducts } = useContext(ProductContext)
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem('cart') || '[]')
+  )
 
   const [selectedWilaya, setSelectedWilaya] = useState()
   const [selectedCommune, setSelectedCommune] = useState()
   const [selectedShippingType, setSelectedShippingType] = useState()
-  const [note, setNote] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [address, setAddress] = useState('')
-  const [phoneNumber1, setPhoneNumber1] = useState('')
-  const [phoneNumber2, setPhoneNumber2] = useState('')
-  const [validateAttempt, setValidateAttempt] = useState(false)
+  const [isOrderSuccessful, setIsOrderSuccessful] = useState(false)
   const [isValidating, setIsValidating] = useState(false)
 
-  const validateForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  const validateForm = (data) => {
     return (
-      fullName &&
-      address &&
-      phoneNumber1.length === 10 &&
-      /^(05|06|07)\d{8}$/.test(phoneNumber1) &&
+      data.fullName &&
+      data.address &&
+      data.phoneNumber1.length === 10 &&
+      /^(05|06|07)\d{8}$/.test(data.phoneNumber1) &&
       selectedWilaya &&
       selectedCommune &&
       selectedShippingType &&
-      (!phoneNumber2 || /^(05|06|07)\d{8}$/.test(phoneNumber2))
+      (!data.phoneNumber2 || /^(05|06|07)\d{8}$/.test(data.phoneNumber2))
     )
   }
 
-  const createOrder = async () => {
-    if (!validateForm()) {
-      setValidateAttempt(true)
+  const onSubmit = async (data) => {
+    if (!validateForm(data)) {
       return
     }
 
-    setValidateAttempt(false)
     setIsValidating(true)
 
     const orderData = {
-      note,
-      fullName,
-      address,
+      note: data.note,
+      fullName: data.fullName,
+      address: data.address,
       wilaya: selectedWilaya.frWilaya,
       commune: selectedCommune.frCommune,
-      phoneNumber1,
-      phoneNumber2,
+      phoneNumber1: data.phoneNumber1,
+      phoneNumber2: data.phoneNumber2,
       shippingType: selectedShippingType.enType.toLowerCase(),
       shippingPrice:
         selectedShippingType.enType === 'Home'
@@ -91,12 +91,12 @@ const Checkout = () => {
           language === 'ar'
             ? 'تم إرسال الطلب بنجاح'
             : language === 'fr'
-            ? 'commande envoyé avec succès'
+            ? 'Commande envoyée avec succès'
             : 'Order sent successfully',
           3000
         )
         clearCart()
-        navigate('/products')
+        setIsOrderSuccessful(true)
       }
     } catch (error) {
       setIsValidating(false)
@@ -111,358 +111,489 @@ const Checkout = () => {
     }
   }
 
+  const calculateTotal = () => {
+    const subtotal = total
+    const delivery =
+      selectedShippingType?.enType === 'Home'
+        ? selectedWilaya?.homePrice ?? 0
+        : selectedWilaya?.deskPrice ?? 0
+    const totalPrice = subtotal + delivery
+    return { subtotal, delivery, total: totalPrice }
+  }
+
   return (
-    <div className='p-4 lg:p-32 bg-white'>
+    <div className='pt-16 lg:py-32 bg-white'>
       {isValidating ? (
         <div className='h-[100vh] w-full flex justify-center items-center'>
           <ClipLoader />
         </div>
       ) : (
-        <div
-          className={`flex flex-col lg:px-24 ${
-            language === 'ar' ? 'md:flex-row-reverse' : 'md:flex-row'
-          }`}
-        >
-          <div
-            className={`w-full mx-4 bg-white px-12 py-8 flex flex-col ${
-              language === 'ar' ? 'items-end' : 'items-start'
-            }`}
-          >
-            <section className='grid grid-cols-1 mt-4 gap-[30px] w-full max-auto md:max-w-none md:mx-0 lg:w-2/3 xl:w-1/2'>
-              <h1
-                className={`font-bold text-lg m-0 p-0 ${
-                  language === 'ar' ? 'text-end' : 'text-start'
-                }`}
-              >
+        <div className='flex flex-col lg:px-24 md:flex-row space-y-4 md:space-y-0 md:space-x-4'>
+          {isOrderSuccessful ? (
+            <div className='w-full min-h-[450px] border p-4 rounded-xl flex flex-col justify-center items-center gap-6'>
+              <FaCircleCheck color='green' size={80} />
+              <h2 className='font-bold text-4xl leading-10 text-center uppercase'>
                 {language === 'ar'
-                  ? 'اتصال'
+                  ? 'تم إكمال الطلب بنجاح'
                   : language === 'fr'
-                  ? 'Contact'
-                  : 'Contact'}
-              </h1>
-              <InputField
-                label={
-                  language === 'ar'
+                  ? 'Commande réussie'
+                  : 'Order Completed Successfully'}
+              </h2>
+              <p className='text-lg leading-8 text-gray-500 text-center uppercase'>
+                {language === 'ar'
+                  ? 'شكرا لك'
+                  : language === 'fr'
+                  ? 'Merci'
+                  : 'Thank You'}
+              </p>
+              <button className='border border-black p-2 rounded bg-black hover:opacity-75 text-white'>
+                <Link to='/products'>
+                  {language === 'ar'
+                    ? 'العودة إلى المتجر'
+                    : language === 'fr'
+                    ? 'Retour à la boutique'
+                    : 'Go back to shop'}
+                </Link>
+              </button>
+            </div>
+          ) : (
+            <form
+              className='w-full border p-4 rounded-xl'
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <h2 className='text-2xl font-semibold mb-4 text-center'>
+                {language === 'ar'
+                  ? 'الدفع'
+                  : language === 'fr'
+                  ? 'Paiement'
+                  : 'Checkout'}
+              </h2>
+
+              {/* Full Name Field */}
+              <div className='mb-4'>
+                <label className='block mb-2 text-sm font-medium'>
+                  {language === 'ar'
                     ? 'الإسم واللقب'
                     : language === 'fr'
                     ? 'Nom et Prénom'
-                    : 'First and Last name'
-                }
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                error={validateAttempt && !fullName}
-                errorMessage={
-                  language === 'ar'
-                    ? 'من فضلك أدخل الإسم واللقب'
-                    : language === 'fr'
-                    ? 'Veuillez entrer votre Nom et Prénom'
-                    : 'Please enter your First and Last name'
-                }
-                language={language}
-              />
-              <InputField
-                label={
-                  language === 'ar'
-                    ? 'رقم الهاتف 1'
-                    : language === 'fr'
-                    ? 'Numéro de téléphone 1'
-                    : 'Phone number 1'
-                }
-                value={phoneNumber1}
-                onChange={(e) => setPhoneNumber1(e.target.value)}
-                error={
-                  validateAttempt &&
-                  (phoneNumber1.length !== 10 ||
-                    !/^(05|06|07)\d{8}$/.test(phoneNumber1))
-                }
-                errorMessage={
-                  language === 'ar'
-                    ? 'الرجاء إدخال رقم هاتف صحيح'
-                    : language === 'fr'
-                    ? 'Veuillez entrer un numéro de téléphone valide'
-                    : 'Please enter a valid Phone number'
-                }
-                language={language}
-              />
-              <InputField
-                label={
-                  language === 'ar'
-                    ? '(اختياري) رقم الهاتف 2'
-                    : language === 'fr'
-                    ? 'Numéro de téléphone 2 (optional)'
-                    : 'Phone number 2 (optional)'
-                }
-                value={phoneNumber2}
-                onChange={(e) => setPhoneNumber2(e.target.value)}
-                error={
-                  validateAttempt &&
-                  phoneNumber2.length > 0 &&
-                  !/^(05|06|07)\d{8}$/.test(phoneNumber2)
-                }
-                errorMessage={
-                  language === 'ar'
-                    ? 'الرجاء إدخال رقم هاتف صحيح'
-                    : language === 'fr'
-                    ? 'Veuillez entrer un numéro de téléphone valide'
-                    : 'Please enter a valid Phone number'
-                }
-                language={language}
-              />
-              <h1
-                className={`font-bold text-lg m-0 p-0 ${
-                  language === 'ar' ? 'text-end' : 'text-start'
-                }`}
-              >
-                {language === 'ar'
-                  ? 'مكان'
-                  : language === 'fr'
-                  ? 'Localisation'
-                  : 'Location'}
-              </h1>
-              <InputField
-                label={
-                  language === 'ar'
+                    : 'First and Last name'}
+                  <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type='text'
+                  {...register('fullName', { required: true })}
+                  className={`w-full px-4 py-3 border rounded-md bg-white focus:border-white ${
+                    errors.fullName ? 'border-red-500' : ''
+                  }`}
+                  placeholder={
+                    language === 'ar'
+                      ? 'أدخل اسمك الكامل'
+                      : language === 'fr'
+                      ? 'Entrez votre nom complet'
+                      : 'Enter your full name'
+                  }
+                />
+                {errors.fullName && (
+                  <p className='text-red-500 text-sm'>
+                    {language === 'ar'
+                      ? 'من فضلك أدخل الإسم واللقب'
+                      : language === 'fr'
+                      ? 'Veuillez entrer votre Nom et Prénom'
+                      : 'Please enter your First and Last name'}
+                  </p>
+                )}
+              </div>
+
+              {/* Address Field */}
+              <div className='mb-4'>
+                <label className='block mb-2 text-sm font-medium'>
+                  {language === 'ar'
                     ? 'العنوان'
                     : language === 'fr'
                     ? 'Adresse'
-                    : 'Address'
-                }
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                error={validateAttempt && !address}
-                errorMessage={
-                  language === 'ar'
-                    ? 'من فضلك أدخل عنوانك'
+                    : 'Address'}
+                  <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type='text'
+                  {...register('address', { required: true })}
+                  className={`w-full px-4 py-3 border rounded-md bg-white focus:border-white ${
+                    errors.address ? 'border-red-500' : ''
+                  }`}
+                  placeholder={
+                    language === 'ar'
+                      ? 'أدخل عنوانك'
+                      : language === 'fr'
+                      ? 'Entrez votre adresse'
+                      : 'Enter your address'
+                  }
+                />
+                {errors.address && (
+                  <p className='text-red-500 text-sm'>
+                    {language === 'ar'
+                      ? 'من فضلك أدخل عنوانك'
+                      : language === 'fr'
+                      ? 'Veuillez entrer votre adresse'
+                      : 'Please enter your address'}
+                  </p>
+                )}
+              </div>
+
+              {/* Phone Number 1 Field */}
+              <div className='mb-4'>
+                <label className='block mb-2 text-sm font-medium'>
+                  {language === 'ar'
+                    ? 'رقم الهاتف 1'
                     : language === 'fr'
-                    ? 'Veuillez entrer votre Addresse'
-                    : 'Please enter your Address'
-                }
-                language={language}
-              />
-              <WilayaDropdown
-                onSelect={(wilaya) => setSelectedWilaya(wilaya)}
-                validateAttempt={validateAttempt}
-              />
-              <CommuneDropdown
-                onSelect={(commune) => setSelectedCommune(commune)}
-                selectedWilaya={selectedWilaya}
-                validateAttempt={validateAttempt}
-              />
-              <h1
-                className={`font-bold text-lg m-0 p-0 ${
-                  language === 'ar' ? 'text-end' : 'text-start'
-                }`}
-              >
-                {language === 'ar'
-                  ? 'الشحن'
-                  : language === 'fr'
-                  ? 'Livraison'
-                  : 'Delivery'}
-              </h1>
-              <ShippingTypeDropdown
-                onSelect={(type) => setSelectedShippingType(type)}
-                validateAttempt={validateAttempt}
-              />
-              <h1
-                className={`font-bold text-lg m-0 p-0 ${
-                  language === 'ar' ? 'text-end' : 'text-start'
-                }`}
-              >
-                {language === 'ar'
-                  ? 'ملاحظة'
-                  : language === 'fr'
-                  ? 'Note'
-                  : 'Note'}
-              </h1>
-              <InputField
-                label={
-                  language === 'ar'
+                    ? 'Numéro de téléphone 1'
+                    : 'Phone number 1'}
+                  <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type='tel'
+                  {...register('phoneNumber1', {
+                    required: true,
+                    pattern: /^(05|06|07)\d{8}$/,
+                  })}
+                  className={`w-full px-4 py-3 border rounded-md bg-white focus:border-white ${
+                    errors.phoneNumber1 ? 'border-red-500' : ''
+                  }`}
+                  placeholder={
+                    language === 'ar'
+                      ? 'أدخل رقم هاتفك'
+                      : language === 'fr'
+                      ? 'Entrez votre numéro de téléphone'
+                      : 'Enter your phone number'
+                  }
+                />
+                {errors.phoneNumber1 && (
+                  <p className='text-red-500 text-sm'>
+                    {language === 'ar'
+                      ? 'الرجاء إدخال رقم هاتف صحيح'
+                      : language === 'fr'
+                      ? 'Veuillez entrer un numéro de téléphone valide'
+                      : 'Please enter a valid phone number'}
+                  </p>
+                )}
+              </div>
+
+              {/* Phone Number 2 Field */}
+              <div className='mb-4'>
+                <label className='block mb-2 text-sm font-medium'>
+                  {language === 'ar'
+                    ? '(اختياري) رقم الهاتف 2'
+                    : language === 'fr'
+                    ? 'Numéro de téléphone 2 (optionnel)'
+                    : 'Phone number 2 (optional)'}
+                </label>
+                <input
+                  type='tel'
+                  {...register('phoneNumber2', {
+                    pattern: {
+                      value: /^(05|06|07)\d{8}$/,
+                      message:
+                        language === 'ar'
+                          ? 'الرجاء إدخال رقم هاتف صحيح'
+                          : language === 'fr'
+                          ? 'Veuillez entrer un numéro de téléphone valide'
+                          : 'Please enter a valid phone number',
+                    },
+                  })}
+                  className={`w-full px-4 py-3 border rounded-md bg-white focus:border-white ${
+                    errors.phoneNumber2 ? 'border-red-500' : ''
+                  }`}
+                  placeholder={
+                    language === 'ar'
+                      ? 'أدخل رقم هاتفك الثاني'
+                      : language === 'fr'
+                      ? 'Entrez votre deuxième numéro de téléphone'
+                      : 'Enter your second phone number'
+                  }
+                />
+                {errors.phoneNumber2 && (
+                  <p className='text-red-500 text-sm'>
+                    {errors.phoneNumber2.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Wilaya Dropdown */}
+              <div className='mb-4'>
+                <label className='block mb-2 text-sm font-medium'>
+                  {language === 'ar'
+                    ? 'الولاية'
+                    : language === 'fr'
+                    ? 'Wilaya'
+                    : 'Wilaya'}
+                  <span className='text-red-500'>*</span>
+                </label>
+                <WilayaDropdown
+                  onSelect={(wilaya) => setSelectedWilaya(wilaya)}
+                  validateAttempt={Boolean(errors.selectedWilaya)}
+                />
+                {errors.selectedWilaya && (
+                  <p className='text-red-500 text-sm'>
+                    {language === 'ar'
+                      ? 'يرجى تحديد ولايتك'
+                      : language === 'fr'
+                      ? 'Veuillez sélectionner votre wilaya'
+                      : 'Please select your wilaya'}
+                  </p>
+                )}
+              </div>
+
+              {/* Commune Dropdown */}
+              <div className='mb-4'>
+                <label className='block mb-2 text-sm font-medium'>
+                  {language === 'ar'
+                    ? 'البلدية'
+                    : language === 'fr'
+                    ? 'Commune'
+                    : 'Commune'}
+                  <span className='text-red-500'>*</span>
+                </label>
+                <CommuneDropdown
+                  onSelect={(commune) => setSelectedCommune(commune)}
+                  selectedWilaya={selectedWilaya}
+                  validateAttempt={Boolean(errors.selectedCommune)}
+                />
+                {errors.selectedCommune && (
+                  <p className='text-red-500 text-sm'>
+                    {language === 'ar'
+                      ? 'يرجى تحديد بلديتك'
+                      : language === 'fr'
+                      ? 'Veuillez sélectionner votre commune'
+                      : 'Please select your commune'}
+                  </p>
+                )}
+              </div>
+
+              {/* Shipping Type Dropdown */}
+              <div className='mb-4'>
+                <label className='block mb-2 text-sm font-medium'>
+                  {language === 'ar'
+                    ? 'نوع الشحن'
+                    : language === 'fr'
+                    ? 'Type de livraison'
+                    : 'Shipping type'}
+                  <span className='text-red-500'>*</span>
+                </label>
+                <ShippingTypeDropdown
+                  onSelect={(type) => setSelectedShippingType(type)}
+                  validateAttempt={Boolean(errors.selectedShippingType)}
+                />
+                {errors.selectedShippingType && (
+                  <p className='text-red-500 text-sm'>
+                    {language === 'ar'
+                      ? 'يرجى تحديد نوع الشحن'
+                      : language === 'fr'
+                      ? 'Veuillez sélectionner un type de livraison'
+                      : 'Please select a shipping type'}
+                  </p>
+                )}
+              </div>
+
+              {/* Note Field */}
+              <div className='mb-4'>
+                <label className='block mb-2 text-sm font-medium'>
+                  {language === 'ar'
                     ? '(اختياري) ملاحظة'
                     : language === 'fr'
-                    ? 'Note (optional)'
-                    : 'Note (optional)'
-                }
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                language={language}
-              />
-            </section>
-            <div
-              className={`flex w-full flex-col items-center justify-stretch mt-4 ${
-                language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'
-              }`}
-            >
-              <Link
-                to='/'
-                className='bg-primary w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium mx-2 text-nowrap rounded-2xl'
-              >
-                {language === 'ar'
-                  ? 'اشتري اكثر'
-                  : language === 'fr'
-                  ? 'Acheter plus'
-                  : 'Buy more'}
-              </Link>
-              <button
-                disabled={cart.length === 0}
-                onClick={createOrder}
-                className='bg-gray-500 w-full flex p-4 justify-center items-center text-white max-w-[200px] font-medium m-2 rounded-2xl'
-              >
-                {language === 'ar'
-                  ? 'تأكيد'
-                  : language === 'fr'
-                  ? 'Valider'
-                  : 'Validate'}
-              </button>
-            </div>
-          </div>
-          <div className='flex items-start justify-center h-fit w-full md:w-[500px] lg:w-[500px] xl:w-[500px] pr-2 bg-white py-4 mt-4 md:mt-0'>
-            <div
-              className={`flex flex-col items-center w-[230px] pl-2 ${
-                language === 'ar' ? 'md:items-end' : 'md:items-start'
-              }`}
-            >
-              <div className='font-bold'>
-                {language === 'ar'
-                  ? 'المشتريات'
-                  : language === 'fr'
-                  ? 'Achats'
-                  : 'Purchases'}
+                    ? 'Note (optionnelle)'
+                    : 'Note (optional)'}
+                </label>
+                <textarea
+                  {...register('note')}
+                  className='w-full px-4 py-3 border rounded-md bg-white focus:border-white'
+                  placeholder={
+                    language === 'ar'
+                      ? 'أدخل ملاحظتك'
+                      : language === 'fr'
+                      ? 'Entrez votre note'
+                      : 'Enter your note'
+                  }
+                />
               </div>
-              <div className='flex overflow-y-auto overflow-x-hidden max-h-[1000px] lg:max-h-[700px] w-[230px] border-y-2 my-4'>
-                <div className='flex flex-col'>
+
+              {/* Submit Button */}
+              <button
+                type='submit'
+                className='w-full py-3 bg-black text-white font-semibold rounded-md hover:opacity-75'
+                disabled={isValidating || cart.length === 0}
+              >
+                {isValidating ? (
+                  <div className='flex items-center justify-center space-x-2'>
+                    <FaSpinner className='animate-spin' />
+                    <span>
+                      {language === 'ar'
+                        ? 'جار التحميل...'
+                        : language === 'fr'
+                        ? 'Chargement...'
+                        : 'Loading...'}
+                    </span>
+                  </div>
+                ) : language === 'ar' ? (
+                  'تأكيد'
+                ) : language === 'fr' ? (
+                  'Valider'
+                ) : (
+                  'Validate'
+                )}
+              </button>
+            </form>
+          )}
+
+          {/* Purchases Section */}
+          <div className='w-full h-auto border p-4 rounded-xl'>
+            <h2 className='text-2xl font-semibold mb-4 text-center'>
+              {language === 'ar'
+                ? 'المشتريات'
+                : language === 'fr'
+                ? 'Achats'
+                : 'Purchases'}
+            </h2>
+            <div className='mt-8'>
+              <div className='flow-root'>
+                <ul
+                  role='list'
+                  className='-my-6 divide-y divide-gray-200 max-h-[400px] overflow-y-auto'
+                >
                   {cart.map((item, i) => (
-                    <div
-                      key={i}
-                      className={`w-[230px] m-4 flex ${
-                        language === 'ar' ? 'flex-row-reverse' : 'flex-row'
-                      }`}
-                    >
-                      <img
-                        className='h-[100px] object-fit'
-                        src={item.img}
-                        alt=''
-                      />
-                      <div className='mx-4'>
-                        <div
-                          className={`flex mt-2 ${
-                            language === 'ar' ? 'flex-row-reverse' : 'flex-row'
-                          }`}
-                        >
-                          <div
-                            style={{
-                              cursor: 'pointer',
-                              height: '25px',
-                              width: '25px',
-                              borderRadius: '4px',
-                              margin: '0px 4px',
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              border: '1px solid black',
-                              fontSize: '14px',
-                            }}
-                          >
-                            {item.size}
-                          </div>
-                        </div>
-                        <div
-                          className={`flex items-center text-center text-sm text-gray-400 ${
-                            language === 'ar' ? 'flex-row-reverse' : 'flex-row'
-                          }`}
-                        >
-                          {language === 'ar'
-                            ? 'دج '
-                            : language === 'fr'
-                            ? 'DA '
-                            : 'DZD '}
-                          {item.isSale ? item.salePrice : item.price} X{' '}
-                          {item.amount}
-                        </div>
+                    <li key={i} className='flex py-6'>
+                      <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
+                        <img
+                          src={item.img}
+                          alt={item.name}
+                          className='h-full w-full object-cover object-center'
+                        />
+                      </div>
+
+                      <div className='ml-4 flex flex-1 flex-col'>
                         <div>
-                          {language === 'ar'
-                            ? 'دج '
-                            : language === 'fr'
-                            ? 'DA '
-                            : 'DZD '}
-                          {item.isSale
-                            ? item.salePrice * item.amount
-                            : item.price * item.amount}
+                          <div className='flex justify-between text-base font-medium'>
+                            <h3>{item.name}</h3>
+                            <p className='ml-4'>
+                              {item.isSale ? item.salePrice : item.price}{' '}
+                              <small>
+                                <sup>
+                                  {language === 'ar'
+                                    ? 'دج'
+                                    : language === 'fr'
+                                    ? 'DA'
+                                    : 'DZD'}
+                                </sup>
+                              </small>
+                            </p>
+                          </div>
+                          <p className='mt-1 text-sm text-gray-500'>
+                            {language === 'ar'
+                              ? 'الحجم'
+                              : language === 'fr'
+                              ? 'Taille'
+                              : 'Size'}{' '}
+                            {item.size}
+                          </p>
+                        </div>
+                        <div className='flex flex-1 items-end justify-between text-sm'>
+                          <p className='text-gray-500'>
+                            {language === 'ar'
+                              ? 'الكمية'
+                              : language === 'fr'
+                              ? 'Qté'
+                              : 'Qty'}{' '}
+                            x{item.amount}
+                          </p>
                         </div>
                       </div>
-                    </div>
+                    </li>
                   ))}
+                </ul>
+                <div className='border-t border-gray-200 px-4 py-6 sm:px-6 mt-10'>
+                  <div className='flex justify-between text-base font-medium'>
+                    <p>
+                      {language === 'ar'
+                        ? 'السعر الإجمالي'
+                        : language === 'fr'
+                        ? 'Prix total'
+                        : 'Subtotal'}
+                    </p>
+                    <p>
+                      {calculateTotal().subtotal}{' '}
+                      <small className='ml-1'>
+                        <sup>
+                          {language === 'ar'
+                            ? 'دج'
+                            : language === 'fr'
+                            ? 'DA'
+                            : 'DZD'}
+                        </sup>
+                      </small>
+                    </p>
+                  </div>
+                  <div className='flex justify-between text-base font-medium'>
+                    <p>
+                      {language === 'ar'
+                        ? 'رسوم الشحن'
+                        : language === 'fr'
+                        ? 'Frais de livraison'
+                        : 'Delivery'}
+                    </p>
+                    <p>
+                      {calculateTotal().delivery}{' '}
+                      <small className='ml-1'>
+                        <sup>
+                          {language === 'ar'
+                            ? 'دج'
+                            : language === 'fr'
+                            ? 'DA'
+                            : 'DZD'}
+                        </sup>
+                      </small>
+                    </p>
+                  </div>
+                  <hr />
+                  <div className='flex justify-between text-base font-medium'>
+                    <p>
+                      {language === 'ar'
+                        ? 'مجموع المدفوعات'
+                        : language === 'fr'
+                        ? 'Total à payer'
+                        : 'Total'}
+                    </p>
+                    <p>
+                      {calculateTotal().total}{' '}
+                      <small className='ml-1'>
+                        <sup>
+                          {language === 'ar'
+                            ? 'دج'
+                            : language === 'fr'
+                            ? 'DA'
+                            : 'DZD'}
+                        </sup>
+                      </small>
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className='my-2 font-bold'>
-                {language === 'ar'
-                  ? 'السعر الإجمالي : '
-                  : language === 'fr'
-                  ? 'Prix total: '
-                  : 'Total price: '}
-                {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                {total}
-              </div>
-              <div className='my-2 font-bold'>
-                {language === 'ar'
-                  ? 'رسوم الشحن : '
-                  : language === 'fr'
-                  ? 'Frais de livraison: '
-                  : 'Shipping fees: '}
-                {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                {selectedShippingType?.enType === 'Home'
-                  ? selectedWilaya?.homePrice
-                  : selectedWilaya?.deskPrice ?? 0}
-              </div>
-              <div className='my-2 font-bold'>
-                {language === 'ar'
-                  ? 'مجموع المدفوعات : '
-                  : language === 'fr'
-                  ? 'Total à payer: '
-                  : 'Total to pay: '}
-                {language === 'ar' ? 'دج ' : language === 'fr' ? 'DA ' : 'DZD '}
-                {total +
-                  (selectedShippingType?.enType === 'Home'
-                    ? selectedWilaya?.homePrice
-                    : selectedWilaya?.deskPrice ?? 0)}
               </div>
             </div>
           </div>
         </div>
       )}
-      <TitleCard
-        title={
-          language === 'ar'
-            ? 'الأكثر مبيعا'
-            : language === 'fr'
-            ? 'Besy-Seller'
-            : 'Bestselling'
-        }
-      />
-      <BestsellingCarousel products={randomProducts} />
+      {/* Bestselling Carousel Section */}
+      <div className='mt-8'>
+        <TitleCard
+          title={
+            language === 'ar'
+              ? 'الأكثر مبيعا'
+              : language === 'fr'
+              ? 'Plus vendu'
+              : 'Bestselling'
+          }
+        />
+        <BestsellingCarousel products={randomProducts} />
+      </div>
     </div>
   )
 }
-
-const InputField = ({
-  label,
-  value,
-  onChange,
-  error,
-  errorMessage,
-  language,
-}) => (
-  <div className={`${language === 'ar' ? 'text-end' : 'text-start'}`}>
-    <div className='relative flex flex-row items-center border border-1 border-black rounded-lg'>
-      <input
-        value={value}
-        onChange={onChange}
-        className='bg-white p-2 w-full flex items-center justify-between text-l focus:border-transparent focus:ring-0 outline-none rounded-lg'
-        placeholder={label}
-        type='text'
-      />
-    </div>
-    {error && <div className='text-red-500 text-sm'>{errorMessage}</div>}
-  </div>
-)
 
 export default Checkout

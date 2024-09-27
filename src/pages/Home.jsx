@@ -28,7 +28,24 @@ const Home = () => {
         }
       />
 
-      <SingleCarousel products={newProducts} />
+      <section>
+        <div>
+          <div className='flex flex-row'></div>
+          {loadingProducts ? (
+            <section className='h-screen flex justify-center items-center '>
+              <ClipLoader />
+            </section>
+          ) : (
+            <div>
+              <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[16px] max-auto max-w-none md:mx-0 p-4'>
+                {newProducts.map((product) => {
+                  return <Product product={product} key={product._id} />
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
       <TitleCard
         title={
           language === 'ar'

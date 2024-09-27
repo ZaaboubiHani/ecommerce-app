@@ -1,10 +1,8 @@
 import React, { useState, useContext, useRef, useEffect } from 'react'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
-import { CategoryContext } from '../contexts/CategoryContext'
 import { LanguageContext } from '../contexts/LanguageContext'
 import data from '../../public/data/wilayas.json'
-import Api from '../api/api.source'
-const apiInstance = Api.instance
+
 const CommuneDropdown = ({ onSelect, validateAttempt, selectedWilaya }) => {
   const [selectedCommune, setSelectedCommune] = useState()
   const { language } = useContext(LanguageContext)
@@ -33,12 +31,13 @@ const CommuneDropdown = ({ onSelect, validateAttempt, selectedWilaya }) => {
       ref={dropdownRef}
     >
       <button
+        type='button'
         onClick={() => {
           setIsCommunesOpen((prev) => !prev)
         }}
         className='bg-white p-2 w-full flex items-center justify-between
-                        text-l tracking-wider border border-1 border-black h-11 rounded-lg
-        duration-300'
+                    text-l tracking-wider border border-1 border-black h-11 rounded-lg
+                    duration-300'
       >
         <div
           className={`${
@@ -56,8 +55,7 @@ const CommuneDropdown = ({ onSelect, validateAttempt, selectedWilaya }) => {
       {isCommunesOpen && (
         <div
           className='bg-white absolute top-[50px] flex flex-col items-start p-1 w-full z-10
-                                border border-1 border-black max-h-[400px] overflow-x-hidden overflow-y-auto rounded-lg shadow-md
-                                '
+                      border border-1 border-black max-h-[400px] overflow-x-hidden overflow-y-auto rounded-lg shadow-md'
         >
           {data
             .filter((c) => c.wilaya_name_ascii === selectedWilaya?.frWilaya)

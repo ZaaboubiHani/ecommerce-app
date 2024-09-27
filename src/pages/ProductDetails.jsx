@@ -165,27 +165,36 @@ const ProductDetails = () => {
                 {product.isSale ? (
                   <>
                     <span className='text-xl line-through text-gray-500 mr-2'>
-                      {language === 'ar'
-                        ? `دج ${product.price}`
-                        : language === 'fr'
-                        ? `DA ${product.price}`
-                        : `DZD ${product.price}`}
+                      <sup className='text-sm' aria-hidden='true'>
+                        {language === 'ar'
+                          ? 'دج'
+                          : language === 'fr'
+                          ? 'DA'
+                          : 'DZD'}
+                      </sup>{' '}
+                      {product.price}
                     </span>
                     <span className='text-2xl font-bold text-primary'>
-                      {language === 'ar'
-                        ? `دج ${product.salePrice}`
-                        : language === 'fr'
-                        ? `DA ${product.salePrice}`
-                        : `DZD ${product.salePrice}`}
+                      <sup className='text-sm' aria-hidden='true'>
+                        {language === 'ar'
+                          ? 'دج'
+                          : language === 'fr'
+                          ? 'DA'
+                          : 'DZD'}
+                      </sup>{' '}
+                      {product.salePrice}
                     </span>
                   </>
                 ) : (
                   <span className='text-2xl font-bold text-primary'>
-                    {language === 'ar'
-                      ? `دج ${product.price}`
-                      : language === 'fr'
-                      ? `DA ${product.price}`
-                      : `DZD ${product.price}`}
+                    <sup className='text-sm' aria-hidden='true'>
+                      {language === 'ar'
+                        ? 'دج'
+                        : language === 'fr'
+                        ? 'DA'
+                        : 'DZD'}
+                    </sup>{' '}
+                    {product.price}
                   </span>
                 )}
               </div>
@@ -203,7 +212,7 @@ const ProductDetails = () => {
               <div className='mb-6'>
                 <h2 className='text-lg font-medium mb-2'>
                   {language === 'ar'
-                    ? 'الحجم'
+                    ? 'المقاس'
                     : language === 'fr'
                     ? 'Taille'
                     : 'Size'}
@@ -237,7 +246,7 @@ const ProductDetails = () => {
                 {validateAttempt && sizeIndex === undefined && (
                   <p className='text-red-500 text-sm mt-2'>
                     {language === 'ar'
-                      ? 'الرجاء تحديد حجم'
+                      ? 'الرجاء تحديد المقاس'
                       : language === 'fr'
                       ? 'Veuillez choisir une taille'
                       : 'Please select a size'}
