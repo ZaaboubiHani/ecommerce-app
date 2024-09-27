@@ -18,7 +18,7 @@ const Product = ({ product }) => {
     sizes,
     isSale,
     salePrice,
-    isNew,
+    new: isNew,
   } = product
 
   const isAvailable = sizes?.some((size) => size.inStock) ?? false
@@ -75,7 +75,7 @@ const Product = ({ product }) => {
       {/* Availability Badge */}
       <div
         className={`
-          absolute bg-white border border-gray-200 top-3 rounded-full px-3 py-1 z-10 flex items-center text-xs font-medium shadow-sm opacity-90 
+          absolute bg-white border text-black border-gray-200 top-3 rounded-full px-3 py-1 z-10 flex items-center text-xs font-medium shadow-sm opacity-90 
           ${language === 'ar' ? 'flex-row-reverse right-3' : 'left-3'}
         `}
       >
