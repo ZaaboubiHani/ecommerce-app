@@ -13,6 +13,7 @@ module.exports = {
       sedan: ['sedan'],
       script: ['"Times New Roman"', 'serif'],
       lora: ['"Lora"', 'serif'],
+      arinttika: ['"Arinttika Signature"', 'cursive'],
     },
     container: {
       padding: {

@@ -114,12 +114,12 @@ const Hero = () => {
           </div>
 
           {/* Title */}
-          <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6'>
+          <h1 className='text-7xl sm:text-8xl md:text-9xl lg:text-10xl xl:text-12xl 2xl:text-14xl font-arinttika bg-gradient-to-r from-yellow-700 to-yellow-400 bg-clip-text text-transparent mb-6 p-4'>
             {getHeroText(1)}
           </h1>
 
           {/* Subtitle */}
-          <p className='text-lg sm:text-xl md:text-2xl text-white mb-8'>
+          <p className='font-sedan text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white mb-8'>
             {getHeroText(2)}
           </p>
 
