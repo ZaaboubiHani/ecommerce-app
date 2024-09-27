@@ -4,9 +4,10 @@ import { LanguageContext } from '../contexts/LanguageContext'
 import { HeroContext } from '../contexts/HeroContext'
 import ClipLoader from 'react-spinners/ClipLoader'
 import Snowfall from 'react-snowfall'
+import snowflakeSrc from '../assets/snowflake.png'
 
-const snowflake2 = document.createElement('img')
-snowflake2.src = 'src/img/snowflake.png'
+const snowflake2 = new Image()
+snowflake2.src = snowflakeSrc
 const images = [snowflake2]
 
 const Hero = () => {
