@@ -54,7 +54,7 @@ const Hero = () => {
           </div>
 
           {/* Title */}
-          <h1 className='text-7xl sm:text-8xl md:text-9xl lg:text-10xl xl:text-12xl 2xl:text-14xl font-arinttika bg-gradient-to-r from-yellow-700 to-yellow-400 bg-clip-text text-transparent mb-6 p-4'>
+          <h1 className='text-7xl sm:text-8xl md:text-9xl lg:text-10xl xl:text-12xl 2xl:text-14xl font-edu font-semibold  bg-gradient-to-r from-yellow-700 to-yellow-400 bg-clip-text text-transparent mb-6 p-4'>
             {getHeroText(1)}
           </h1>
 

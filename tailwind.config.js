@@ -14,6 +14,7 @@ module.exports = {
       script: ['"Times New Roman"', 'serif'],
       lora: ['"Lora"', 'serif'],
       arinttika: ['"Arinttika Signature"', 'cursive'],
+      edu: ['"Edu AU VIC WA NT Guides"', 'cursive'],
     },
     container: {
       padding: {
