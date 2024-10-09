@@ -82,7 +82,7 @@ const Footer = () => {
   return (
     <footer
       dir={isArabic ? 'rtl' : 'ltr'}
-      className='bg-black text-white py-12 w-full mt-auto'
+      className='bg-main text-white py-12 w-full mt-auto'
     >
       <div
         className={`container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 ${

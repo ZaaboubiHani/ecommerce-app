@@ -471,11 +471,17 @@ const Checkout = () => {
                       <div className='ml-4 flex flex-1 flex-col'>
                         <div>
                           <div className='flex justify-between text-base font-medium'>
-                            <h3>{item.name}</h3>
-                            <p className='ml-4'>
+                            <h3 className='capitalize font-bold'>
+                              {language === 'ar'
+                                ? `${item.arName}`
+                                : language === 'fr'
+                                ? `${item.frName}`
+                                : `${item.engName}`}
+                            </h3>
+                            <p className='ml-4 font-bold'>
                               {item.isSale ? item.salePrice : item.price}{' '}
                               <small>
-                                <sup>
+                                <sup className='font-bold'>
                                   {language === 'ar'
                                     ? 'دج'
                                     : language === 'fr'
@@ -517,10 +523,10 @@ const Checkout = () => {
                         ? 'Prix total'
                         : 'Subtotal'}
                     </p>
-                    <p>
+                    <p className='font-bold'>
                       {calculateTotal().subtotal}{' '}
-                      <small className='ml-1'>
-                        <sup>
+                      <small className='ml-1 font-bold'>
+                        <sup className=''>
                           {language === 'ar'
                             ? 'دج'
                             : language === 'fr'
@@ -538,9 +544,9 @@ const Checkout = () => {
                         ? 'Frais de livraison'
                         : 'Delivery'}
                     </p>
-                    <p>
+                    <p className='font-bold'>
                       {calculateTotal().delivery}{' '}
-                      <small className='ml-1'>
+                      <small className='ml-1 font-bold'>
                         <sup>
                           {language === 'ar'
                             ? 'دج'
@@ -560,10 +566,10 @@ const Checkout = () => {
                         ? 'Total à payer'
                         : 'Total'}
                     </p>
-                    <p>
+                    <p className='font-bold'>
                       {calculateTotal().total}{' '}
                       <small className='ml-1'>
-                        <sup>
+                        <sup className='font-bold'>
                           {language === 'ar'
                             ? 'دج'
                             : language === 'fr'

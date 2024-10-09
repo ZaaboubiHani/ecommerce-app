@@ -48,7 +48,7 @@ const Header = () => {
   )
 
   return (
-    <header className='bg-black text-white font-bold shadow-md fixed w-full z-30 transition-all h-[60px]'>
+    <header className='bg-main text-white font-bold shadow-md fixed w-full z-30 transition-all h-[60px]'>
       <div className='mx-auto flex items-center justify-between h-full px-4 lg:px-16 relative'>
         {/* Hamburger Menu for Mobile */}
         <div
@@ -95,7 +95,7 @@ const Header = () => {
           {renderNavLink(
             '/promotion',
             language === 'ar'
-              ? 'ترويج'
+              ? 'تخفيضات'
               : language === 'fr'
               ? 'PROMOTION'
               : 'PROMOTION'

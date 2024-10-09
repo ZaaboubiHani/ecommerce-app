@@ -99,7 +99,7 @@ const Menu = () => {
             <RiDiscountPercentFill className='text-3xl mr-3' />
             <span>
               {language === 'ar'
-                ? 'ترويج'
+                ? 'تخفيضات'
                 : language === 'fr'
                 ? 'PROMOTION'
                 : 'PROMOTION'}

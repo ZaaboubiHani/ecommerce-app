@@ -57,7 +57,7 @@ const Product = ({ product }) => {
     <div
       className={`
         relative 
-        bg-black
+        bg-main
         text-white
          shadow-xl
         overflow-visible
@@ -73,7 +73,7 @@ const Product = ({ product }) => {
         {/* Availability Badge */}
         <div
           className={`
-          absolute bg-white border text-black border-gray-200 top-3  px-3 py-1 z-10 flex items-center text-xs font-medium shadow-sm opacity-90 
+          absolute bg-white font-bold border text-black border-gray-200 top-3  px-3 py-1 z-10 flex items-center text-xs font-medium shadow-sm opacity-90 
           ${language === 'ar' ? 'flex-row-reverse right-3' : 'left-3'}
         `}
         >
@@ -185,7 +185,7 @@ const Product = ({ product }) => {
               <sup className='text-xs'>{getCurrencySymbol()}</sup> {price}
             </div>
             {isSale && (
-              <div className='font-semibold text-lg sm:text-xl text-red-400'>
+              <div className='font-semibold text-lg sm:text-xl text-white'>
                 <sup className='text-sm'>{getCurrencySymbol()}</sup> {salePrice}
               </div>
             )}
