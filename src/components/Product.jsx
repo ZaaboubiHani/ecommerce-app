@@ -57,7 +57,7 @@ const Product = ({ product }) => {
     <div
       className={`
         relative 
-        bg-main
+        bg-white
         text-white
          shadow-xl
         overflow-visible
@@ -73,7 +73,7 @@ const Product = ({ product }) => {
         {/* Availability Badge */}
         <div
           className={`
-          absolute bg-white font-bold border text-black border-gray-200 top-3  px-3 py-1 z-10 flex items-center text-xs font-medium shadow-sm opacity-90 
+          absolute bg-white font-bold border text-main border-gray-200 top-3  px-3 py-1 z-10 flex items-center text-xs shadow-sm opacity-90 
           ${language === 'ar' ? 'flex-row-reverse right-3' : 'left-3'}
         `}
         >
@@ -159,12 +159,14 @@ const Product = ({ product }) => {
           </div>
 
           <h2
-            className={`font-bold font-lora mb-2 text-white capitalize ${
+            className={`font-bold font-lora mb-2 text-main capitalize ${
               language === 'ar' ? 'text-right' : 'text-left'
             } whitespace-nowrap overflow-hidden truncate text-xs sm:text-sm md:text-base lg:text-lg leading-tight`}
-            style={{
-              textShadow: '1px 2px 0 #7f7f7f',
-            }}
+            style={
+              {
+                // textShadow: '1px 2px 0 #7f7f7f',
+              }
+            }
           >
             {capitalize(getLocalizedText({ arName, frName, engName }))}
           </h2>
@@ -178,14 +180,14 @@ const Product = ({ product }) => {
             <div
               className={`
               font-bold font-lora text-lg sm:text-xl 
-              ${isSale ? 'line-through text-gray-400' : 'text-white'}
+              ${isSale ? 'line-through text-gray-700' : 'text-main'}
               ${language === 'ar' ? 'ml-2' : 'mr-2'}
             `}
             >
               <sup className='text-xs'>{getCurrencySymbol()}</sup> {price}
             </div>
             {isSale && (
-              <div className='font-semibold text-lg sm:text-xl text-white'>
+              <div className='font-semibold text-lg sm:text-xl text-main'>
                 <sup className='text-sm'>{getCurrencySymbol()}</sup> {salePrice}
               </div>
             )}
