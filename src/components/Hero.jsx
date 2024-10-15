@@ -14,10 +14,6 @@ const Hero = () => {
   const { language } = useContext(LanguageContext)
   const { fetchHeros, heros } = useContext(HeroContext)
 
-  useEffect(() => {
-    fetchHeros()
-  }, [fetchHeros])
-
   if (!heros) {
     return (
       <div className='h-screen w-full flex justify-center items-center bg-gray-100'>
