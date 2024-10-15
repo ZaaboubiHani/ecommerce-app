@@ -104,7 +104,7 @@ const ProductProvider = ({ children }) => {
     const response = await apiInstance.getAxios().get('/products', {
       params: {
         page: 1,
-        limit: 10,
+        limit: 1000,
         isSale: true,
       },
       cancelToken: source?.current?.token,
