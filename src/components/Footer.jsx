@@ -225,6 +225,17 @@ const Footer = () => {
         <p className='text-gray-400 mb-4 md:mb-0'>
           {translations.rights[language] || translations.rights.en}
         </p>
+        <p className='text-gray-400 flex items-center'>
+          Made with <span className='text-red-500 mx-1'>❤️</span> by{' '}
+          <a
+            href='https://www.instagram.com/abdou_bougherara/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-gray-400 hover:text-white transition-colors duration-200 flex items-center underline ml-1'
+          >
+            Abdelali Bougherara <FaInstagramSquare className='ml-2' />
+          </a>
+        </p>
       </div>
     </footer>
   )
