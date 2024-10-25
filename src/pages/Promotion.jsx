@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Product from '../components/Product'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { ProductContext } from '../contexts/ProductContext'
@@ -6,8 +6,16 @@ import { LanguageContext } from '../contexts/LanguageContext'
 import PromotionCard from '../components/PromotionCard'
 
 const Promotion = () => {
-  const { promotions, loadingProducts } = useContext(ProductContext)
+  const { promotions, loadingProducts, getPromotions } =
+    useContext(ProductContext)
   const { language } = useContext(LanguageContext)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getPromotions()
+    }
+    fetchData()
+  }, [])
 
   // Helper function for localized titles
   const getTitle = (ar, fr, en) => {

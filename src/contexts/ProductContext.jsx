@@ -17,7 +17,10 @@ const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([])
   const [loadingProducts, setLoadingProducts] = useState(true)
   const [limitReached, setLimitReached] = useState(false)
-
+  const [newProducts, setNewProducts] = useState([])
+  const [randomProducts, setRandomProducts] = useState([])
+  const [bestsellings, setBestsellings] = useState([])
+  const [promotions, setPromotions] = useState([])
   const page = useRef(1)
   const pageLimit = useRef(1)
   const localLoadingProducts = useRef(false)
@@ -95,6 +98,73 @@ const ProductProvider = ({ children }) => {
     fetchProducts(true)
   }, [category, text])
 
+  const getNewProducts = async () => {
+    const response = await apiInstance.getAxios().get('/products', {
+      params: {
+        page: 1,
+        limit: 10,
+        new: true,
+      },
+      cancelToken: source?.current?.token,
+    })
+    setNewProducts(response.data.docs)
+  }
+
+  // Get random products
+  const getRandomProducts = async () => {
+    const response = await apiInstance.getAxios().get('/products/random', {
+      params: {
+        number: 10,
+      },
+      cancelToken: source?.current?.token,
+    })
+
+    setRandomProducts(response.data)
+  }
+
+  // Get products on sale
+  const getPromotions = async () => {
+    const response = await apiInstance.getAxios().get('/products', {
+      params: {
+        page: 1,
+        limit: 1000,
+        isSale: true,
+      },
+      cancelToken: source?.current?.token,
+    })
+
+    setPromotions(response.data.docs)
+  }
+
+  // Get best-selling products
+  const getBestsellings = async () => {
+    const response = await apiInstance.getAxios().get('/products', {
+      params: {
+        page: 1,
+        limit: 10,
+        bestselling: true,
+      },
+      cancelToken: source?.current?.token,
+    })
+
+    setBestsellings(response.data.docs)
+  }
+
+  const fetchSingleProduct = async (id) => {
+    try {
+      const response = await apiInstance.getAxios().get(`/products/${id}`)
+
+      if (response.status === 200) {
+        return response.data
+      } else {
+        return null // Return null if the product is not found
+      }
+    } catch (error) {
+      console.error('Error fetching product:', error)
+      return null // Return null in case of an error
+    }
+  }
+
   return (
     <ProductContext.Provider
       value={{
@@ -102,6 +172,15 @@ const ProductProvider = ({ children }) => {
         loadingProducts,
         limitReached,
         fetchMoreProducts,
+        getNewProducts,
+        newProducts,
+        randomProducts,
+        bestsellings,
+        promotions,
+        getRandomProducts,
+        getBestsellings,
+        getPromotions,
+        fetchSingleProduct,
       }}
     >
       {children}

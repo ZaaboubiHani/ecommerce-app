@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { ProductContext } from '../contexts/ProductContext'
 import Product from '../components/Product'
 import Hero from '../components/Hero'
@@ -8,14 +8,33 @@ import BestsellingCarousel from '../components/BestsellingCarousel'
 import TitleCard from '../components/TitleCard'
 
 const Home = () => {
-  const { loadingProducts, newProducts, randomProducts, bestsellings } =
-    useContext(ProductContext)
+  const {
+    loadingProducts,
+    newProducts,
+    randomProducts,
+    bestsellings,
+    getNewProducts,
+    getRandomProducts,
+    getBestsellings,
+  } = useContext(ProductContext)
   const { language } = useContext(LanguageContext)
 
   // Helper function to get localized titles
   const getTitle = (ar, fr, en) => {
     return language === 'ar' ? ar : language === 'fr' ? fr : en
   }
+
+  // Fetch products when the component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      await Promise.all([
+        getNewProducts(),
+        getRandomProducts(),
+        getBestsellings(),
+      ])
+    }
+    fetchData()
+  }, [])
 
   return (
     <div className='bg-cover bg-white'>

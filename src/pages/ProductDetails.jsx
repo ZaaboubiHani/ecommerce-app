@@ -28,7 +28,11 @@ const ProductDetails = () => {
   useEffect(() => {
     const initData = async () => {
       const fetchedProduct = await fetchSingleProduct(id)
-      setProduct(fetchedProduct)
+      if (fetchedProduct) {
+        setProduct(fetchedProduct)
+      } else {
+        setProduct(null) // Set product to null if not found
+      }
       setLoading(false)
     }
     initData()
@@ -54,10 +58,6 @@ const ProductDetails = () => {
         </p>
       </section>
     )
-  }
-
-  if (!product) {
-    return <NotFound />
   }
 
   return (
