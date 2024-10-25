@@ -1,17 +1,20 @@
-import React, { createContext, useState, useEffect } from 'react';
-export const SearchContext = createContext();
+// SearchProvider component
+import React, { createContext, useState } from 'react'
+
+export const SearchContext = createContext()
 
 const SearchProvider = ({ children }) => {
-  const [text, setText] = useState();
-  const [searchDialogOpen, setSearchDialogOpen] = useState(false);
+  const [text, setText] = useState('')
 
-  const changeSearch = (text) => {
-    setText(text);
-  };
+  const changeSearch = (newText) => {
+    setText(newText)
+  }
 
-  return <SearchContext.Provider value={{text,changeSearch,searchDialogOpen,setSearchDialogOpen}}>
-    {children}
-  </SearchContext.Provider>;
-};
+  return (
+    <SearchContext.Provider value={{ text, changeSearch }}>
+      {children}
+    </SearchContext.Provider>
+  )
+}
 
-export default SearchProvider;
+export default SearchProvider

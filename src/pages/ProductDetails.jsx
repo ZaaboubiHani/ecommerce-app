@@ -9,6 +9,7 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import { MdOutlineArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 import BestsellingCarousel from '../components/BestsellingCarousel'
 import TitleCard from '../components/TitleCard'
+import NotFound from './NotFound'
 
 const ProductDetails = () => {
   const { id } = useParams()
@@ -31,11 +32,7 @@ const ProductDetails = () => {
       setLoading(false)
     }
     initData()
-  }, [fetchSingleProduct, id])
-
-  useEffect(() => {
-    console.log('Current Image Index:', imageIndex)
-  }, [imageIndex])
+  }, [fetchSingleProduct, id]) // Ensure fetchSingleProduct doesn't change
 
   if (loading) {
     return (
@@ -57,6 +54,10 @@ const ProductDetails = () => {
         </p>
       </section>
     )
+  }
+
+  if (!product) {
+    return <NotFound />
   }
 
   return (
