@@ -225,7 +225,7 @@ const Footer = () => {
         <p className='text-gray-400 mb-4 md:mb-0'>
           {translations.rights[language] || translations.rights.en}
         </p>
-        <p className='text-gray-400 flex items-center'>
+        {/* <p className='text-gray-400 flex items-center'>
           Made with <span className='text-red-500 mx-1'>❤️</span> by{' '}
           <a
             href='https://www.instagram.com/abdou_bougherara/'
@@ -235,7 +235,7 @@ const Footer = () => {
           >
             Abdelali Bougherara <FaInstagramSquare className='ml-2' />
           </a>
-        </p>
+        </p> */}
       </div>
     </footer>
   )
