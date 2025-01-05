@@ -7,6 +7,7 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import Api from '../api/api.source'
+
 import { CategoryContext } from './CategoryContext'
 import { SearchContext } from './SearchContext'
 
@@ -14,89 +15,75 @@ export const ProductContext = createContext()
 const apiInstance = Api.instance
 
 const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState([])
-  const [loadingProducts, setLoadingProducts] = useState(true)
-  const [limitReached, setLimitReached] = useState(false)
   const [newProducts, setNewProducts] = useState([])
   const [randomProducts, setRandomProducts] = useState([])
   const [bestsellings, setBestsellings] = useState([])
   const [promotions, setPromotions] = useState([])
-  const page = useRef(1)
-  const pageLimit = useRef(1)
-  const localLoadingProducts = useRef(false)
-  const source = useRef(null)
 
-  const { category, fetchCategories } = useContext(CategoryContext)
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [page, setPage] = useState(1) // Current page
+  const [hasNextPage, setHasNextPage] = useState(true) // Track if more data is available
+
+  const { category } = useContext(CategoryContext)
   const { text } = useContext(SearchContext)
-  const categoryRef = useRef(category)
 
   useEffect(() => {
-    categoryRef.current = category
-  }, [category])
+    fetchProducts() // Initial fetch on component mount
+  }, [category, text])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetchCategories()
-      await fetchProducts()
-    }
-    fetchData()
-  }, [])
+  const fetchProducts = async () => {
+    try {
+      setLoading(true)
+      setProducts([]) // Clear previous products
+      setPage(1) // Reset to the first page
 
-  const fetchProducts = async (resetPage = false) => {
-    setLoadingProducts(true)
-    if (resetPage) {
-      page.current = 1
-      setLimitReached(false)
-    }
+      const response = await apiInstance.getAxios().get(`/products?page=1`, {
+        params: {
+          limit: 12,
+          name: text || '', // Add text filter if provided
+          category: category?._id || '', // Add category filter if provided
+        },
+      })
+      console.log('response', response.data)
 
-    if (source.current) {
-      source.current.cancel('Operation canceled due to new request.')
+      setProducts(response.data.docs) // Set initial products
+      setPage(response.data.page)
+      setHasNextPage(response.data.hasNextPage) // Update pagination state
+    } catch (err) {
+      console.error('Error fetching products:', err)
+    } finally {
+      setLoading(false)
     }
-    source.current = axios.CancelToken.source()
+  }
+
+  const paginateProducts = async () => {
+    // Fetch additional products if available
+    if (!hasNextPage || loading) return
 
     try {
-      const response = await apiInstance.getAxios().get('/products', {
-        params: {
-          page: page.current,
-          limit: 10,
-          category: categoryRef.current?._id,
-          name: text || undefined,
-        },
-        cancelToken: source.current.token,
-      })
+      setLoading(true)
+      const nextPage = page + 1 // Calculate the next page
 
-      if (response.status === 200) {
-        pageLimit.current = response.data.totalPages
-        setProducts((prev) =>
-          resetPage ? response.data.docs : [...prev, ...response.data.docs]
-        )
-        setLimitReached(response.data.docs.length < 10)
-      }
-    } catch (error) {
-      handleAxiosError(error)
+      const response = await apiInstance
+        .getAxios()
+        .get(`/products?page=${nextPage}`, {
+          params: {
+            limit: 12,
+            name: text || '', // Add text filter if provided
+            category: category?._id || '', // Add category filter if provided
+          },
+        })
+
+      setProducts((prevProducts) => [...prevProducts, ...response.data.docs]) // Append new products to the existing ones
+      setPage(response.data.page)
+      setHasNextPage(response.data.hasNextPage) // Update pagination state
+    } catch (err) {
+      console.error('Error fetching more products:', err)
     } finally {
-      setLoadingProducts(false)
+      setLoading(false)
     }
   }
-
-  const fetchMoreProducts = () => {
-    if (page.current < pageLimit.current && !localLoadingProducts.current) {
-      page.current += 1
-      fetchProducts()
-    }
-  }
-
-  const handleAxiosError = (error) => {
-    if (axios.isCancel(error)) {
-      console.log('Request canceled', error.message)
-    } else {
-      console.error('Error:', error.message)
-    }
-  }
-
-  useEffect(() => {
-    fetchProducts(true)
-  }, [category, text])
 
   const getNewProducts = async () => {
     const response = await apiInstance.getAxios().get('/products', {
@@ -105,7 +92,6 @@ const ProductProvider = ({ children }) => {
         limit: 10,
         new: true,
       },
-      cancelToken: source?.current?.token,
     })
     setNewProducts(response.data.docs)
   }
@@ -116,7 +102,6 @@ const ProductProvider = ({ children }) => {
       params: {
         number: 10,
       },
-      cancelToken: source?.current?.token,
     })
 
     setRandomProducts(response.data)
@@ -130,7 +115,6 @@ const ProductProvider = ({ children }) => {
         limit: 1000,
         isSale: true,
       },
-      cancelToken: source?.current?.token,
     })
 
     setPromotions(response.data.docs)
@@ -144,7 +128,6 @@ const ProductProvider = ({ children }) => {
         limit: 10,
         bestselling: true,
       },
-      cancelToken: source?.current?.token,
     })
 
     setBestsellings(response.data.docs)
@@ -169,9 +152,10 @@ const ProductProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         products,
-        loadingProducts,
-        limitReached,
-        fetchMoreProducts,
+        loading,
+        paginateProducts,
+        hasNextPage,
+        fetchProducts,
         getNewProducts,
         newProducts,
         randomProducts,

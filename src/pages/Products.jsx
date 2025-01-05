@@ -1,5 +1,5 @@
-// Products component
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { ProductContext } from '../contexts/ProductContext'
 import Product from '../components/Product'
 import CategoryDropdown from '../components/CategoryDropdown'
@@ -9,41 +9,13 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import { TbMoodEmpty } from 'react-icons/tb'
 
 const Products = () => {
-  const { products, loadingProducts, limitReached, fetchMoreProducts } =
+  const { products, loading, hasNextPage, fetchProducts, paginateProducts } =
     useContext(ProductContext)
   const { language } = useContext(LanguageContext)
-  const loadingRef = useRef(null)
-  const [loadingMore, setLoadingMore] = useState(false)
-
-  const handleScroll = () => {
-    if (
-      loadingRef.current &&
-      loadingRef.current.getBoundingClientRect().top <= window.innerHeight
-    ) {
-      loadMoreProducts()
-    }
-  }
-
-  const loadMoreProducts = async () => {
-    if (!loadingMore && !limitReached) {
-      setLoadingMore(true)
-      await fetchMoreProducts()
-      setLoadingMore(false)
-    }
-  }
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+    fetchProducts() // Initial fetch on component mount
   }, [])
-
-  const renderLoading = () => (
-    <section className='h-screen flex justify-center items-center'>
-      <ClipLoader />
-    </section>
-  )
 
   const renderNoResults = () => (
     <section className='h-screen flex justify-center items-center text-2xl'>
@@ -59,17 +31,12 @@ const Products = () => {
   const renderProducts = () => (
     <div>
       <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 mt-4'>
-        {products.map((product) => (
+        {products?.map((product) => (
           <div key={product._id} className='px-1'>
             <Product product={product} />
           </div>
         ))}
       </div>
-      {!limitReached && (
-        <div ref={loadingRef} className='flex justify-center mt-4'>
-          <ClipLoader />
-        </div>
-      )}
     </div>
   )
 
@@ -85,11 +52,23 @@ const Products = () => {
             <CategoryDropdown />
             <SearchField />
           </div>
-          {loadingProducts
-            ? renderLoading()
-            : products.length === 0
-            ? renderNoResults()
-            : renderProducts()}
+
+          {products.length === 0 && !loading ? (
+            renderNoResults()
+          ) : (
+            <InfiniteScroll
+              dataLength={products.length} // This is important to detect scroll position
+              next={paginateProducts} // Function to fetch the next batch of products
+              hasMore={hasNextPage} // Determines whether to load more data
+              loader={
+                <div className='flex justify-center items-center py-4'>
+                  <ClipLoader />
+                </div>
+              }
+            >
+              {renderProducts()}
+            </InfiniteScroll>
+          )}
         </div>
       </section>
     </div>
