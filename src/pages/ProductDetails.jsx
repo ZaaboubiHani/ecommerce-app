@@ -10,6 +10,7 @@ import { MdOutlineArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 import BestsellingCarousel from '../components/BestsellingCarousel'
 import TitleCard from '../components/TitleCard'
 import NotFound from './NotFound'
+import SizeChart from '../components/SizeChart'
 
 const ProductDetails = () => {
   const { id } = useParams()
@@ -383,6 +384,21 @@ const ProductDetails = () => {
                 </Link>
               </div>
             </div>
+          </div>
+          {/* Size Chart Section */}
+          <div className='mt-8'>
+            <h2
+              className={`text-xl font-bold mb-4 ${
+                language === 'ar' ? 'text-right' : ''
+              }`}
+            >
+              {language === 'ar'
+                ? 'دليل المقاسات'
+                : language === 'fr'
+                ? 'Tableau des tailles'
+                : 'Size Chart'}
+            </h2>
+            <SizeChart language={language} />
           </div>
         </div>
       </section>
