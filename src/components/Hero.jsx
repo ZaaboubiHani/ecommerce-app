@@ -70,7 +70,7 @@ const Hero = () => {
           <img
             src={newcollection}
             alt='New Collection'
-            className='absolute top-4 left-2 md:top-16 md:left-6 w-24 md:w-40 z-30'
+            className='absolute top-12 left-2 md:top-16 md:left-6 w-24 md:w-40 z-30'
           />
           <button
             onClick={prevSlide}
@@ -110,7 +110,7 @@ const Hero = () => {
               />
             </svg>
           </button>
-          <div className='relative mt-12 md:mt-24 max-w-[300px] md:max-w-[450px] w-full h-auto'>
+          <div className='relative mt-24 md:mt-24 max-w-[300px] md:max-w-[450px] w-full h-auto'>
             <img
               src={images[currentImageIndex]}
               alt={`Hero Slide ${currentImageIndex + 1}`}
@@ -136,14 +136,16 @@ const Hero = () => {
             ))}
           </div>
         </div>
-        <div className='w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left p-4 md:p-8'>
-          <h1 className='text-8xl md:text-9xl font-Calinastiya bg-clip-text text-transparent mb-4 animate-slideInLeft bg-gradient-to-r from-[#714920] to-[#9c704a]'>
+        <div className='w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left p-4 md:p-8 mb-8 md:mb-0'>
+          {' '}
+          {/* Added bottom margin on mobile */}
+          <h1 className='text-5xl md:text-8xl lg:text-9xl font-Calinastiya bg-clip-text text-transparent mb-4 animate-slideInLeft bg-gradient-to-r from-[#714920] to-[#9c704a]'>
             Arela Clothsy
           </h1>
-          <div className='flex flex-col md:flex-row gap-4'>
+          <div className='flex flex-col md:flex-row gap-4 w-full px-4 justify-center'>
             <Link
               to='/products'
-              className='border-2 border-[#573718] text-[#573718] px-4 py-2 md:px-6 md:py-3 rounded-full uppercase font-semibold hover:text-white hover:bg-[#452d22] transition-all duration-300 shadow-md'
+              className='border-2 border-[#573718] text-[#573718] px-4 py-2 md:px-6 md:py-3 rounded-full uppercase font-semibold hover:text-white hover:bg-[#452d22] transition-all duration-300 shadow-md text-sm md:text-base'
             >
               {language === 'ar'
                 ? 'تسوق الآن'
@@ -153,7 +155,7 @@ const Hero = () => {
             </Link>
             <a
               href='#new-collection'
-              className='border-2 border-[#573718] text-[#573718] px-4 py-2 md:px-6 md:py-3 rounded-full uppercase font-semibold hover:bg-[#573718] hover:text-white transition-all duration-300 shadow-md'
+              className='border-2 border-[#573718] text-[#573718] px-4 py-2 md:px-6 md:py-3 rounded-full uppercase font-semibold hover:bg-[#573718] hover:text-white transition-all duration-300 shadow-md text-sm md:text-base'
             >
               {language === 'ar'
                 ? 'استكشفي'
