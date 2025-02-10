@@ -89,7 +89,7 @@ const Home = () => {
 
       {/* Recommendations Section */}
       <SectionWrapper extraClasses='min-h-[600px]'>
-        <TitleCard title={getTitle('مقترحات', 'Picks', 'Choix')} />
+        <TitleCard title={getTitle('مقترحات', 'Sélection', 'Picks')} />
         {loadingProducts ? (
           <div className='h-[300px] flex justify-center items-center'>
             <ClipLoader size={60} color='#714920' />
