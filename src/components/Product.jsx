@@ -57,7 +57,7 @@ const Product = ({ product }) => {
     <div
       className={`
         relative 
-        bg-[#ffd3c2]
+        bg-shite
         text-white
          shadow-xl
         overflow-visible
