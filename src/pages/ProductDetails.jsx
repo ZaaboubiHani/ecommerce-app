@@ -40,7 +40,7 @@ const ProductDetails = () => {
 
   if (loading) {
     return (
-      <section className='h-screen flex justify-center items-center bg-white'>
+      <section className='h-screen flex justify-center items-center bg-[#ffd3c2]'>
         <ClipLoader size={50} color='#4A90E2' />
       </section>
     )
@@ -48,7 +48,7 @@ const ProductDetails = () => {
 
   if (!product) {
     return (
-      <section className='h-screen flex justify-center items-center bg-white'>
+      <section className='h-screen flex justify-center items-center bg-[#ffd3c2]'>
         <p className='text-xl text-gray-500'>
           {language === 'ar'
             ? 'المنتج غير موجود'
@@ -61,7 +61,7 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className='bg-white'>
+    <div className='bg-[#ffd3c2]'>
       <section className='py-12 px-4 md:px-8 lg:px-16 xl:px-32'>
         <div className='container mx-auto'>
           <div

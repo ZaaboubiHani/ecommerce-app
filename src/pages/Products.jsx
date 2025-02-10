@@ -13,10 +13,6 @@ const Products = () => {
     useContext(ProductContext)
   const { language } = useContext(LanguageContext)
 
-  useEffect(() => {
-    fetchProducts() // Initial fetch on component mount
-  }, [])
-
   const renderNoResults = () => (
     <section className='h-screen flex justify-center items-center text-2xl'>
       {language === 'ar'
@@ -42,7 +38,7 @@ const Products = () => {
 
   return (
     <div>
-      <section className='py-16 bg-[#dbdee3] mt-12'>
+      <section className='py-16 bg-[#ffd3c2] mt-12'>
         <div className='container mx-auto px-2 sm:px-4'>
           <div
             className={`flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 ${

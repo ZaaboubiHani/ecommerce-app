@@ -122,7 +122,7 @@ const Checkout = () => {
   }
 
   return (
-    <div className='pt-16 lg:py-32 bg-white'>
+    <div className='pt-16 lg:py-32 bg-[#ffd3c2] text-[#714920]'>
       {isValidating ? (
         <div className='h-[100vh] w-full flex justify-center items-center'>
           <ClipLoader />
@@ -158,7 +158,7 @@ const Checkout = () => {
             </div>
           ) : (
             <form
-              className='w-full border p-4 rounded-xl'
+              className='w-full border p-4 rounded-xl border-[#714920]'
               onSubmit={handleSubmit(onSubmit)}
             >
               <h2 className='text-2xl font-semibold mb-4 text-center'>
@@ -182,7 +182,7 @@ const Checkout = () => {
                 <input
                   type='text'
                   {...register('fullName', { required: true })}
-                  className={`w-full px-4 py-3 border rounded-md bg-white focus:border-white ${
+                  className={`w-full px-4 py-3 border rounded-md bg-[#ffd3c2] border-[#714920] focus:border-white ${
                     errors.fullName ? 'border-red-500' : ''
                   }`}
                   placeholder={
@@ -217,7 +217,7 @@ const Checkout = () => {
                 <input
                   type='text'
                   {...register('address', { required: true })}
-                  className={`w-full px-4 py-3 border rounded-md bg-white focus:border-white ${
+                  className={`w-full px-4 py-3 border rounded-md bg-[#ffd3c2] border-black focus:border-white ${
                     errors.address ? 'border-red-500' : ''
                   }`}
                   placeholder={
@@ -255,7 +255,7 @@ const Checkout = () => {
                     required: true,
                     pattern: /^(05|06|07)\d{8}$/,
                   })}
-                  className={`w-full px-4 py-3 border rounded-md bg-white focus:border-white ${
+                  className={`w-full px-4 py-3 border rounded-md bg-[#ffd3c2] border-black focus:border-white ${
                     errors.phoneNumber1 ? 'border-red-500' : ''
                   }`}
                   placeholder={
@@ -299,7 +299,7 @@ const Checkout = () => {
                           : 'Please enter a valid phone number',
                     },
                   })}
-                  className={`w-full px-4 py-3 border rounded-md bg-white focus:border-white ${
+                  className={`w-full px-4 py-3 border rounded-md bg-[#ffd3c2] border-black focus:border-white ${
                     errors.phoneNumber2 ? 'border-red-500' : ''
                   }`}
                   placeholder={
@@ -404,7 +404,7 @@ const Checkout = () => {
                 </label>
                 <textarea
                   {...register('note')}
-                  className='w-full px-4 py-3 border rounded-md bg-white focus:border-white'
+                  className='w-full px-4 py-3 border rounded-md bg-[#ffd3c2] border-black focus:border-white'
                   placeholder={
                     language === 'ar'
                       ? 'أدخل ملاحظتك'
@@ -444,7 +444,7 @@ const Checkout = () => {
           )}
 
           {/* Purchases Section */}
-          <div className='w-full h-auto border p-4 rounded-xl'>
+          <div className='w-full h-auto border border-[#714920] p-4 rounded-xl'>
             <h2 className='text-2xl font-semibold mb-4 text-center'>
               {language === 'ar'
                 ? 'المشتريات'
@@ -456,7 +456,7 @@ const Checkout = () => {
               <div className='flow-root'>
                 <ul
                   role='list'
-                  className='-my-6 divide-y divide-gray-200 max-h-[400px] overflow-y-auto'
+                  className='-my-6 divide-y divide-[#714920] max-h-[400px] overflow-y-auto'
                 >
                   {cart.map((item, i) => (
                     <li key={i} className='flex py-6'>
@@ -514,7 +514,7 @@ const Checkout = () => {
                     </li>
                   ))}
                 </ul>
-                <div className='border-t border-gray-200 px-4 py-6 sm:px-6 mt-10'>
+                <div className='border-t border-[#714920] px-4 py-6 sm:px-6 mt-10'>
                   <div className='flex justify-between text-base font-medium'>
                     <p>
                       {language === 'ar'
@@ -557,7 +557,7 @@ const Checkout = () => {
                       </small>
                     </p>
                   </div>
-                  <hr />
+                  <hr className='border-[#714920]' />
                   <div className='flex justify-between text-base font-medium'>
                     <p>
                       {language === 'ar'
@@ -585,19 +585,6 @@ const Checkout = () => {
           </div>
         </div>
       )}
-      {/* Bestselling Carousel Section */}
-      <div className='mt-8'>
-        <TitleCard
-          title={
-            language === 'ar'
-              ? 'الأكثر مبيعا'
-              : language === 'fr'
-              ? 'Plus vendu'
-              : 'Bestselling'
-          }
-        />
-        <BestsellingCarousel products={randomProducts} />
-      </div>
     </div>
   )
 }

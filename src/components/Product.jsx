@@ -57,7 +57,7 @@ const Product = ({ product }) => {
     <div
       className={`
         relative 
-        bg-white
+        bg-[#ffd3c2]
         text-white
          shadow-xl
         overflow-visible
@@ -65,11 +65,6 @@ const Product = ({ product }) => {
       `}
     >
       <Link to={`/product/${_id}`}>
-        {/* Snowflakes Decoration */}
-        <div className='absolute -top-6 left-0 w-full flex justify-center z-20 pointer-events-none'>
-          <img src={flakes} className='w-full h-full object-cover' alt='' />
-        </div>
-
         {/* Availability Badge */}
         <div
           className={`

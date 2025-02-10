@@ -30,20 +30,24 @@ const LanguageDropdown = () => {
     >
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className='bg-main p-2 w-[60px] flex items-center justify-between
-                           font-bold text-l rounded-lg tracking-wider border-4 border-transparent active:border-white
-                           duration-300 active:text-white'
+        className='p-2 w-[60px] flex items-center justify-between bg-#573718
+                           font-bold text-l rounded-lg tracking-wider border-4 border-transparent 
+                           '
       >
         <div></div>
-        <GrLanguage></GrLanguage>
+        <GrLanguage color='#573718' size={30}></GrLanguage>
         {/* {language === 'ar' ? (<img className='h-[20px]' src={DZ} alt="" />) :
                     language === 'fr' ? (<img className='h-[20px]' src={FR} alt="" />) :
                         (<img className='h-[20px]' src={UK} alt="" />)
                 } */}
-        {!isOpen ? <IoMdArrowDropdown /> : <IoMdArrowDropup />}
+        {!isOpen ? (
+          <IoMdArrowDropdown color='#573718' />
+        ) : (
+          <IoMdArrowDropup color='#573718' />
+        )}
       </button>
       {isOpen && (
-        <div className='bg-main absolute top-[50px] w-[120px] flex flex-col items-start rounded-lg p-1 shadow-lg'>
+        <div className='bg-[#573718] absolute top-[50px] w-[120px] flex flex-col items-start rounded-lg p-1 shadow-lg'>
           <div
             onClick={() => {
               changeLanguage('ar')

@@ -11,10 +11,14 @@ module.exports = {
       primary: ['"Montserrat"', 'sans-serif'],
       title: ['"Great Vibes"', 'cursive'],
       sedan: ['sedan'],
+      beloved: ['beloved'],
       script: ['"Times New Roman"', 'serif'],
       lora: ['"Lora"', 'serif'],
       arinttika: ['"Arinttika Signature"', 'cursive'],
       edu: ['"Edu AU VIC WA NT Guides"', 'cursive'],
+      fingerpaint: ['"Finger Paint"', 'serif'],
+      Darling: ['Darling'],
+      Calinastiya: ['Calinastiya'],
     },
     container: {
       padding: {
@@ -32,7 +36,7 @@ module.exports = {
       colors: {
         primary: '#222222',
         secondary: '#F5E6E0',
-        main: '#151212',
+        main: '#714920',
       },
       backgroundImage: {
         hero1: "url('./img/bg_hero1.jpg')",
@@ -45,6 +49,7 @@ module.exports = {
         winter5: 'url("./img/winter-5.jpg")',
         winter6: 'url("./img/winter6.jpg")',
         hero10: 'url("./img/hero.png")',
+        hero12: 'url("./img/95485.jpg")',
       },
     },
   },

@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import { SidebarContext } from '../contexts/SidebarContext'
-import { BsBag } from 'react-icons/bs'
 import { CartContext } from '../contexts/CartContext'
 import { MenuContext } from '../contexts/MenuContext'
-import { NavLink } from 'react-router-dom'
-import Logo from '../img/ARELA CLOTHSY.png'
-import LanguageDropdown from './LanguageDropdown' // Ensure correct filename
 import { LanguageContext } from '../contexts/LanguageContext'
-import { GiHamburgerMenu } from 'react-icons/gi'
-import { CiSearch } from 'react-icons/ci'
 import { SearchContext } from '../contexts/SearchContext'
+import Logo from '../img/ARELA CLOTHSY.png'
+import LanguageDropdown from './LanguageDropdown'
+import { GiHamburgerMenu } from 'react-icons/gi'
+import { BsBag } from 'react-icons/bs'
+import { CiSearch } from 'react-icons/ci'
 
 const Header = () => {
   const { handleOpenSidebar } = useContext(SidebarContext)
@@ -17,30 +17,29 @@ const Header = () => {
   const { itemAmount } = useContext(CartContext)
   const { language } = useContext(LanguageContext)
   const { setSearchDialogOpen } = useContext(SearchContext)
+  const location = useLocation()
 
-  // Function to render NavLink with underline
+  // Check if the current page is the home page
+  const isHomePage = location.pathname === '/'
+
+  // Function to render navigation links with an underline effect
   const renderNavLink = (to, label) => (
     <NavLink
       to={to}
-      className='group relative h-full px-4 md:px-6 hidden md:block'
+      className='group relative h-full px-4 md:px-6 hidden md:block bg-transparent'
     >
       {({ isActive }) => (
         <>
           <span
-            className={`
-              text-white transition duration-300 
-              ${isActive ? 'text-black ' : ' '}
-            `}
+            className={`text-[#573718] bold transition duration-300 
+              ${isActive ? 'text-[#211509]' : ''}`}
           >
             {label}
           </span>
           <span
-            className={`
-              block max-w-0 group-hover:max-w-full ${
-                isActive ? 'max-w-full' : ''
-              }
-              transition-all duration-500 h-0.5 bg-white mt-1
-            `}
+            className={`block max-w-0 group-hover:max-w-full ${
+              isActive ? 'max-w-full' : ''
+            } transition-all duration-500 h-0.5 bg-[#573718] mt-1`}
           ></span>
         </>
       )}
@@ -48,7 +47,11 @@ const Header = () => {
   )
 
   return (
-    <header className='bg-main text-white font-bold shadow-md fixed w-full z-30 transition-all h-[60px]'>
+    <header
+      className={`text-black font-bold fixed w-full z-30 transition-all h-[60px] ${
+        isHomePage ? 'bg-transparent' : 'bg-[#ffd3c2]'
+      }`}
+    >
       <div className='mx-auto flex items-center justify-between h-full px-4 lg:px-16 relative'>
         {/* Hamburger Menu for Mobile */}
         <div
@@ -72,7 +75,7 @@ const Header = () => {
         </NavLink>
 
         {/* Navigation Links and Icons */}
-        <nav className='flex items-center'>
+        <nav className='flex items-center font-fingerpaint'>
           {/* Navigation Links (hidden on mobile) */}
           {renderNavLink(
             '/',
@@ -111,11 +114,11 @@ const Header = () => {
           )}
 
           {/* Search Icon */}
-          {/* <CiSearch
+          <CiSearch
             className='text-2xl cursor-pointer mx-2'
             onClick={() => setSearchDialogOpen(true)}
             aria-label='Search'
-          /> */}
+          />
 
           {/* Language Dropdown */}
           <LanguageDropdown />
@@ -126,7 +129,7 @@ const Header = () => {
             onClick={handleOpenSidebar}
             aria-label='Open cart'
           >
-            <BsBag className='text-2xl' />
+            <BsBag className='text-2xl' color='#573718' size={30} />
             {itemAmount > 0 && (
               <div className='bg-black absolute -right-2 -bottom-2 text-[12px] w-[18px] h-[18px] text-white rounded-full flex justify-center items-center'>
                 {itemAmount}

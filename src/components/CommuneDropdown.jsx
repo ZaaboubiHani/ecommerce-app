@@ -35,8 +35,8 @@ const CommuneDropdown = ({ onSelect, validateAttempt, selectedWilaya }) => {
         onClick={() => {
           setIsCommunesOpen((prev) => !prev)
         }}
-        className='bg-white p-2 w-full flex items-center justify-between
-                    text-l tracking-wider border border-1 border-black h-11 rounded-lg
+        className='bg-[#ffd3c2] border-[#714920] p-2 w-full flex items-center justify-between
+                    text-l tracking-wider border border-1  h-11 rounded-lg
                     duration-300'
       >
         <div

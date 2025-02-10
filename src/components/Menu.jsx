@@ -27,7 +27,7 @@ const Menu = () => {
 
       {/* Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-black text-white shadow-2xl z-30 transform ${
+        className={`fixed top-0 left-0 h-full w-80 bg-[#ffd3c2] text-[#714920] shadow-2xl z-30 transform ${
           menuIsOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 ease-in-out px-4 py-6 flex flex-col`}
       >
@@ -37,7 +37,7 @@ const Menu = () => {
           className='cursor-pointer mb-8 self-start'
           aria-label='Close Menu'
         >
-          <IoMdArrowBack className='text-2xl' />
+          <IoMdArrowBack className='text-2xl text-[#714920]' />
         </div>
 
         {/* Navigation Links */}
@@ -45,9 +45,9 @@ const Menu = () => {
           <Link
             to='/'
             onClick={handleCloseMenu}
-            className='flex items-center p-2 hover:bg-slate-100 rounded transition-colors duration-300'
+            className='flex items-center p-2 hover:bg-[#f7b89d] rounded transition-colors duration-300'
           >
-            <FaHome className='text-2xl mr-4' />
+            <FaHome className='text-2xl mr-4 text-[#714920]' />
             <span>
               {language === 'ar'
                 ? 'إستقبال'
@@ -60,9 +60,9 @@ const Menu = () => {
           <Link
             to='/products'
             onClick={handleCloseMenu}
-            className='flex items-center p-2 hover:bg-slate-100 rounded transition-colors duration-300'
+            className='flex items-center p-2 hover:bg-[#f7b89d] rounded transition-colors duration-300'
           >
-            <GiLoincloth className='text-2xl mr-4' />
+            <GiLoincloth className='text-2xl mr-4 text-[#714920]' />
             <span>
               {language === 'ar'
                 ? 'منتجات'
@@ -81,7 +81,7 @@ const Menu = () => {
                 navigate('/products')
                 handleCloseMenu()
               }}
-              className='text-left pl-8 py-2 hover:bg-slate-100 rounded transition-colors duration-300'
+              className='text-left pl-8 py-2 hover:bg-[#f7b89d] rounded transition-colors duration-300'
             >
               {language === 'ar'
                 ? category.arName
@@ -94,9 +94,9 @@ const Menu = () => {
           <Link
             to='/promotion'
             onClick={handleCloseMenu}
-            className='flex items-center p-2 hover:bg-slate-100 rounded transition-colors duration-300'
+            className='flex items-center p-2 hover:bg-[#f7b89d] rounded transition-colors duration-300'
           >
-            <RiDiscountPercentFill className='text-3xl mr-3' />
+            <RiDiscountPercentFill className='text-3xl mr-3 text-[#714920]' />
             <span>
               {language === 'ar'
                 ? 'تخفيضات'
@@ -109,9 +109,9 @@ const Menu = () => {
           <Link
             to='/about'
             onClick={handleCloseMenu}
-            className='flex items-center p-2 hover:bg-slate-100 rounded transition-colors duration-300'
+            className='flex items-center p-2 hover:bg-[#f7b89d] rounded transition-colors duration-300'
           >
-            <BsFillInfoCircleFill className='text-2xl mr-4' />
+            <BsFillInfoCircleFill className='text-2xl mr-4 text-[#714920]' />
             <span>
               {language === 'ar'
                 ? 'عنا'

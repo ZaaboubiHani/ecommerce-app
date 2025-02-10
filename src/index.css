@@ -26,9 +26,33 @@
 }
 
 @font-face {
+  font-family: 'beloved';
+  src: url('/src/assets/fonts/beloved.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Darling';
+  src: url('/src/assets/fonts/Darling.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Arinttika Signature';
   src: url('./assets/fonts/Arinttika Signature.ttf') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap; /* Improves loading performance */
+}
+
+@font-face {
+  font-family: 'Calinastiya';
+  src: url('./assets/fonts/Calinastiya.ttf') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Improves loading performance */
+}
+html {
+  scroll-behavior: smooth;
 }

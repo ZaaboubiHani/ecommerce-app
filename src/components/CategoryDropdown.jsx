@@ -29,9 +29,9 @@ const CategoryDropdown = () => {
     >
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className='bg-gray-100 p-3 w-full flex items-center justify-between
-    text-base font-medium border border-gray-300 rounded-lg shadow-md transition-all
-    duration-300 hover:shadow-lg hover:bg-gray-100'
+        className='bg-[#ffd3c2] text-[#714920] p-3 w-full flex items-center justify-between
+    text-base font-medium border border-[#714920]  rounded-lg shadow-md transition-all
+    duration-300 hover:shadow-lg hover:bg-[#ffbfa6]'
       >
         {language === 'ar'
           ? category?.arName ?? 'أصناف'
@@ -42,7 +42,7 @@ const CategoryDropdown = () => {
       </button>
       {isOpen && (
         <div
-          className='bg-gray-100 absolute top-[55px] w-full z-20 rounded-lg shadow-lg border border-gray-300 p-2 mt-1
+          className='bg-[#ffd3c2] absolute top-[55px] w-full z-20 rounded-lg shadow-lg border border-[#714920] p-2 mt-1
           transition-all duration-300 transform origin-top'
         >
           {/* Option for "All Categories" */}
@@ -52,7 +52,7 @@ const CategoryDropdown = () => {
               changeCategory(undefined)
               setIsOpen(false)
             }}
-            className='flex w-full items-center justify-between px-2 py-1 hover:bg-gray-400 cursor-pointer rounded'
+            className='flex w-full items-center justify-between px-2 py-2 hover:bg-[#ffbfa6] cursor-pointer rounded text-[#714920]'
           >
             <h3 className='text-sm font-medium'>
               {language === 'ar'
@@ -69,7 +69,7 @@ const CategoryDropdown = () => {
                 changeCategory(category)
                 setIsOpen(false)
               }}
-              className='flex w-full items-center justify-between px-2 py-1 hover:bg-gray-400 cursor-pointer rounded'
+              className='flex w-full items-center justify-between px-2 py-1 hover:bg-[#ffbfa6] cursor-pointer rounded'
             >
               <h3 className='text-sm font-medium'>
                 {language === 'ar'
