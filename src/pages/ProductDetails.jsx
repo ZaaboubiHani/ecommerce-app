@@ -398,7 +398,9 @@ const ProductDetails = () => {
                 ? 'Tableau des tailles'
                 : 'Size Chart'}
             </h2>
-            <SizeChart language={language} />
+            {product?.category?.engName !== 'abaya' && (
+              <SizeChart language={language} />
+            )}
           </div>
         </div>
       </section>
