@@ -386,22 +386,23 @@ const ProductDetails = () => {
             </div>
           </div>
           {/* Size Chart Section */}
-          <div className='mt-8'>
-            <h2
-              className={`text-xl font-bold mb-4 ${
-                language === 'ar' ? 'text-right' : ''
-              }`}
-            >
-              {language === 'ar'
-                ? 'دليل المقاسات'
-                : language === 'fr'
-                ? 'Tableau des tailles'
-                : 'Size Chart'}
-            </h2>
-            {product?.category?.engName !== 'abaya' && (
+          {product?.category?.engName !== 'abaya' && (
+            <div className='mt-8'>
+              <h2
+                className={`text-xl font-bold mb-4 ${
+                  language === 'ar' ? 'text-right' : ''
+                }`}
+              >
+                {language === 'ar'
+                  ? 'دليل المقاسات'
+                  : language === 'fr'
+                  ? 'Tableau des tailles'
+                  : 'Size Chart'}
+              </h2>
+
               <SizeChart language={language} />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </section>
     </div>
